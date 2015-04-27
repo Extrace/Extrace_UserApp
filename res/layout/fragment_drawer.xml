@@ -1,11 +1,39 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#cccc"
-    tools:context="com.track.app.user.NavigationDrawerFragment" >
+    tools:context="com.track.app.user.fragment.NavigationDrawerFragment" >
+	
+     <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:background="#f0f0f0">
 
-	<ListView android:id="@+id/drawer_list"
+            <ImageView
+                android:id="@+id/zero"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/face_default" />
+
+            <TextView
+                android:id="@+id/zero1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/zero"
+                android:text="游客"
+                android:textColor="#000000"
+                android:textSize="35sp" />
+        </RelativeLayout>
+    
+    
+	<ListView android:id="@+id/id_drawer_list"
+	    	  android:paddingTop="100dp"
 			  android:layout_width="match_parent"
 	          android:layout_height="match_parent"
 	          android:choiceMode="singleChoice"
@@ -13,4 +41,4 @@
 	          android:dividerHeight="0dp" 
 	          />
 
-</LinearLayout>
+</RelativeLayout>

@@ -1,4 +1,8 @@
-package com.track.app.user;
+package com.track.app.user.fragment;
+
+import com.track.app.user.R;
+import com.track.app.user.R.id;
+import com.track.app.user.R.layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

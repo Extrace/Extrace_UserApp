@@ -1,8 +1,10 @@
-package com.track.app.user;
+package com.track.app.user.fragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.track.app.user.MainActivity;
+import com.track.app.user.R;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -26,24 +28,24 @@ public class PlaceHolderFragment extends Fragment {
 	/**
 	 * 
 	 */
-	private  TransNodeTabFragment mTransNodeTabFragment;
-	private  TransPackageTabFragment mTransPackageTabFragment;
-	private  MyCenterTabFragment mCenterTabFragment;
-	private  static ViewPager mViewPager;
-	private  FragmentPagerAdapter mAdapter;
-	private  List<Fragment> mFragments;
-	private  static ImageView mTabLine;
-	private  TextView mPackageTextView;
-	private  TextView mNodeTextView;
-	private  TextView mCenterTextView;
+	private TransNodeTabFragment mTransNodeTabFragment;
+	private TransPackageTabFragment mTransPackageTabFragment;
+	private MyCenterTabFragment mCenterTabFragment;
+	private static ViewPager mViewPager;
+	private FragmentPagerAdapter mAdapter;
+	private List<Fragment> mFragments;
+	private static ImageView mTabLine;
+	private TextView mPackageTextView;
+	private TextView mNodeTextView;
+	private TextView mCenterTextView;
 
 	private int mCurrentIndex;
 	private int screenWidth1_3;
 
-	private  final String ARG_SECTION_NUMBER = "section_number";
+	private final String ARG_SECTION_NUMBER = "section_number";
 
 	// 获取选中item的参数，并传递给Bundle
-	public  Fragment newInstance(int sectionNumber) {
+	public Fragment newInstance(int sectionNumber) {
 		PlaceHolderFragment fragment = new PlaceHolderFragment();
 		Bundle args = new Bundle();
 		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -51,7 +53,6 @@ public class PlaceHolderFragment extends Fragment {
 		return fragment;
 	}
 
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -60,10 +61,10 @@ public class PlaceHolderFragment extends Fragment {
 		InitViewPager(rootView);
 		initTabLine(rootView);
 		InitTextView(rootView);
-		
+
 		return rootView;
 	}
-	
+
 	private void InitTextView(View rootView) {
 		// TODO Auto-generated method stub
 		mPackageTextView = (TextView) rootView.findViewById(R.id.id_tv_package);
@@ -76,15 +77,15 @@ public class PlaceHolderFragment extends Fragment {
 		// TODO Auto-generated method stub
 		mViewPager = (ViewPager) rootView.findViewById(R.id.id_viewpager);
 		mFragments = new ArrayList<Fragment>();
-		
-		mTransNodeTabFragment =new TransNodeTabFragment();
+
+		mTransNodeTabFragment = new TransNodeTabFragment();
 		mTransPackageTabFragment = new TransPackageTabFragment();
 		mCenterTabFragment = new MyCenterTabFragment();
-		
+
 		mFragments.add(mTransPackageTabFragment);
 		mFragments.add(mTransNodeTabFragment);
 		mFragments.add(mCenterTabFragment);
-		
+
 		mAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
 
 			@Override
@@ -99,9 +100,9 @@ public class PlaceHolderFragment extends Fragment {
 				return mFragments.get(arg0);
 			}
 		};
-		
+
 		mViewPager.setAdapter(mAdapter);
-		
+
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
 			// 当fragment被选中时，分别设置文本标题颜色
@@ -146,10 +147,8 @@ public class PlaceHolderFragment extends Fragment {
 
 			}
 		});
-//		mViewPager.setCurrentItem(0);
+		// mViewPager.setCurrentItem(0);
 	}
-
-	
 
 	// 当回到MainActivity时，调用onSectionAttached
 	@Override
@@ -158,7 +157,7 @@ public class PlaceHolderFragment extends Fragment {
 		((MainActivity) activity).onSectionAttached(getArguments().getInt(
 				ARG_SECTION_NUMBER));
 	}
-	
+
 	/**
 	 * 初始化title2下面的tabline
 	 */
@@ -172,6 +171,7 @@ public class PlaceHolderFragment extends Fragment {
 		lp.width = screenWidth1_3;
 		mTabLine.setLayoutParams(lp);
 	}
+
 	private void setClickListener() {
 		mNodeTextView.setOnClickListener(new OnClickListener() {
 
@@ -197,14 +197,14 @@ public class PlaceHolderFragment extends Fragment {
 				mViewPager.setCurrentItem(2);
 			}
 		});
-		
+
 	}
-	
-	//重置title2的文本颜色为黑色
+
+	// 重置title2的文本颜色为黑色
 	protected void resetTextColor() {
-			mPackageTextView.setTextColor(Color.BLACK);
-			mNodeTextView.setTextColor(Color.BLACK);
-			mCenterTextView.setTextColor(Color.BLACK);
-		}
+		mPackageTextView.setTextColor(Color.BLACK);
+		mNodeTextView.setTextColor(Color.BLACK);
+		mCenterTextView.setTextColor(Color.BLACK);
+	}
 
 }

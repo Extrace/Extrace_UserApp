@@ -1,6 +1,8 @@
-package com.track.app.user;
+package com.track.app.user.fragment;
 
 import com.track.app.user.R;
+import com.track.app.user.R.id;
+import com.track.app.user.R.layout;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -53,8 +55,10 @@ public class NavigationDrawerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_drawer, container, false);
+		
 		// 获取抽屉的listview
-		mDrawerListView = (ListView) v.findViewById(R.id.drawer_list);
+		mDrawerListView = (ListView) v.findViewById(R.id.id_drawer_list);
+		
 		// 定义每个选项的点击监听器
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -74,7 +78,9 @@ public class NavigationDrawerFragment extends Fragment {
 						getString(R.string.title_section1),
 						getString(R.string.title_section2),
 						getString(R.string.title_section3), }));
-
+		MenuAdapter menuAdapter =  new MenuAdapter(getActivity());
+		mDrawerListView.setAdapter(menuAdapter);
+		
 		// 为listview设置当前的item为选中状态，默认为0，即第一个item
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return v;
@@ -91,9 +97,9 @@ public class NavigationDrawerFragment extends Fragment {
 		if (mDrawerListView != null) {
 			mDrawerListView.setItemChecked(position, true);
 		}
-		 if (mCallbacks != null) {
-		 mCallbacks.onNavigationDrawerItemSelected(position);
-		 }
+		if (mCallbacks != null) {
+			mCallbacks.onNavigationDrawerItemSelected(position);
+		}
 	}
 
 	/**

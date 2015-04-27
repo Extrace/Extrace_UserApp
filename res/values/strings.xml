@@ -2,12 +2,12 @@
 <resources>
 
     <string name="app_name">物流管家</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">首页</string>
+    <string name="title_section2">揽收</string>
+    <string name="title_section3">分拣</string>
+    <string name="title_section4">配送</string>
+    <string name="about">关于</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">关于</string>
-    <string name="action_settings">设置</string>
 
 </resources>

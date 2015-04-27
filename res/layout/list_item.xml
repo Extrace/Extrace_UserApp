@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <!-- 左侧导航每一行布局 -->
+
+    <ImageView
+        android:id="@+id/id_DrawerImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/id_DrawerText"
+        android:layout_width="80dp"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+        android:gravity="left|center_vertical" 
+        android:textSize="20sp"/>
+
+</LinearLayout>

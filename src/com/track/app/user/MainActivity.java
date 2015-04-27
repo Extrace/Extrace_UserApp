@@ -1,6 +1,11 @@
 package com.track.app.user;
 
 import com.track.app.user.R;
+import com.track.app.user.fragment.MyCenterTabFragment;
+import com.track.app.user.fragment.NavigationDrawerFragment;
+import com.track.app.user.fragment.PlaceHolderFragment;
+import com.track.app.user.fragment.TransNodeTabFragment;
+import com.track.app.user.fragment.TransPackageTabFragment;
 import com.zxing.activity.CaptureActivity;
 
 import android.support.v4.app.FragmentManager;
@@ -125,6 +130,7 @@ public class MainActivity extends ActionBarActivity implements
 		case 1:
 			mFragmentTransaction.replace(R.id.container, mTransNodeTabFragment)
 					.commit();
+			onSectionAttached(position+1);
 			// 关闭抽屉
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -135,6 +141,7 @@ public class MainActivity extends ActionBarActivity implements
 		case 2:
 			mFragmentTransaction.replace(R.id.container, mCenterTabFragment)
 					.commit();
+			onSectionAttached(position+1);
 			// 关闭抽屉
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
