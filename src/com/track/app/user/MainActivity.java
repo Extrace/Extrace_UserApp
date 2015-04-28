@@ -1,19 +1,12 @@
 package com.track.app.user;
 
-import com.track.app.user.R;
-import com.track.app.user.fragment.MyCenterTabFragment;
-import com.track.app.user.fragment.NavigationDrawerFragment;
-import com.track.app.user.fragment.PlaceHolderFragment;
-import com.track.app.user.fragment.TransNodeTabFragment;
-import com.track.app.user.fragment.TransPackageTabFragment;
-import com.zxing.activity.CaptureActivity;
-
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,7 +15,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.v4.widget.DrawerLayout;
+
+import com.track.app.user.fragment.MyCenterTabFragment;
+import com.track.app.user.fragment.NavigationDrawerFragment;
+import com.track.app.user.fragment.PlaceHolderFragment;
+import com.track.app.user.fragment.TransNodeTabFragment;
+import com.track.app.user.fragment.TransPackageTabFragment;
+import com.zxing.activity.CaptureActivity;
 
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -46,6 +45,7 @@ public class MainActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_main);
 		mNavigationDrawerFragment = new NavigationDrawerFragment();
 		mActionBar = new ActionBarHelper();
+
 		mActionBar.init();
 
 		// getSupportFragmentManager().beginTransaction()
@@ -130,7 +130,7 @@ public class MainActivity extends ActionBarActivity implements
 		case 1:
 			mFragmentTransaction.replace(R.id.container, mTransNodeTabFragment)
 					.commit();
-			onSectionAttached(position+1);
+			onSectionAttached(position + 1);
 			// 关闭抽屉
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -141,7 +141,7 @@ public class MainActivity extends ActionBarActivity implements
 		case 2:
 			mFragmentTransaction.replace(R.id.container, mCenterTabFragment)
 					.commit();
-			onSectionAttached(position+1);
+			onSectionAttached(position + 1);
 			// 关闭抽屉
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -299,6 +299,7 @@ public class MainActivity extends ActionBarActivity implements
 		public void setTitle(CharSequence title) {
 			mTitle = title;
 		}
+
 	}
 
 }

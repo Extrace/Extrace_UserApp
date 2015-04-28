@@ -2,10 +2,12 @@
 
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-	    <item name="colorPrimary">@color/material_deep_teal_200</item>
+	    <!-- 自定义actionBar颜色 -->
+	    <item name="colorPrimary">@color/myActionBarColor</item>
+	    
 	    <item name="colorPrimaryDark">@color/material_deep_teal_500</item>
 	    <item name="colorAccent">@color/material_blue_grey_800</item>
-	    
+	
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">

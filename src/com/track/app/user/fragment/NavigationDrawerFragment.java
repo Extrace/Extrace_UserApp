@@ -1,21 +1,16 @@
 package com.track.app.user.fragment;
 
-import com.track.app.user.R;
-import com.track.app.user.R.id;
-import com.track.app.user.R.layout;
-
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.track.app.user.R;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -28,6 +23,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private int mCurrentSelectedPosition = 0;
 
 	public NavigationDrawerFragment() {
+
 	}
 
 	@Override
@@ -55,10 +51,10 @@ public class NavigationDrawerFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_drawer, container, false);
-		
+
 		// 获取抽屉的listview
 		mDrawerListView = (ListView) v.findViewById(R.id.id_drawer_list);
-		
+
 		// 定义每个选项的点击监听器
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -71,16 +67,17 @@ public class NavigationDrawerFragment extends Fragment {
 
 		// 为listview设置adapter，这个ArrayAdapter的构造器参数应该是固定的
 		// 最后一个参数是一个String数组，并获取了每个title_section的内容
-		mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-				.getThemedContext(),
-				android.R.layout.simple_list_item_activated_1,
-				android.R.id.text1, new String[] {
-						getString(R.string.title_section1),
-						getString(R.string.title_section2),
-						getString(R.string.title_section3), }));
-		MenuAdapter menuAdapter =  new MenuAdapter(getActivity());
+		/*
+		 * mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
+		 * .getThemedContext(), android.R.layout.simple_list_item_activated_1,
+		 * android.R.id.text1, new String[] {
+		 * getString(R.string.title_section1),
+		 * getString(R.string.title_section2),
+		 * getString(R.string.title_section3), }));
+		 */
+		MenuAdapter menuAdapter = new MenuAdapter(getActivity());
 		mDrawerListView.setAdapter(menuAdapter);
-		
+
 		// 为listview设置当前的item为选中状态，默认为0，即第一个item
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return v;
@@ -132,9 +129,10 @@ public class NavigationDrawerFragment extends Fragment {
 		outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
 	}
 
-	private ActionBar getActionBar() {
-		return ((ActionBarActivity) getActivity()).getSupportActionBar();
-	}
+	/*
+	 * private ActionBar getActionBar() { return ((ActionBarActivity)
+	 * getActivity()).getSupportActionBar(); }
+	 */
 
 	// 这是一个回调接口
 	public static interface NavigationDrawerCallbacks {
