@@ -1,4 +1,4 @@
-package com.track.app.user.fragment;
+package com.track.ui.main;
 
 import com.track.app.user.R;
 import com.track.app.user.R.layout;

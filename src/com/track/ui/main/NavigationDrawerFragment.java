@@ -1,16 +1,22 @@
-package com.track.app.user.fragment;
+package com.track.ui.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.track.app.user.R;
+import com.track.ui.adapter.MenuAdapter;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -20,10 +26,23 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private ListView mDrawerListView;
 
+	private TextView mTextView;
+
+	private ImageView mImageView;
+
+	private View rootview;
+
 	private int mCurrentSelectedPosition = 0;
 
 	public NavigationDrawerFragment() {
 
+	}
+
+	public static NavigationDrawerFragment newInstance() {
+		NavigationDrawerFragment fragment = new NavigationDrawerFragment();
+		Bundle args = new Bundle();
+		fragment.setArguments(args);
+		return fragment;
 	}
 
 	@Override
@@ -39,23 +58,13 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		setHasOptionsMenu(true);
-	}
-
-	/**
-	 * 抽屉也是fragment，这里定义了它的相关属性和格式 这里为抽屉定义了一个listview
-	 */
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_drawer, container, false);
-
-		// 获取抽屉的listview
-		mDrawerListView = (ListView) v.findViewById(R.id.id_drawer_list);
-
-		// 定义每个选项的点击监听器
+		rootview = inflater.inflate(R.layout.fragment_drawer, container, false);
+		mDrawerListView = (ListView) rootview.findViewById(R.id.id_drawer_list);
+		mImageView = (ImageView) rootview.findViewById(R.id.id_iv_account);
+		mTextView = (TextView) rootview.findViewById(R.id.id_bt_login);
+		setClickLisener();
 		mDrawerListView
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					@Override
@@ -64,23 +73,38 @@ public class NavigationDrawerFragment extends Fragment {
 						selectItem(position);
 					}
 				});
-
-		// 为listview设置adapter，这个ArrayAdapter的构造器参数应该是固定的
-		// 最后一个参数是一个String数组，并获取了每个title_section的内容
-		/*
-		 * mDrawerListView.setAdapter(new ArrayAdapter<String>(getActionBar()
-		 * .getThemedContext(), android.R.layout.simple_list_item_activated_1,
-		 * android.R.id.text1, new String[] {
-		 * getString(R.string.title_section1),
-		 * getString(R.string.title_section2),
-		 * getString(R.string.title_section3), }));
-		 */
 		MenuAdapter menuAdapter = new MenuAdapter(getActivity());
 		mDrawerListView.setAdapter(menuAdapter);
-
 		// 为listview设置当前的item为选中状态，默认为0，即第一个item
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
-		return v;
+		return rootview;
+	}
+
+	private void setClickLisener() {
+		// TODO Auto-generated method stub
+		mImageView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				test();
+			}
+		});
+
+		mTextView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				test();
+			}
+		});
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		setHasOptionsMenu(true);
 	}
 
 	/**
@@ -97,6 +121,13 @@ public class NavigationDrawerFragment extends Fragment {
 		if (mCallbacks != null) {
 			mCallbacks.onNavigationDrawerItemSelected(position);
 		}
+	}
+
+	private void test() {
+		Log.d("Test", "onClickListener ist gestartet");
+		Toast.makeText(getActivity().getApplicationContext(), "Test",
+				Toast.LENGTH_LONG).show();
+		toLoginActivity();
 	}
 
 	/**
@@ -137,6 +168,11 @@ public class NavigationDrawerFragment extends Fragment {
 	// 这是一个回调接口
 	public static interface NavigationDrawerCallbacks {
 		void onNavigationDrawerItemSelected(int position);
+
 	}
 
+	public void toLoginActivity() {
+		Intent intent = new Intent(getActivity(), LoginActivity.class);
+		startActivity(intent);
+	}
 }

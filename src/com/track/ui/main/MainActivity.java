@@ -1,4 +1,4 @@
-package com.track.app.user;
+package com.track.ui.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -16,11 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.track.app.user.fragment.MyCenterTabFragment;
-import com.track.app.user.fragment.NavigationDrawerFragment;
-import com.track.app.user.fragment.PlaceHolderFragment;
-import com.track.app.user.fragment.TransNodeTabFragment;
-import com.track.app.user.fragment.TransPackageTabFragment;
+import com.track.app.user.R;
 import com.zxing.activity.CaptureActivity;
 
 public class MainActivity extends ActionBarActivity implements
@@ -32,9 +28,6 @@ public class MainActivity extends ActionBarActivity implements
 	private CharSequence mTitle;
 	private ActionBarHelper mActionBar;
 
-	/**
-	 * 
-	 */
 	private TransNodeTabFragment mTransNodeTabFragment;
 	private MyCenterTabFragment mCenterTabFragment;
 	private TransPackageTabFragment mTransPackageTabFragment;
@@ -45,17 +38,10 @@ public class MainActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_main);
 		mNavigationDrawerFragment = new NavigationDrawerFragment();
 		mActionBar = new ActionBarHelper();
-
 		mActionBar.init();
-
-		// getSupportFragmentManager().beginTransaction()
-		// .add(R.id.navigation_drawer, mNavigationDrawerFragment)
-		// .commit();
-
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.navigation_drawer, mNavigationDrawerFragment)
 				.commit();
-
 		setUpDrawer();
 	}
 
@@ -92,14 +78,6 @@ public class MainActivity extends ActionBarActivity implements
 			}
 		});
 	}
-
-	/**
-	 * 判断抽屉是否打开
-	 */
-	// public boolean isDrawerOpen() {
-	// return mDrawerLayout != null
-	// && mDrawerLayout.isDrawerOpen(Gravity.LEFT);
-	// }
 
 	/**
 	 * 点击抽屉中的不同的item时，分别响应不同的动作
@@ -161,13 +139,25 @@ public class MainActivity extends ActionBarActivity implements
 	public void onSectionAttached(int number) {
 		switch (number) {
 		case 1:
-			mTitle = getString(R.string.title_section1);
+			mTitle = getString(R.string.menu_index);
 			break;
 		case 2:
-			mTitle = getString(R.string.title_section2);
+			mTitle = getString(R.string.menu_receive);
 			break;
 		case 3:
-			mTitle = getString(R.string.title_section3);
+			mTitle = getString(R.string.menu_deliver);
+			break;
+		case 4:
+			mTitle = getString(R.string.menu_unpack);
+			break;
+		case 5:
+			mTitle = getString(R.string.menu_pack);
+			break;
+		case 6:
+			mTitle = getString(R.string.menu_customermanage);
+			break;
+		case 7:
+			mTitle = getString(R.string.menu_about);
 			break;
 		}
 	}
@@ -216,7 +206,6 @@ public class MainActivity extends ActionBarActivity implements
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK) {
 			String result = data.getExtras().getString("result");
@@ -283,7 +272,7 @@ public class MainActivity extends ActionBarActivity implements
 		public void init() {
 			mActionBar.setDisplayHomeAsUpEnabled(true);
 			mActionBar.setDisplayShowHomeEnabled(false);
-			mTitle = getString(R.string.title_section1);
+			mTitle = getString(R.string.menu_index);
 			mActionBar.setTitle(mTitle);
 			mDrawerTitle = getTitle();
 		}

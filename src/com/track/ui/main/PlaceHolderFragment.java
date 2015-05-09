@@ -1,10 +1,10 @@
-package com.track.app.user.fragment;
+package com.track.ui.main;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.track.app.user.MainActivity;
 import com.track.app.user.R;
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;

@@ -1,6 +1,5 @@
-package com.track.app.user.fragment;
+package com.track.ui.adapter;
 
-import com.track.app.user.R;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -9,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.track.app.user.R;
 
 public class MenuAdapter extends BaseAdapter {
 
@@ -28,23 +29,20 @@ public class MenuAdapter extends BaseAdapter {
 
 	}
 
-	private Integer[] images = { R.drawable.menu_add_icon,
-			R.drawable.menu_add_icon, R.drawable.menu_add_icon,
-			R.drawable.menu_add_icon, R.drawable.menu_add_icon,
+	private Integer[] images = { R.drawable.menu_index,
+			R.drawable.menu_deliver, R.drawable.menu_deliver,
+			R.drawable.menu_pack, R.drawable.menu_pack,
+			R.drawable.menu_customer2, R.drawable.menu_about
 
 	};
 
-	private Integer[] texts = { R.string.title_section1,
-			R.string.title_section2, R.string.title_section3,
-			R.string.title_section4, R.string.about, };
+	private Integer[] texts = { R.string.menu_index, R.string.menu_receive,
+			R.string.menu_deliver, R.string.menu_unpack, R.string.menu_pack,
+			R.string.menu_customermanage, R.string.menu_about };
 
 	@Override
 	public int getCount() {
-
-		// TODO Auto-generated method stub
-
 		return images.length;
-
 	}
 
 	@Override

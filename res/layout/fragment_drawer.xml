@@ -1,44 +1,42 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cccc"
-    tools:context="com.track.app.user.fragment.NavigationDrawerFragment" >
-	
-     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:background="#f0f0f0">
+    android:orientation="vertical"
+    android:clickable="false"
+    android:background="#fff" >
 
-            <ImageView
-                android:id="@+id/zero"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/face_default" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#0099cc"
+        android:duplicateParentState="true"
+        android:orientation="horizontal" >
 
-            <TextView
-                android:id="@+id/zero1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_toRightOf="@id/zero"
-                android:text="游客"
-                android:textColor="#000000"
-                android:textSize="35sp" />
-        </RelativeLayout>
-    
-    
-	<ListView android:id="@+id/id_drawer_list"
-	    	  android:paddingTop="100dp"
-			  android:layout_width="match_parent"
-	          android:layout_height="match_parent"
-	          android:choiceMode="singleChoice"
-	          android:divider="@android:color/transparent"
-	          android:dividerHeight="0dp" 
-	          />
+        <ImageView
+            android:id="@+id/id_iv_account"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_account" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/id_bt_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:text="请登录"
+            android:textColor="#fff"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/id_drawer_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:paddingTop="0dp" />
+
+</LinearLayout>

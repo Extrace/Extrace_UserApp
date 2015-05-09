@@ -2,11 +2,15 @@
 <resources>
 
     <string name="app_name">物流管家</string>
-    <string name="title_section1">首页</string>
-    <string name="title_section2">揽收</string>
-    <string name="title_section3">分拣</string>
-    <string name="title_section4">配送</string>
-    <string name="about">关于</string>
+    <string name="menu_index">首页</string>
+    <string name="menu_receive">快件揽收</string>
+    <string name="menu_deliver">快件派送</string>
+    <string name="menu_unpack">包裹拆包</string>
+    <string name="menu_pack">包裹打包</string>
+    <string name="menu_customermanage">客户管理</string>
+    <string name="menu_about">关于</string>
+    <string name="title_login">登录物流管家</string>
+    <string name="title_register">注册物流管家</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
