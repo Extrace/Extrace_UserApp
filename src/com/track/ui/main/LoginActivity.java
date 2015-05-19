@@ -3,10 +3,12 @@ package com.track.ui.main;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -25,13 +27,16 @@ import com.track.util.Utility;
  * 登陆活动
  * 
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends FragmentActivity {
 	// 进度对话框模块
 	private ProgressDialog prgDialog;
 	private TextView errorMsg;
 	private EditText unameET;
 	private EditText pwdET;
 	private ImageView mImageViewBack;
+	private static JSONObject obj;
+	private FragmentManager manager;
+	private FragmentTransaction transaction;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,6 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.login);
 		mImageViewBack = (ImageView) findViewById(R.id.id_iv_back);
 		mImageViewBack.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -65,15 +69,15 @@ public class LoginActivity extends Activity {
 	 * @param view
 	 */
 	public void loginUser(View view) {
-		String username = unameET.getText().toString();
-		String password = pwdET.getText().toString();
+		String uname = unameET.getText().toString();
+		String pwd = pwdET.getText().toString();
 		// 初始化 Http Request Param Object
 		RequestParams params = new RequestParams();
-		if (Utility.isNotNull(username) && Utility.isNotNull(password)) {
+		if (Utility.isNotNull(uname) && Utility.isNotNull(pwd)) {
 			// 将username放入params中
-			params.put("username", username);
+			params.put("uname", uname);
 			// 将pwd放入params中
-			params.put("password", password);
+			params.put("pwd", pwd);
 			invokeWS(params);
 		}
 		// 当输入框留白
@@ -94,8 +98,9 @@ public class LoginActivity extends Activity {
 		// 创建 AsyncHttpClient object
 		AsyncHttpClient client = new AsyncHttpClient();
 
-		client.get("http://192.168.191.1:8080/tracking/users/dologin", params,
-				new AsyncHttpResponseHandler() {
+		client.get(
+				"http://192.168.191.11:8080/TestCxfHibernate/rest/Misc/doLogin",
+				params, new AsyncHttpResponseHandler() {
 					// When the response returned by REST has Http response code
 					// '200'
 
@@ -105,13 +110,12 @@ public class LoginActivity extends Activity {
 						prgDialog.hide();
 						try {
 							// 将服务端返回的字符串转换成JSON Object
-							JSONObject obj = new JSONObject(response);
+							obj = new JSONObject(response);
 							if (obj.getBoolean("status")) {
 								Toast.makeText(getApplicationContext(),
-										"You are successfully logged in!",
-										Toast.LENGTH_LONG).show();
+										"登录成功!", Toast.LENGTH_LONG).show();
 								// 进入HomeActivity
-								navigatetoHomeActivity();
+								navigatetoMainActivity();
 							} else {
 								errorMsg.setText(obj.getString("error_msg"));
 								Toast.makeText(getApplicationContext(),
@@ -136,14 +140,12 @@ public class LoginActivity extends Activity {
 						prgDialog.hide();
 						// When Http response code is '404'
 						if (statusCode == 404) {
-							Toast.makeText(getApplicationContext(),
-									"Requested resource not found",
+							Toast.makeText(getApplicationContext(), "资源未找到",
 									Toast.LENGTH_LONG).show();
 						}
 						// When Http response code is '500'
 						else if (statusCode == 500) {
-							Toast.makeText(getApplicationContext(),
-									"Something went wrong at server end",
+							Toast.makeText(getApplicationContext(), "服务器发生异常",
 									Toast.LENGTH_LONG).show();
 						}
 						// When Http response code other than 404, 500
@@ -155,16 +157,25 @@ public class LoginActivity extends Activity {
 						}
 					}
 				});
+
 	}
 
 	/**
-	 * 从LoginActivity跳转HomeActivity
+	 * 从LoginActivity跳转MainActivity
+	 * 
+	 * @throws JSONException
 	 */
-	public void navigatetoHomeActivity() {
-		Intent homeIntent = new Intent(getApplicationContext(),
+	public void navigatetoMainActivity() throws JSONException {
+		Intent mainIntent = new Intent(getApplicationContext(),
 				MainActivity.class);
-		homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(homeIntent);
+		mainIntent.putExtra("uname", obj.getString("username"));
+		manager = getSupportFragmentManager();
+		transaction = manager.beginTransaction();
+		NavigationDrawerFragment mNavigationDrawerFragment = new NavigationDrawerFragment();
+		Bundle bundle = new Bundle();
+		bundle.putString("uname", obj.getString("username"));
+		mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(mainIntent);
 	}
 
 	/**

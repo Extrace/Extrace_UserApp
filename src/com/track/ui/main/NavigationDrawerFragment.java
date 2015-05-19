@@ -32,6 +32,8 @@ public class NavigationDrawerFragment extends Fragment {
 
 	private View rootview;
 
+	private TextView mUserText;
+
 	private int mCurrentSelectedPosition = 0;
 
 	public NavigationDrawerFragment() {
