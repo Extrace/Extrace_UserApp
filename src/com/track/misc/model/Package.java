@@ -17,7 +17,7 @@ import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 
-public class Package  implements Serializable {
+public class Package implements Serializable {
 	/**
 	 * 
 	 */
@@ -25,93 +25,95 @@ public class Package  implements Serializable {
 
 	public Package() {
 	}
-	
-	@Expose private String ID;
-	@Expose private String sourceNode;
-	@Expose private String targetNode;
-	@Expose private java.sql.Timestamp createTime;
-	@Expose private int status;
-	
-	public void setID(String value) {
-		this.ID = value;
-	}
-	
-	public String getID() {
-		return ID;
-	}
-	
+
+	@Expose
+	private String id;
+	@Expose
+	private String sourcenode;
+	@Expose
+	private String targetnode;
+	@Expose
+	private java.sql.Timestamp createtime;
+	@Expose
+	private int status;
+
 	public String getORMID() {
-		return getID();
+		return getId();
 	}
-	
-	public void setSourceNode(String value) {
-		this.sourceNode = value;
+
+	public String getId() {
+		return id;
 	}
-	
-	public String getSourceNode() {
-		return sourceNode;
+
+	public void setId(String id) {
+		this.id = id;
 	}
-	
-	public void setTargetNode(String value) {
-		this.targetNode = value;
+
+	public String getSourcenode() {
+		return sourcenode;
 	}
-	
-	public String getTargetNode() {
-		return targetNode;
+
+	public void setSourcenode(String sourcenode) {
+		this.sourcenode = sourcenode;
 	}
-	
-	public void setCreateTime(java.sql.Timestamp value) {
-		this.createTime = value;
+
+	public String getTargetnode() {
+		return targetnode;
 	}
-	
-	public java.sql.Timestamp getCreateTime() {
-		return createTime;
+
+	public void setTargetnode(String targetnode) {
+		this.targetnode = targetnode;
 	}
-	
-	public void setStatus(int value) {
-		this.status = value;
+
+	public java.sql.Timestamp getCreatetime() {
+		return createtime;
 	}
-	
+
+	public void setCreatetime(java.sql.Timestamp createtime) {
+		this.createtime = createtime;
+	}
+
 	public int getStatus() {
 		return status;
 	}
-		
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	@Override
 	public String toString() {
 		return toString(false);
 	}
-	
+
 	public String toString(boolean idOnly) {
 		if (idOnly) {
-			return String.valueOf(getID());
-		}
-		else {
+			return String.valueOf(getId());
+		} else {
 			StringBuffer sb = new StringBuffer();
 			sb.append("TransPackage[ ");
-			sb.append("ID=").append(getID()).append(" ");
-			sb.append("SourceNode=").append(getSourceNode()).append(" ");
-			sb.append("TargetNode=").append(getTargetNode()).append(" ");
-			sb.append("CreateTime=").append(getCreateTime()).append(" ");
+			sb.append("ID=").append(getId()).append(" ");
+			sb.append("SourceNode=").append(getSourcenode()).append(" ");
+			sb.append("TargetNode=").append(getTargetnode()).append(" ");
+			sb.append("CreateTime=").append(getCreatetime()).append(" ");
 			sb.append("Status=").append(getStatus()).append(" ");
 			sb.append("]");
 			return sb.toString();
 		}
 	}
-	
+
 	private boolean _saved = false;
-	
+
 	public void onSave() {
-		_saved=true;
+		_saved = true;
 	}
-	
-	
+
 	public void onLoad() {
-		_saved=true;
+		_saved = true;
 	}
-	
-	
+
 	public boolean isSaved() {
 		return _saved;
 	}
-	
-	
+
 }

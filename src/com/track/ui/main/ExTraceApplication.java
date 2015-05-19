@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.track.misc.model.User;
 
 public class ExTraceApplication extends Application {
-	private static final String PREFS_NAME = "ExTrace.cfg";
+	private static final String PREFS_NAME = "ExTrace.cfg2";
 	String mServerUrl;
 	String mMiscService, mDomainService;
 	User user;
@@ -41,12 +41,12 @@ public class ExTraceApplication extends Application {
 
 		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
 		mServerUrl = settings.getString("ServerUrl", "");
-		mMiscService = settings.getString("MiscService", "/REST/Misc/");
-		mDomainService = settings.getString("DomainService", "/REST/Domain/");
+		mMiscService = settings.getString("MiscService", "/rest/Misc/");
+		mDomainService = settings.getString("DomainService", "/rest/Domain/");
 		if (mServerUrl == null || mServerUrl.length() == 0) {
-			mServerUrl = "http://192.168.7.100:8080/TestCxfHibernate";
-			mMiscService = "/REST/Misc/";
-			mDomainService = "/REST/Domain/";
+			mServerUrl = "http://169.254.250.120:8080/TestCxfHibernate";
+			mMiscService = "/rest/Misc/";
+			mDomainService = "/rest/Domain/";
 			SharedPreferences.Editor editor = settings.edit();
 			editor.putString("ServerUrl", mServerUrl);
 			editor.putString("MiscService", mMiscService);
@@ -54,11 +54,11 @@ public class ExTraceApplication extends Application {
 			editor.commit();
 		}
 		// 临时造一个用户
-		// userInfo = new User();
-		// userInfo.setID(12);
-		// userInfo.setReceivePackageID("1111112222");
-		// userInfo.setTransPackageID("1111113333");
-		// userInfo.setDelivePackageID("1111115555");
+		user = new User();
+		user.setId(12);
+		user.setReceivepid("1111112222");
+		user.setTranspid("1111113333");
+		user.setDeliverpid("1111115555");
 	}
 
 	@Override

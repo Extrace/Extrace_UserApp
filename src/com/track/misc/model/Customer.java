@@ -12,119 +12,127 @@ public class Customer implements Serializable {
 
 	public Customer() {
 	}
-	
-	@Expose private int ID;
-	@Expose private String name;
-	@Expose private String telCode;
-	@Expose private String department;
-	@Expose private String regionCode;
-	@Expose private String address;
-	@Expose private int postCode;
 
-	public void setID(int value) {
-		this.ID = value;
-	}
-	
-	public int getID() {
-		return ID;
-	}
-	
+	@Expose
+	private int id;
+	@Expose
+	private String cname;
+	@Expose
+	private String telcode;
+	@Expose
+	private String department;
+	@Expose
+	private String regioncode;
+	@Expose
+	private String address;
+	@Expose
+	private int poscode;
+
 	public int getORMID() {
-		return getID();
+		return getId();
 	}
-	
-	public void setName(String value) {
-		this.name = value;
+
+	public int getId() {
+		return id;
 	}
-	
-	public String getName() {
-		return name;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	public void setTelCode(String value) {
-		this.telCode = value;
+
+	public String getCname() {
+		return cname;
 	}
-	
-	public String getTelCode() {
-		return telCode;
+
+	public void setCname(String cname) {
+		this.cname = cname;
 	}
-	
-	public void setDepartment(String value) {
-		this.department = value;
+
+	public String getTelcode() {
+		return telcode;
 	}
-	
+
+	public void setTelcode(String telcode) {
+		this.telcode = telcode;
+	}
+
 	public String getDepartment() {
 		return department;
 	}
-	
-	public void setRegionCode(String value) {
-		this.regionCode = value;
+
+	public void setDepartment(String department) {
+		this.department = department;
 	}
-	
-	public String getRegionCode() {
-		return regionCode;
+
+	public String getRegioncode() {
+		return regioncode;
 	}
-	
-	public void setAddress(String value) {
-		this.address = value;
+
+	public void setRegioncode(String regioncode) {
+		this.regioncode = regioncode;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
-	
-	public void setPostCode(int value) {
-		this.postCode = value;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	
-	public int getPostCode() {
-		return postCode;
+
+	public int getPoscode() {
+		return poscode;
 	}
-	
+
+	public void setPoscode(int poscode) {
+		this.poscode = poscode;
+	}
+
+	@Override
 	public String toString() {
 		return toString(false);
 	}
-	
+
 	public String toString(boolean idOnly) {
 		if (idOnly) {
-			return String.valueOf(getID());
-		}
-		else {
+			return String.valueOf(getId());
+		} else {
 			StringBuffer sb = new StringBuffer();
 			sb.append("CustomerInfo[ ");
-			sb.append("ID=").append(getID()).append(" ");
-			sb.append("Name=").append(getName()).append(" ");
-			sb.append("TelCode=").append(getTelCode()).append(" ");
+			sb.append("ID=").append(getId()).append(" ");
+			sb.append("Name=").append(getCname()).append(" ");
+			sb.append("TelCode=").append(getTelcode()).append(" ");
 			sb.append("Department=").append(getDepartment()).append(" ");
-			sb.append("RegionCode=").append(getRegionCode()).append(" ");
+			sb.append("RegionCode=").append(getRegioncode()).append(" ");
 			sb.append("RegionString=").append(getRegionString()).append(" ");
 			sb.append("Address=").append(getAddress()).append(" ");
-			sb.append("PostCode=").append(getPostCode()).append(" ");
+			sb.append("PostCode=").append(getPoscode()).append(" ");
 			sb.append("]");
 			return sb.toString();
 		}
 	}
-	
+
 	private String regionString;
 
 	public String getRegionString() {
 		return regionString;
 	}
+
 	public void setRegionString(String value) {
 		this.regionString = value;
 	}
-		
+
 	private boolean _saved = false;
-	
+
 	public void onSave() {
-		_saved=true;
+		_saved = true;
 	}
-	
+
 	public void onLoad() {
-		_saved=true;
+		_saved = true;
 	}
-	
+
 	public boolean isSaved() {
 		return _saved;
-	}	
+	}
 }

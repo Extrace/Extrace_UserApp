@@ -36,6 +36,7 @@ public class LoginActivity extends FragmentActivity {
 	private ImageView mImageViewBack;
 	private static JSONObject obj;
 	private FragmentManager manager;
+	@SuppressWarnings("unused")
 	private FragmentTransaction transaction;
 
 	@Override
@@ -99,11 +100,10 @@ public class LoginActivity extends FragmentActivity {
 		AsyncHttpClient client = new AsyncHttpClient();
 
 		client.get(
-				"http://192.168.191.11:8080/TestCxfHibernate/rest/Misc/doLogin",
+				"http://192.168.10.144:8080/TestCxfHibernate/rest/Misc/doLogin",
 				params, new AsyncHttpResponseHandler() {
 					// When the response returned by REST has Http response code
 					// '200'
-
 					@Override
 					public void onSuccess(String response) {
 						// 隐藏 Progress Dialog

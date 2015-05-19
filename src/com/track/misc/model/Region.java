@@ -10,80 +10,79 @@ public class Region implements Serializable {
 
 	public Region() {
 	}
-	
-	private String regionCode;
-	
-	private String prv;
-	
-	private String cty;
-	
-	private String twn;
-	
+
+	private String regioncode;
+
+	private String province;
+
+	private String city;
+
+	private String town;
+
 	private int stage;
-	
-	public void setRegionCode(String value) {
-		this.regionCode = value;
-	}
-	
-	public String getRegionCode() {
-		return regionCode;
-	}
-	
+
 	public String getORMID() {
-		return getRegionCode();
+		return getRegioncode();
 	}
-	
-	public void setPrv(String value) {
-		this.prv = value;
+
+	public String getRegioncode() {
+		return regioncode;
 	}
-	
-	public String getPrv() {
-		return prv;
+
+	public void setRegioncode(String regioncode) {
+		this.regioncode = regioncode;
 	}
-	
-	public void setCty(String value) {
-		this.cty = value;
+
+	public String getProvince() {
+		return province;
 	}
-	
-	public String getCty() {
-		return cty;
+
+	public void setProvince(String province) {
+		this.province = province;
 	}
-	
-	public void setTwn(String value) {
-		this.twn = value;
+
+	public String getCity() {
+		return city;
 	}
-	
-	public String getTwn() {
-		return twn;
+
+	public void setCity(String city) {
+		this.city = city;
 	}
-	
-	public void setStage(int value) {
-		this.stage = value;
+
+	public String getTown() {
+		return town;
 	}
-	
+
+	public void setTown(String town) {
+		this.town = town;
+	}
+
 	public int getStage() {
 		return stage;
 	}
-	
+
+	public void setStage(int stage) {
+		this.stage = stage;
+	}
+
+	@Override
 	public String toString() {
 		return toString(false);
 	}
-	
+
 	public String toString(boolean idOnly) {
 		if (idOnly) {
-			return String.valueOf(getRegionCode());
-		}
-		else {
+			return String.valueOf(getRegioncode());
+		} else {
 			StringBuffer sb = new StringBuffer();
 			sb.append("Region[ ");
-			sb.append("RegionCode=").append(getRegionCode()).append(" ");
-			sb.append("Prv=").append(getPrv()).append(" ");
-			sb.append("Cty=").append(getCty()).append(" ");
-			sb.append("Twn=").append(getTwn()).append(" ");
+			sb.append("RegionCode=").append(getRegioncode()).append(" ");
+			sb.append("Prv=").append(getProvince()).append(" ");
+			sb.append("Cty=").append(getCity()).append(" ");
+			sb.append("Twn=").append(getTown()).append(" ");
 			sb.append("Stage=").append(getStage()).append(" ");
 			sb.append("]");
 			return sb.toString();
 		}
 	}
-	
 }

@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <include layout="@layout/titleregister" />
+        <include layout="@layout/title_register" />
         <!-- View Title Label -->
 
         <LinearLayout

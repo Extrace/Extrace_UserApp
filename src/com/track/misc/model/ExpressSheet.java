@@ -14,177 +14,194 @@ public class ExpressSheet implements Serializable {
 	public ExpressSheet() {
 	}
 
-	@Expose private String ID;
-	@Expose private int type;
-	@Expose private Customer sender;	
-	@Expose private Customer recever;
-	
-	@Expose private Float weight;
-	
-	@Expose private Float tranFee;
-	@Expose private Float packageFee;
-	@Expose private Float insuFee;
-	@Expose private String accepter;
-	@Expose private String deliver;
-	@Expose private Date accepteTime;
-	@Expose private Date deliveTime;
-	@Expose private String acc1;
-	@Expose private String acc2;
-	@Expose private Integer status;
-	
-	public void setID(String value) {
-		this.ID = value;
-	}
-	
-	public String getID() {
-		return ID;
-	}
-	
+	@Expose
+	private String id;
+	@Expose
+	private int expresstype;
+	@Expose
+	private Customer sender;
+	@Expose
+	private Customer receiver;
+
+	@Expose
+	private Float weight;
+
+	@Expose
+	private Float transcost;
+	@Expose
+	private Float packagecost;
+	@Expose
+	private Float insurcost;
+	@Expose
+	private String accepter;
+	@Expose
+	private String deliver;
+	@Expose
+	private Date acceptetime;
+	@Expose
+	private Date delivetime;
+	@Expose
+	private String acc1;
+	@Expose
+	private String acc2;
+	@Expose
+	private Integer status;
+
 	public String getORMID() {
-		return getID();
+		return getId();
 	}
-	
-	public void setType(int value) {
-		this.type = value;
+
+	public String getId() {
+		return id;
 	}
-	
-	public int getType() {
-		return type;
+
+	public void setId(String id) {
+		this.id = id;
 	}
-	
-	public void setWeight(Float value) {
-		this.weight = value;
+
+	public int getExpresstype() {
+		return expresstype;
 	}
-	
-	public Float getWeight() {
-		return weight;
+
+	public void setExpresstype(int expresstype) {
+		this.expresstype = expresstype;
 	}
-	
-	public void setTranFee(Float value) {
-		this.tranFee = value;
-	}
-	
-	public Float getTranFee() {
-		return tranFee;
-	}
-	
-	public void setPackageFee(Float value) {
-		this.packageFee = value;
-	}
-	
-	public Float getPackageFee() {
-		return packageFee;
-	}
-	
-	public void setInsuFee(Float value) {
-		this.insuFee = value;
-	}
-	
-	public Float getInsuFee() {
-		return insuFee;
-	}
-	
-	public void setAccepter(String value) {
-		this.accepter = value;
-	}
-	
-	public String getAccepter() {
-		return accepter;
-	}
-	
-	public void setDeliver(String value) {
-		this.deliver = value;
-	}
-	
-	public String getDeliver() {
-		return deliver;
-	}
-	
-	public void setAccepterTime(Date value) {
-		this.accepteTime = value;
-	}
-	
-	public Date getAccepterTime() {
-		return accepteTime;
-	}
-	
-	public void setDeleveTime(Date value) {
-		this.deliveTime = value;
-	}
-	
-	public Date getDeleveTime() {
-		return deliveTime;
-	}
-	
-	public void setAcc1(String value) {
-		this.acc1 = value;
-	}
-	
-	public String getAcc1() {
-		return acc1;
-	}
-	
-	public void setAcc2(String value) {
-		this.acc2 = value;
-	}
-	
-	public String getAcc2() {
-		return acc2;
-	}
-	
-	public void setStatus(Integer value) {
-		this.status = value;
-	}
-	
-	public Integer getStatus() {
-		return status;
-	}
-	
-	public void setSender(Customer value) {
-		this.sender = value;
-	}
-	
+
 	public Customer getSender() {
 		return sender;
 	}
-	
-	public void setRecever(Customer value) {
-		this.recever = value;
+
+	public void setSender(Customer sender) {
+		this.sender = sender;
 	}
-	
-	public Customer getRecever() {
-		return recever;
+
+	public Customer getReceiver() {
+		return receiver;
 	}
-	
+
+	public void setReceiver(Customer receiver) {
+		this.receiver = receiver;
+	}
+
+	public Float getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Float weight) {
+		this.weight = weight;
+	}
+
+	public Float getTranscost() {
+		return transcost;
+	}
+
+	public void setTranscost(Float transcost) {
+		this.transcost = transcost;
+	}
+
+	public Float getPackagecost() {
+		return packagecost;
+	}
+
+	public void setPackagecost(Float packagecost) {
+		this.packagecost = packagecost;
+	}
+
+	public Float getInsurcost() {
+		return insurcost;
+	}
+
+	public void setInsurcost(Float insurcost) {
+		this.insurcost = insurcost;
+	}
+
+	public String getAccepter() {
+		return accepter;
+	}
+
+	public void setAccepter(String accepter) {
+		this.accepter = accepter;
+	}
+
+	public String getDeliver() {
+		return deliver;
+	}
+
+	public void setDeliver(String deliver) {
+		this.deliver = deliver;
+	}
+
+	public Date getAcceptetime() {
+		return acceptetime;
+	}
+
+	public void setAcceptetime(Date acceptetime) {
+		this.acceptetime = acceptetime;
+	}
+
+	public Date getDelivetime() {
+		return delivetime;
+	}
+
+	public void setDelivetime(Date delivetime) {
+		this.delivetime = delivetime;
+	}
+
+	public String getAcc1() {
+		return acc1;
+	}
+
+	public void setAcc1(String acc1) {
+		this.acc1 = acc1;
+	}
+
+	public String getAcc2() {
+		return acc2;
+	}
+
+	public void setAcc2(String acc2) {
+		this.acc2 = acc2;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+
+	@Override
 	public String toString() {
 		return toString(false);
 	}
-	
+
 	public String toString(boolean idOnly) {
 		if (idOnly) {
-			return String.valueOf(getID());
-		}
-		else {
+			return String.valueOf(getId());
+		} else {
 			StringBuffer sb = new StringBuffer();
 			sb.append("ExpreesSheet[ ");
-			sb.append("ID=").append(getID()).append(" ");
-			sb.append("Type=").append(getType()).append(" ");
+			sb.append("ID=").append(getId()).append(" ");
+			sb.append("Type=").append(getExpresstype()).append(" ");
 			if (getSender() != null)
-				sb.append("Sender.Persist_ID=").append(getSender().toString(true)).append(" ");
+				sb.append("Sender.Persist_ID=")
+						.append(getSender().toString(true)).append(" ");
 			else
 				sb.append("Sender=null ");
-			if (getRecever() != null)
-				sb.append("Recever.Persist_ID=").append(getRecever().toString(true)).append(" ");
+			if (getReceiver() != null)
+				sb.append("Recever.Persist_ID=")
+						.append(getReceiver().toString(true)).append(" ");
 			else
 				sb.append("Recever=null ");
 			sb.append("Weight=").append(getWeight()).append(" ");
-			sb.append("TranFee=").append(getTranFee()).append(" ");
-			sb.append("PacgageFee=").append(getPackageFee()).append(" ");
-			sb.append("InsuFee=").append(getInsuFee()).append(" ");
+			sb.append("TranFee=").append(getTranscost()).append(" ");
+			sb.append("PacgageFee=").append(getPackagecost()).append(" ");
+			sb.append("InsuFee=").append(getInsurcost()).append(" ");
 			sb.append("Accepter=").append(getAccepter()).append(" ");
 			sb.append("Deliver=").append(getDeliver()).append(" ");
-			sb.append("AccepterTime=").append(getAccepterTime()).append(" ");
-			sb.append("DeleveTime=").append(getDeleveTime()).append(" ");
+			sb.append("AccepterTime=").append(getAcceptetime()).append(" ");
+			sb.append("DeleveTime=").append(getDelivetime()).append(" ");
 			sb.append("Acc1=").append(getAcc1()).append(" ");
 			sb.append("Acc2=").append(getAcc2()).append(" ");
 			sb.append("Status=").append(getStatus()).append(" ");
@@ -192,24 +209,22 @@ public class ExpressSheet implements Serializable {
 			return sb.toString();
 		}
 	}
-	
+
 	private boolean _saved = false;
-	
+
 	public void onSave() {
-		_saved=true;
+		_saved = true;
 	}
-	
-	
+
 	public void onLoad() {
-		_saved=true;
+		_saved = true;
 	}
-	
-	
+
 	public boolean isSaved() {
 		return _saved;
 	}
-	
-	public static final class STATUS{
+
+	public static final class STATUS {
 		public static final int STATUS_CREATED = 0;
 		public static final int STATUS_RECEIVED = 1;
 		public static final int STATUS_PARTATION = 2;
@@ -217,5 +232,5 @@ public class ExpressSheet implements Serializable {
 		public static final int STATUS_DISPATCHED = 4;
 		public static final int STATUS_DELIVERIED = 5;
 	}
-	
+
 }

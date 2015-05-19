@@ -1,117 +1,117 @@
 package com.track.misc.model;
-public class User{
-	private int UID;
-	private String PWD;
-	private String name;
-	private int URull;
+
+public class User {
+	private int id;
+	private String password;
+	private String uname;
+	private int role;
 	private String telCode;
 	private int status;
-	private String dptID;
-	private String receivePackageID;
-	private String delivePackageID;
-	private String transPackageID;
+	private String dptid;
+	private String receivepid;
+	private String deliverpid;
+	private String transpid;
 
-	public int getUID() {
-		return UID;
+	public int getId() {
+		return id;
 	}
-	
-	public int setID(int id) {
-		return UID = id;
+
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	public void setPWD(String value) {
-		this.PWD = value;
+
+	public String getPassword() {
+		return password;
 	}
-	
-	public String getPWD() {
-		return PWD;
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	
-	public void setName(String value) {
-		this.name = value;
+
+	public String getUname() {
+		return uname;
 	}
-	
-	public String getName() {
-		return name;
+
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
-	
-	public void setURull(int value) {
-		this.URull = value;
+
+	public int getRole() {
+		return role;
 	}
-	
-	public int getURull() {
-		return URull;
+
+	public void setRole(int role) {
+		this.role = role;
 	}
-	
-	public void setTelCode(String value) {
-		this.telCode = value;
-	}
-	
+
 	public String getTelCode() {
 		return telCode;
 	}
-	
-	public void setStatus(int value) {
-		this.status = value;
+
+	public void setTelCode(String telCode) {
+		this.telCode = telCode;
 	}
-	
+
 	public int getStatus() {
 		return status;
 	}
-	
-	public void setDptID(String value) {
-		this.dptID = value;
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
-	
-	public String getDptID() {
-		return dptID;
+
+	public String getDptid() {
+		return dptid;
 	}
-	
-	public void setReceivePackageID(String value) {
-		this.receivePackageID = value;
+
+	public void setDptid(String dptid) {
+		this.dptid = dptid;
 	}
-	
-	public String getReceivePackageID() {
-		return receivePackageID;
+
+	public String getReceivepid() {
+		return receivepid;
 	}
-	
-	public void setDelivePackageID(String value) {
-		this.delivePackageID = value;
+
+	public void setReceivepid(String receivepid) {
+		this.receivepid = receivepid;
 	}
-	
-	public String getDelivePackageID() {
-		return delivePackageID;
+
+	public String getDeliverpid() {
+		return deliverpid;
 	}
-	
-	public void setTransPackageID(String value) {
-		this.transPackageID = value;
+
+	public void setDeliverpid(String deliverpid) {
+		this.deliverpid = deliverpid;
 	}
-	
-	public String geTransPackageID() {
-		return transPackageID;
+
+	public String getTranspid() {
+		return transpid;
 	}
-	
+
+	public void setTranspid(String transpid) {
+		this.transpid = transpid;
+	}
+
+	@Override
 	public String toString() {
 		return toString(false);
 	}
-	
+
 	public String toString(boolean idOnly) {
 		if (idOnly) {
-			return String.valueOf(getUID());
-		}
-		else {
+			return String.valueOf(getId());
+		} else {
 			StringBuffer sb = new StringBuffer();
 			sb.append("UserInfo[ ");
-			sb.append("UID=").append(getUID()).append(" ");
-			sb.append("PWD=").append(getPWD()).append(" ");
-			sb.append("Name=").append(getName()).append(" ");
-			sb.append("URull=").append(getURull()).append(" ");
+			sb.append("UID=").append(getId()).append(" ");
+			sb.append("PWD=").append(getPassword()).append(" ");
+			sb.append("Name=").append(getUname()).append(" ");
+			sb.append("URull=").append(getRole()).append(" ");
 			sb.append("TelCode=").append(getTelCode()).append(" ");
 			sb.append("Status=").append(getStatus()).append(" ");
-			sb.append("DptID=").append(getDptID()).append(" ");
+			sb.append("DptID=").append(getDptid()).append(" ");
 			sb.append("]");
 			return sb.toString();
 		}
 	}
-	
 }

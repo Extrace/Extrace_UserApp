@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
@@ -17,10 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.track.app.user.R;
+import com.track.ui.domain.ExpressListFragment.OnFragmentInteractionListener;
 import com.zxing.activity.CaptureActivity;
 
 public class MainActivity extends ActionBarActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks {
+		NavigationDrawerFragment.NavigationDrawerCallbacks,
+		ActionBar.TabListener, OnFragmentInteractionListener {
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
@@ -31,6 +34,8 @@ public class MainActivity extends ActionBarActivity implements
 	private TransNodeTabFragment mTransNodeTabFragment;
 	private MyCenterTabFragment mCenterTabFragment;
 	private TransPackageTabFragment mTransPackageTabFragment;
+	private ExpressEditFragment mExpressEditFragment;
+	private ExpressSendFragment mExpressSendFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +96,14 @@ public class MainActivity extends ActionBarActivity implements
 		PlaceHolderFragment mPlaceholderFragment = new PlaceHolderFragment();
 		mTransNodeTabFragment = new TransNodeTabFragment();
 		mCenterTabFragment = new MyCenterTabFragment();
+		mExpressEditFragment = new ExpressEditFragment();
+		mExpressSendFragment = new ExpressSendFragment();
+
 		FragmentTransaction mFragmentTransaction = fragmentManager
 				.beginTransaction();
 		// 然后替换当前的fragment，并将参数item位置参数+1传递给placeholderFragment
 		switch (position) {
+		// 首页
 		case 0:
 			mFragmentTransaction.replace(R.id.container,
 					mPlaceholderFragment.newInstance(position + 1)).commit();
@@ -105,22 +114,70 @@ public class MainActivity extends ActionBarActivity implements
 
 			}
 			break;
+		// 快件揽收
 		case 1:
-			mFragmentTransaction.replace(R.id.container, mTransNodeTabFragment)
+			mFragmentTransaction.replace(R.id.container, mExpressEditFragment)
 					.commit();
 			onSectionAttached(position + 1);
-			// 关闭抽屉
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
 
 			}
 			break;
+		// 快件派送
 		case 2:
-			mFragmentTransaction.replace(R.id.container, mCenterTabFragment)
+			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
 					.commit();
 			onSectionAttached(position + 1);
-			// 关闭抽屉
+			try {
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
+			} catch (NullPointerException e) {
+
+			}
+			break;
+
+		// 包裹拆包
+		case 3:
+			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
+					.commit();
+			onSectionAttached(position + 1);
+			try {
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
+			} catch (NullPointerException e) {
+
+			}
+			break;
+
+		// 包裹打包
+		case 4:
+			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
+					.commit();
+			onSectionAttached(position + 1);
+			try {
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
+			} catch (NullPointerException e) {
+
+			}
+			break;
+
+		// 客户管理
+		case 5:
+			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
+					.commit();
+			onSectionAttached(position + 1);
+			try {
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
+			} catch (NullPointerException e) {
+
+			}
+			break;
+
+		// 关于
+		case 6:
+			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
+					.commit();
+			onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -288,6 +345,30 @@ public class MainActivity extends ActionBarActivity implements
 		public void setTitle(CharSequence title) {
 			mTitle = title;
 		}
+
+	}
+
+	@Override
+	public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onTabUnselected(Tab arg0, FragmentTransaction arg1) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onFragmentInteraction(String id) {
+		// TODO Auto-generated method stub
 
 	}
 
