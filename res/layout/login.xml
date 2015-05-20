@@ -6,70 +6,70 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-         >
-	<include layout="@layout/title_login" />
-	<LinearLayout
-	    android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dip"
-        android:orientation="vertical">
-        "
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="用户名" />
+        android:orientation="vertical" >
 
+        <include layout="@layout/title_login" />
 
-        <EditText
-            android:id="@+id/loginUsername"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="输入用户名"
-            android:inputType="textEmailAddress" />
+            android:orientation="vertical"
+            android:padding="20dip" >
+   
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
+                android:text="用户名" />
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
-            android:text="密码" />
+            <EditText
+                android:id="@+id/loginUsername"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入用户名"
+                android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/loginPassword"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="输入密码"
-            android:inputType="textPassword" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
+                android:text="密码" />
 
-        <TextView
-            android:id="@+id/login_error"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:textColor="#e30000"
-            android:textStyle="bold" />
+            <EditText
+                android:id="@+id/loginPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="输入密码"
+                android:inputType="textPassword" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:background="#ff6347"
-            android:onClick="loginUser"
-            android:text="登录"
-            android:textColor="#fff" />
+            <TextView
+                android:id="@+id/login_error"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dip"
+                android:textColor="#e30000"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnLinkToRegisterScreen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
-            android:background="@null"
-            android:onClick="navigatetoRegisterActivity"
-            android:text="还未注册？快速注册"
-            android:textColor="@color/toolbar"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:background="#ff6347"
+                android:onClick="loginUser"
+                android:text="登录"
+                android:textColor="#fff" />
+
+            <Button
+                android:id="@+id/btnLinkToRegisterScreen"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dip"
+                android:background="@null"
+                android:onClick="navigatetoRegisterActivity"
+                android:text="还未注册？快速注册"
+                android:textColor="@color/toolbar"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 

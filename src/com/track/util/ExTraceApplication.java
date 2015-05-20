@@ -1,4 +1,4 @@
-package com.track.ui.main;
+package com.track.util;
 
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.track.misc.model.User;
 
 public class ExTraceApplication extends Application {
-	private static final String PREFS_NAME = "ExTrace.cfg2";
+	private static final String PREFS_NAME = "ExTrace3.cfg";
 	String mServerUrl;
 	String mMiscService, mDomainService;
 	User user;

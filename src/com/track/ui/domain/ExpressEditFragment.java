@@ -1,4 +1,4 @@
-package com.track.ui.main;
+package com.track.ui.domain;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,14 +8,12 @@ import android.view.ViewGroup;
 
 import com.track.app.user.R;
 
-public class ExpressSendFragment extends Fragment {
-
+public class ExpressEditFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.fragment_express_send, container,
+		return inflater.inflate(R.layout.fragment_express_edit1, container,
 				false);
 	}
-
 }

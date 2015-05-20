@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.track.loader.ExpressListLoader;
 import com.track.misc.model.ExpressSheet;
-import com.track.ui.main.ExTraceApplication;
+import com.track.util.ExTraceApplication;
 
 /**
  * A fragment representing a list of Items.

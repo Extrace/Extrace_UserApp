@@ -15,7 +15,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
-        android:name="com.track.ui.main.ExTraceApplication"
+        android:name="com.track.util.ExTraceApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -43,6 +43,38 @@
         <activity
             android:name="com.track.ui.main.RegisterActivity"
             android:label="注册" >
+        </activity>
+        <activity
+            android:name="com.track.ui.minor.MyInfoActivity"
+            android:label="个人信息" >
+        </activity>
+         <activity
+            android:name="com.track.ui.misc.CustomerListActivity"
+            android:label="@string/title_activity_customer_list" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.track.ui.misc.CustomerEditActivity"
+            android:label="@string/title_activity_customer_edit" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.track.ui.misc.CustomerListActivity" />
+        </activity>
+        <activity
+            android:name="com.track.ui.misc.RegionListActivity"
+            android:label="@string/title_activity_region_list" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.track.ui.domain.ExpressEditActivity"
+            android:label="@string/title_activity_express_edit" >
         </activity>
     </application>
 

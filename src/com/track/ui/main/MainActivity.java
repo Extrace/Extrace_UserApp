@@ -18,7 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.track.app.user.R;
+import com.track.ui.domain.ExpressEditFragment;
+import com.track.ui.domain.ExpressSendFragment;
 import com.track.ui.domain.ExpressListFragment.OnFragmentInteractionListener;
+import com.track.ui.minor.MyCenterTabFragment;
+import com.track.ui.minor.TransNodeTabFragment;
+import com.track.ui.minor.TransPackageTabFragment;
 import com.zxing.activity.CaptureActivity;
 
 public class MainActivity extends ActionBarActivity implements
@@ -43,6 +48,8 @@ public class MainActivity extends ActionBarActivity implements
 		setContentView(R.layout.activity_main);
 		mNavigationDrawerFragment = new NavigationDrawerFragment();
 		mActionBar = new ActionBarHelper();
+		// Bundle extras = getIntent().getExtras();
+		// mNavigationDrawerFragment.setArguments(extras);
 		mActionBar.init();
 		getSupportFragmentManager().beginTransaction()
 				.replace(R.id.navigation_drawer, mNavigationDrawerFragment)
@@ -346,6 +353,14 @@ public class MainActivity extends ActionBarActivity implements
 			mTitle = title;
 		}
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		// SharedPreferences sp = getSharedPreferences("userInfo",
+		// Context.MODE_PRIVATE);
+		// sp.edit().clear().commit();
+		super.onDestroy();
 	}
 
 	@Override

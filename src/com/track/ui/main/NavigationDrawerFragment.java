@@ -2,9 +2,9 @@ package com.track.ui.main;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.track.app.user.R;
 import com.track.ui.adapter.MenuAdapter;
+import com.track.ui.minor.MyInfoActivity;
 
 public class NavigationDrawerFragment extends Fragment {
 
@@ -31,8 +32,6 @@ public class NavigationDrawerFragment extends Fragment {
 	private ImageView mImageView;
 
 	private View rootview;
-
-	private TextView mUserText;
 
 	private int mCurrentSelectedPosition = 0;
 
@@ -66,39 +65,71 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerListView = (ListView) rootview.findViewById(R.id.id_drawer_list);
 		mImageView = (ImageView) rootview.findViewById(R.id.id_iv_account);
 		mTextView = (TextView) rootview.findViewById(R.id.id_bt_login);
-		setClickLisener();
-		mDrawerListView
-				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						selectItem(position);
-					}
-				});
+
+		SharedPreferences sp = this.getActivity().getSharedPreferences(
+				"userInfo", Activity.MODE_PRIVATE);
+		mTextView.setText(sp.getString("uname", "您还未登录~"));
+
+		if (!sp.contains("uname")) {
+			setLoginClickLisener();
+			mDrawerListView
+					.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long id) {
+							if (position > 0 && position < 6) {
+								Toast.makeText(
+										getActivity().getApplicationContext(),
+										"请先登录！", Toast.LENGTH_LONG).show();
+							} else
+								selectItem(position);
+						}
+					});
+		} else {
+			setAnotherClick();
+			mDrawerListView
+					.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> parent,
+								View view, int position, long id) {
+							selectItem(position);
+						}
+					});
+		}
 		MenuAdapter menuAdapter = new MenuAdapter(getActivity());
 		mDrawerListView.setAdapter(menuAdapter);
-		// 为listview设置当前的item为选中状态，默认为0，即第一个item
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		return rootview;
 	}
 
-	private void setClickLisener() {
-		// TODO Auto-generated method stub
+	private void setAnotherClick() {
 		mImageView.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				test();
+			}
+		});
+		mTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 				test();
 			}
 		});
 
-		mTextView.setOnClickListener(new OnClickListener() {
+	}
 
+	private void setLoginClickLisener() {
+		mImageView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				test();
+				toLoginActivity();
+			}
+		});
+
+		mTextView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				toLoginActivity();
 			}
 		});
 	}
@@ -116,7 +147,6 @@ public class NavigationDrawerFragment extends Fragment {
 	 */
 	private void selectItem(int position) {
 		mCurrentSelectedPosition = position;
-		Log.e("fragment:position", "" + position);
 		if (mDrawerListView != null) {
 			mDrawerListView.setItemChecked(position, true);
 		}
@@ -126,10 +156,10 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void test() {
-		Log.d("Test", "onClickListener ist gestartet");
-		Toast.makeText(getActivity().getApplicationContext(), "Test",
-				Toast.LENGTH_LONG).show();
-		toLoginActivity();
+		// Toast.makeText(getActivity().getApplicationContext(), "您已登录",
+		// Toast.LENGTH_LONG).show();
+		Intent myinfoIntent = new Intent(getActivity(), MyInfoActivity.class);
+		startActivity(myinfoIntent);
 	}
 
 	/**

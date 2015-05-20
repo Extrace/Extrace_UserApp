@@ -1,4 +1,4 @@
-package com.track.ui.main;
+package com.track.ui.minor;
 
 import android.content.Intent;
 import android.os.Bundle;

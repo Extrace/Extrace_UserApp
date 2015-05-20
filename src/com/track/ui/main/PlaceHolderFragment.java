@@ -3,8 +3,6 @@ package com.track.ui.main;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.track.app.user.R;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,12 +14,18 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.track.app.user.R;
+import com.track.ui.minor.MyCenterTabFragment;
+import com.track.ui.minor.TransNodeTabFragment;
+import com.track.ui.minor.TransPackageTabFragment;
 
 public class PlaceHolderFragment extends Fragment {
 
@@ -121,6 +125,7 @@ public class PlaceHolderFragment extends Fragment {
 					break;
 				case 2:
 					mCenterTextView.setTextColor(Color.parseColor("#87CEEB"));
+
 					break;
 				}
 				mCurrentIndex = position;
@@ -189,6 +194,7 @@ public class PlaceHolderFragment extends Fragment {
 				mViewPager.setCurrentItem(0);
 			}
 		});
+
 		mCenterTextView.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -199,6 +205,13 @@ public class PlaceHolderFragment extends Fragment {
 		});
 
 	}
+
+	OnClickListener mNoClickListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			Toast.makeText(getActivity(), "请先登录！", Toast.LENGTH_SHORT).show();
+		}
+	};
 
 	// 重置title2的文本颜色为黑色
 	protected void resetTextColor() {

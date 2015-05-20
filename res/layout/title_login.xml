@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="60dp"
+    android:padding="10dp"
     android:background="@color/toolbar"
     android:orientation="horizontal" >
 
@@ -9,14 +10,13 @@
         android:id="@+id/id_iv_back"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:src="@drawable/btn_back_pressed" 
+        android:src="@drawable/btn_back_white" 
         
         />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="50dp"
         android:gravity="center"
         android:text="@string/title_login"
         android:textColor="#fff"
