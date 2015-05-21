@@ -68,7 +68,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 		SharedPreferences sp = this.getActivity().getSharedPreferences(
 				"userInfo", Activity.MODE_PRIVATE);
-		mTextView.setText(sp.getString("uname", "您还未登录~"));
+		mTextView.setText(sp.getString("uname", "点击登录哦~"));
 
 		if (!sp.contains("uname")) {
 			setLoginClickLisener();

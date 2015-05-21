@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/id_et_pkgNum"
-        android:src="@drawable/tab_my_ed_selected" />
+        android:src="@drawable/img_barcode" />
 
     <Button
         android:id="@+id/button1"

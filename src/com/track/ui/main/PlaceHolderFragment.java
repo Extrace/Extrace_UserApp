@@ -39,9 +39,14 @@ public class PlaceHolderFragment extends Fragment {
 	private FragmentPagerAdapter mAdapter;
 	private List<Fragment> mFragments;
 	private static ImageView mTabLine;
+
 	private TextView mPackageTextView;
 	private TextView mNodeTextView;
 	private TextView mCenterTextView;
+
+	private ImageView mPackageImageView;
+	private ImageView mNodeImageView;
+	private ImageView mCenterImageView;
 
 	private int mCurrentIndex;
 	private int screenWidth1_3;
@@ -65,8 +70,18 @@ public class PlaceHolderFragment extends Fragment {
 		InitViewPager(rootView);
 		initTabLine(rootView);
 		InitTextView(rootView);
+		InitImageView(rootView);
 
 		return rootView;
+	}
+
+	private void InitImageView(View rootView) {
+		// TODO Auto-generated method stub
+		mPackageImageView = (ImageView) rootView
+				.findViewById(R.id.id_iv_package);
+		mNodeImageView = (ImageView) rootView.findViewById(R.id.id_iv_node);
+		mCenterImageView = (ImageView) rootView
+				.findViewById(R.id.id_iv_mycenter);
 	}
 
 	private void InitTextView(View rootView) {
@@ -115,17 +130,23 @@ public class PlaceHolderFragment extends Fragment {
 
 				// 每当其中一个fragment被选中时，其他文本恢复为黑色
 				resetTextColor();
+				resetImage();
 
 				switch (position) {
 				case 0:
 					mPackageTextView.setTextColor(Color.parseColor("#87CEEB"));
+					mPackageImageView
+							.setImageResource(R.drawable.id_title_package_selected);
 					break;
 				case 1:
 					mNodeTextView.setTextColor(Color.parseColor("#87CEEB"));
+					mNodeImageView
+							.setImageResource(R.drawable.id_title_node_selected);
 					break;
 				case 2:
 					mCenterTextView.setTextColor(Color.parseColor("#87CEEB"));
-
+					mCenterImageView
+							.setImageResource(R.drawable.id_title_mycenter_selected);
 					break;
 				}
 				mCurrentIndex = position;
@@ -218,6 +239,13 @@ public class PlaceHolderFragment extends Fragment {
 		mPackageTextView.setTextColor(Color.BLACK);
 		mNodeTextView.setTextColor(Color.BLACK);
 		mCenterTextView.setTextColor(Color.BLACK);
+	}
+
+	protected void resetImage() {
+		// TODO Auto-generated method stub
+		mPackageImageView.setImageResource(R.drawable.title_express);
+		mNodeImageView.setImageResource(R.drawable.id_title_node_normal);
+		mCenterImageView.setImageResource(R.drawable.title_mycenter);
 	}
 
 }

@@ -18,9 +18,9 @@
 
             <ImageView
                 android:id="@+id/id_iv_package"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/title_express" />
+                 android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/id_title_package_selected" />
 
             <TextView
                 android:id="@+id/id_tv_package"
@@ -40,9 +40,9 @@
 
             <ImageView
                 android:id="@+id/id_iv_node"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/title_transnode" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/id_title_node_normal" />
 
             <TextView
                 android:id="@+id/id_tv_node"
@@ -62,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/id_iv_mycenter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/title_mycenter" />
 
             <TextView

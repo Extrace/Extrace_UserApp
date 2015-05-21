@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/toolbar"
-    android:padding="10dp" >
+    android:layout_height="60dp"
+    android:background="@color/toolbar" >
 
     <ImageView
         android:id="@+id/id_iv_back"
@@ -11,16 +10,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/btn_back_white" />
+        android:src="@drawable/btn_back_normal" />
 
     <TextView
         android:id="@+id/id_tv_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:paddingRight="15dp"
         android:layout_centerVertical="true"
         android:text="登出"
         android:textColor="#fff"
-        android:textSize="25dp" />
+        android:textSize="22dp" />
 
 </RelativeLayout>
