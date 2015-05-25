@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.track.app.user.R;
 import com.track.loader.RegionListLoader;
 import com.track.misc.model.CodeNamePair;
+import com.track.ui.adapter.RegionListAdapter;
 
 @SuppressWarnings("all")
 public class RegionListActivity extends ActionBarActivity {
@@ -37,9 +38,6 @@ public class RegionListActivity extends ActionBarActivity {
 		}
 	}
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
 	public static class PlaceholderFragment extends ListFragment {
 		private RegionListAdapter mAdapter;
 		private RegionListLoader mLoader;
@@ -55,19 +53,14 @@ public class RegionListActivity extends ActionBarActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			// Give some text to display if there is no data. In a real
-			// application this would come from a resource.
 			setEmptyText("无行政区域选定!");
 
-			// We have a menu item to show in action bar.
 			setHasOptionsMenu(true);
 
-			// Create an empty adapter we will use to display the loaded data.
 			mAdapter = new RegionListAdapter(new ArrayList<CodeNamePair>(),
 					this.getActivity());
 			setListAdapter(mAdapter);
 
-			// Start out with a progress indicator.
 			// setListShown(false);
 
 			if (mIntent.hasExtra("RegionId")) {
@@ -88,8 +81,7 @@ public class RegionListActivity extends ActionBarActivity {
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			// Inflate the menu; this adds items to the action bar if it is
-			// present.
+
 			inflater.inflate(R.menu.region_list, menu);
 			MenuItem item = menu.findItem(R.id.action_reset);
 			MenuItemCompat
@@ -107,9 +99,6 @@ public class RegionListActivity extends ActionBarActivity {
 
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
-			// Handle action bar item clicks here. The action bar will
-			// automatically handle clicks on the Home/Up button, so long
-			// as you specify a parent activity in AndroidManifest.xml.
 			int id = item.getItemId();
 			switch (id) {
 			case R.id.action_ok:
@@ -123,6 +112,7 @@ public class RegionListActivity extends ActionBarActivity {
 			case R.id.action_reset:
 				opStatus = 0;
 				RefreshList(opStatus, "");
+				this.getActivity().setTitle("请选择区域");
 				return true;
 			case R.id.action_settings:
 				// SettingsActivity a = new SettingsActivity();

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="60dp"
-    android:padding="12dp"
     android:background="@color/toolbar" >
 
     <ImageView
@@ -10,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:paddingLeft="12dp"
         android:contentDescription="@string/title_register"
         android:src="@drawable/btn_back_white" />
 
@@ -17,8 +17,8 @@
         android:id="@+id/id_tv_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/id_iv_back"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:text="@string/title_register"
         android:textColor="#fff"
         android:textSize="23sp" />

@@ -1,8 +1,9 @@
-package com.track.ui.domain;
+package com.track.ui.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.track.app.user.R;
 import com.track.misc.model.ExpressSheet;
 import com.track.net.IDataAdapter;
 
+@SuppressLint({ "InflateParams", "SimpleDateFormat" })
 public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 		IDataAdapter<List<ExpressSheet>> {
 
@@ -62,6 +64,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			v = inflater.inflate(R.layout.express_list_item, null);
+
 			hd.name = (TextView) v.findViewById(R.id.name);
 			hd.telCode = (TextView) v.findViewById(R.id.tel);
 			hd.address = (TextView) v.findViewById(R.id.addr);
@@ -76,7 +79,9 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 		ExpressSheet es = getItem(position);
 		switch (ex_type) {
 		case "ExDLV": // 派送
+			System.out.println("****Exadapter not if****");
 			if (es.getReceiver() != null) {
+				System.out.println("****Exadapter in if****");
 				hd.name.setText(es.getReceiver().getCname()); // 接收者姓名
 				hd.telCode.setText(es.getReceiver().getTelcode()); // 接收者电话
 				hd.address.setText(es.getReceiver().getAddress()); // 接收者
@@ -115,13 +120,19 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 		String stText = "";
 		switch (es.getStatus()) {
 		case ExpressSheet.STATUS.STATUS_CREATED:
-			stText = "创建";
+			stText = "新建";
 			break;
 		case ExpressSheet.STATUS.STATUS_RECEIVED:
-			stText = "收件";
+			stText = "揽收中";
 			break;
 		case ExpressSheet.STATUS.STATUS_DELIVERIED:
-			stText = "交付";
+			stText = "已交付";
+			break;
+		case ExpressSheet.STATUS.STATUS_DISPATCHED:
+			stText = "派送中";
+			break;
+		case ExpressSheet.STATUS.STATUS_PARTATION:
+			stText = "分拣中";
 			break;
 		}
 		hd.status.setText(stText);

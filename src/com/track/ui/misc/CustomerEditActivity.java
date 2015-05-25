@@ -141,7 +141,7 @@ public class CustomerEditActivity extends ActionBarActivity implements
 		mAddrView.setText(mItem.getAddress());
 		mDptView.setText(mItem.getDepartment());
 		mRegionView.setTag(mItem.getRegioncode());
-		mRegionView.setText(mItem.getRegionString()); // ================
+		mRegionView.setText(mItem.getRegionString());
 		mPostCodeView.setText(String.valueOf(mItem.getPoscode()));
 	}
 
@@ -200,23 +200,23 @@ public class CustomerEditActivity extends ActionBarActivity implements
 		try {
 			mItem.setCname(mNameView.getText().toString());
 		} catch (Exception e) {
-			Toast.makeText(this, "客户姓名不能为空!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "客户姓名不能为空哦~", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		if (mItem.getCname().length() < 2) {
-			Toast.makeText(this, "客户姓名不能太短!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "客户姓名有点短哦~", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
 		try {
 			mItem.setTelcode(mTelCodeView.getText().toString());
 		} catch (Exception e) {
-			Toast.makeText(this, "客户电话号码不能为空!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "客户电话号码不能为空哦~", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
 		if (mItem.getTelcode().length() < 6) {
-			Toast.makeText(this, "客户电话号码不能太短!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "客户电话号码有点短哦~", Toast.LENGTH_SHORT).show();
 			return;
 		}
 

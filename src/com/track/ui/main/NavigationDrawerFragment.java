@@ -96,6 +96,7 @@ public class NavigationDrawerFragment extends Fragment {
 						}
 					});
 		}
+		// 给抽屉的listview添加适配器
 		MenuAdapter menuAdapter = new MenuAdapter(getActivity());
 		mDrawerListView.setAdapter(menuAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);

@@ -1,5 +1,6 @@
 package com.track.ui.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -18,17 +19,20 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.track.app.user.R;
-import com.track.ui.domain.ExpressEditFragment;
-import com.track.ui.domain.ExpressSendFragment;
+import com.track.ui.domain.ExpressListFragment;
 import com.track.ui.domain.ExpressListFragment.OnFragmentInteractionListener;
+import com.track.ui.domain.ExpressSendFragment;
 import com.track.ui.minor.MyCenterTabFragment;
-import com.track.ui.minor.TransNodeTabFragment;
 import com.track.ui.minor.TransPackageTabFragment;
+import com.track.ui.misc.CustomerListActivity;
 import com.zxing.activity.CaptureActivity;
 
+@SuppressLint("RtlHardcoded")
+@SuppressWarnings("deprecation")
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks,
-		ActionBar.TabListener, OnFragmentInteractionListener {
+		MyCenterTabFragment.TestCallbacks, ActionBar.TabListener,
+		OnFragmentInteractionListener {
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
@@ -36,11 +40,10 @@ public class MainActivity extends ActionBarActivity implements
 	private CharSequence mTitle;
 	private ActionBarHelper mActionBar;
 
-	private TransNodeTabFragment mTransNodeTabFragment;
-	private MyCenterTabFragment mCenterTabFragment;
 	private TransPackageTabFragment mTransPackageTabFragment;
-	private ExpressEditFragment mExpressEditFragment;
 	private ExpressSendFragment mExpressSendFragment;
+	private FragmentManager mfragmentManager;
+	private ExpressReceiveFragment mExpressReceiveFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -99,21 +102,20 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// 获得fragmentManager
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		PlaceHolderFragment mPlaceholderFragment = new PlaceHolderFragment();
-		mTransNodeTabFragment = new TransNodeTabFragment();
-		mCenterTabFragment = new MyCenterTabFragment();
-		mExpressEditFragment = new ExpressEditFragment();
+		mfragmentManager = getSupportFragmentManager();
+		mTransPackageTabFragment = new TransPackageTabFragment();
 		mExpressSendFragment = new ExpressSendFragment();
+		mExpressReceiveFragment = new ExpressReceiveFragment();
 
-		FragmentTransaction mFragmentTransaction = fragmentManager
+		FragmentTransaction mFragmentTransaction = mfragmentManager
 				.beginTransaction();
 		// 然后替换当前的fragment，并将参数item位置参数+1传递给placeholderFragment
 		switch (position) {
 		// 首页
 		case 0:
 			mFragmentTransaction.replace(R.id.container,
-					mPlaceholderFragment.newInstance(position + 1)).commit();
+					PlaceHolderFragment.newInstance(position + 1));
+			mFragmentTransaction.commit();
 			// 关闭抽屉
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -123,8 +125,9 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 		// 快件揽收
 		case 1:
-			mFragmentTransaction.replace(R.id.container, mExpressEditFragment)
-					.commit();
+			mFragmentTransaction.replace(R.id.container,
+					mExpressReceiveFragment);
+			mFragmentTransaction.commit();
 			onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -170,9 +173,11 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 客户管理
 		case 5:
-			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
-					.commit();
-			onSectionAttached(position + 1);
+			// mFragmentTransaction.replace(R.id.container,
+			// mExpressSendFragment)
+			// .commit();
+			getCustomers();
+			// onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -193,6 +198,13 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 		}
 
+	}
+
+	private void getCustomers() {
+		Intent intent = new Intent();
+		intent.setClass(this, CustomerListActivity.class);
+		intent.putExtra("Action", "Query");
+		startActivityForResult(intent, 0);
 	}
 
 	/**
@@ -229,8 +241,6 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
-
-		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
 
@@ -357,9 +367,6 @@ public class MainActivity extends ActionBarActivity implements
 
 	@Override
 	protected void onDestroy() {
-		// SharedPreferences sp = getSharedPreferences("userInfo",
-		// Context.MODE_PRIVATE);
-		// sp.edit().clear().commit();
 		super.onDestroy();
 	}
 
@@ -387,4 +394,12 @@ public class MainActivity extends ActionBarActivity implements
 
 	}
 
+	@Override
+	public void toFragment(String type) {
+		mfragmentManager = getSupportFragmentManager();
+		FragmentTransaction ft = mfragmentManager.beginTransaction();
+		ft.replace(R.id.container, ExpressListFragment.newInstance(type));
+		ft.addToBackStack(null);
+		ft.commit();
+	}
 }

@@ -10,15 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,15 +25,13 @@ import com.track.ui.minor.TransPackageTabFragment;
 
 public class PlaceHolderFragment extends Fragment {
 
-	/**
-	 * 
-	 */
 	private TransNodeTabFragment mTransNodeTabFragment;
 	private TransPackageTabFragment mTransPackageTabFragment;
 	private MyCenterTabFragment mCenterTabFragment;
 	private static ViewPager mViewPager;
 	private FragmentPagerAdapter mAdapter;
 	private List<Fragment> mFragments;
+	@SuppressWarnings("unused")
 	private static ImageView mTabLine;
 
 	private TextView mPackageTextView;
@@ -48,13 +42,15 @@ public class PlaceHolderFragment extends Fragment {
 	private ImageView mNodeImageView;
 	private ImageView mCenterImageView;
 
+	@SuppressWarnings("unused")
 	private int mCurrentIndex;
+	@SuppressWarnings("unused")
 	private int screenWidth1_3;
 
-	private final String ARG_SECTION_NUMBER = "section_number";
+	private final static String ARG_SECTION_NUMBER = "section_number";
 
 	// 获取选中item的参数，并传递给Bundle
-	public Fragment newInstance(int sectionNumber) {
+	public static Fragment newInstance(int sectionNumber) {
 		PlaceHolderFragment fragment = new PlaceHolderFragment();
 		Bundle args = new Bundle();
 		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -68,7 +64,7 @@ public class PlaceHolderFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_main, container,
 				false);
 		InitViewPager(rootView);
-		initTabLine(rootView);
+		// initTabLine(rootView);
 		InitTextView(rootView);
 		InitImageView(rootView);
 
@@ -76,7 +72,6 @@ public class PlaceHolderFragment extends Fragment {
 	}
 
 	private void InitImageView(View rootView) {
-		// TODO Auto-generated method stub
 		mPackageImageView = (ImageView) rootView
 				.findViewById(R.id.id_iv_package);
 		mNodeImageView = (ImageView) rootView.findViewById(R.id.id_iv_node);
@@ -85,7 +80,6 @@ public class PlaceHolderFragment extends Fragment {
 	}
 
 	private void InitTextView(View rootView) {
-		// TODO Auto-generated method stub
 		mPackageTextView = (TextView) rootView.findViewById(R.id.id_tv_package);
 		mNodeTextView = (TextView) rootView.findViewById(R.id.id_tv_node);
 		mCenterTextView = (TextView) rootView.findViewById(R.id.id_tv_mycenter);
@@ -93,7 +87,6 @@ public class PlaceHolderFragment extends Fragment {
 	}
 
 	private void InitViewPager(View rootView) {
-		// TODO Auto-generated method stub
 		mViewPager = (ViewPager) rootView.findViewById(R.id.id_viewpager);
 		mFragments = new ArrayList<Fragment>();
 
@@ -109,13 +102,11 @@ public class PlaceHolderFragment extends Fragment {
 
 			@Override
 			public int getCount() {
-				// TODO Auto-generated method stub
 				return mFragments.size();
 			}
 
 			@Override
 			public Fragment getItem(int arg0) {
-				// TODO Auto-generated method stub
 				return mFragments.get(arg0);
 			}
 		};
@@ -124,14 +115,13 @@ public class PlaceHolderFragment extends Fragment {
 
 		mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
-			// 当fragment被选中时，分别设置文本标题颜色
 			@Override
 			public void onPageSelected(int position) {
 
 				// 每当其中一个fragment被选中时，其他文本恢复为黑色
 				resetTextColor();
 				resetImage();
-
+				// 当fragment被选中时，分别设置文本标题颜色
 				switch (position) {
 				case 0:
 					mPackageTextView.setTextColor(Color.parseColor("#87CEEB"));
@@ -156,24 +146,24 @@ public class PlaceHolderFragment extends Fragment {
 			@Override
 			public void onPageScrolled(int position, float positionOffset,
 					int positionOffsetPx) {
-				// TODO Auto-generated method stub
-				LinearLayout.LayoutParams lp = (android.widget.LinearLayout.LayoutParams) mTabLine
-						.getLayoutParams();
-				if (mCurrentIndex == position) {
-					lp.leftMargin = (int) (screenWidth1_3 * (mCurrentIndex + positionOffset));
-				} else {
-					lp.leftMargin = (int) (screenWidth1_3 * (mCurrentIndex - 1 + positionOffset));
-				}
-				mTabLine.setLayoutParams(lp);
+				// LinearLayout.LayoutParams lp =
+				// (android.widget.LinearLayout.LayoutParams) mTabLine
+				// .getLayoutParams();
+				// if (mCurrentIndex == position) {
+				// lp.leftMargin = (int) (screenWidth1_3 * (mCurrentIndex +
+				// positionOffset));
+				// } else {
+				// lp.leftMargin = (int) (screenWidth1_3 * (mCurrentIndex - 1 +
+				// positionOffset));
+				// }
+				// mTabLine.setLayoutParams(lp);
 			}
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				// TODO Auto-generated method stub
-
 			}
 		});
-		// mViewPager.setCurrentItem(0);
 	}
 
 	// 当回到MainActivity时，调用onSectionAttached
@@ -187,23 +177,22 @@ public class PlaceHolderFragment extends Fragment {
 	/**
 	 * 初始化title2下面的tabline
 	 */
-	private void initTabLine(View rootView) {
-		mTabLine = (ImageView) rootView.findViewById(R.id.id_iv_tabline);
-		Display display = getActivity().getWindowManager().getDefaultDisplay();
-		DisplayMetrics outMetrics = new DisplayMetrics();
-		display.getMetrics(outMetrics);
-		screenWidth1_3 = outMetrics.widthPixels / 3;
-		LayoutParams lp = mTabLine.getLayoutParams();
-		lp.width = screenWidth1_3;
-		mTabLine.setLayoutParams(lp);
-	}
+	// private void initTabLine(View rootView) {
+	// mTabLine = (ImageView) rootView.findViewById(R.id.id_iv_tabline);
+	// Display display = getActivity().getWindowManager().getDefaultDisplay();
+	// DisplayMetrics outMetrics = new DisplayMetrics();
+	// display.getMetrics(outMetrics);
+	// screenWidth1_3 = outMetrics.widthPixels / 3;
+	// LayoutParams lp = mTabLine.getLayoutParams();
+	// lp.width = screenWidth1_3;
+	// mTabLine.setLayoutParams(lp);
+	// }
 
 	private void setClickListener() {
 		mNodeTextView.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				mViewPager.setCurrentItem(1);
 			}
 		});
@@ -211,7 +200,6 @@ public class PlaceHolderFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				mViewPager.setCurrentItem(0);
 			}
 		});
@@ -220,7 +208,6 @@ public class PlaceHolderFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				mViewPager.setCurrentItem(2);
 			}
 		});
@@ -242,7 +229,6 @@ public class PlaceHolderFragment extends Fragment {
 	}
 
 	protected void resetImage() {
-		// TODO Auto-generated method stub
 		mPackageImageView.setImageResource(R.drawable.title_express);
 		mNodeImageView.setImageResource(R.drawable.id_title_node_normal);
 		mCenterImageView.setImageResource(R.drawable.title_mycenter);

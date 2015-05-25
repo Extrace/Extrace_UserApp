@@ -1,17 +1,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/id_fragment_mycenter"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:id="@+id/id_fragment_mycenter"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:paddingTop="40dip"
         android:paddingLeft="15dip"
-        android:paddingRight="15dip" >
+        android:paddingRight="15dip"
+        android:paddingTop="5dip" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:textColor="@color/black"
                 android:textSize="20dip" />
         </LinearLayout>
-        
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0.5dp"

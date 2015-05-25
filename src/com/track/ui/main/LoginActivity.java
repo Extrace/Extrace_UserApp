@@ -1,5 +1,6 @@
 package com.track.ui.main;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -102,9 +103,86 @@ public class LoginActivity extends FragmentActivity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		url += "doLogin";
 		client.get(url, params, new AsyncHttpResponseHandler() {
-			// When Http response code is '404'
+
+			// @Override
+			// public void onSuccess(String response) {
+			// // 隐藏 Progress Dialog
+			// prgDialog.hide();
+			// String uname = unameET.getText().toString();
+			// String pwd = pwdET.getText().toString();
+			// setInfotoSp(uname, pwd);
+			// try {
+			// // 将服务端返回的字符串转换成JSON Object
+			// obj = new JSONObject(response);
+			// if (obj.getBoolean("status")) {
+			// Toast.makeText(getApplicationContext(), "登录成功!" + url,
+			// Toast.LENGTH_LONG).show();
+			// // 进入HomeActivity
+			// ((ExTraceApplication) getApplication()).getUserInfo();
+			// navigatetoMainActivity();
+			// } else {
+			// errorMsg.setText(obj.getString("error_msg"));
+			// Toast.makeText(getApplicationContext(),
+			// obj.getString("error_msg"), Toast.LENGTH_LONG)
+			// .show();
+			// }
+			// } catch (JSONException e) {
+			// Toast.makeText(
+			// getApplicationContext(),
+			// "Error Occured [Server's JSON response might be invalid]!",
+			// Toast.LENGTH_LONG).show();
+			// e.printStackTrace();
+			//
+			// }
+			// }
+			//
+			// @Override
+			// public void onFailure(int statusCode, Throwable error,
+			// String content) {
+			// prgDialog.hide();
+			// // When Http response code is '404'
+			// if (statusCode == 404) {
+			// Toast.makeText(getApplicationContext(), "资源未找到",
+			// Toast.LENGTH_LONG).show();
+			// }
+			// // When Http response code is '500'
+			// else if (statusCode == 500) {
+			// Toast.makeText(getApplicationContext(), "服务器发生异常",
+			// Toast.LENGTH_LONG).show();
+			// }
+			// // When Http response code other than 404, 500
+			// else {
+			// Toast.makeText(getApplicationContext(),
+			// "设备网络异常或服务器为开启！" + url, Toast.LENGTH_LONG).show();
+			// }
+			// }
+
 			@Override
-			public void onSuccess(String response) {
+			public void onFailure(int statusCode, Header[] arg1, byte[] arg2,
+					Throwable arg3) {
+				// TODO Auto-generated method stub
+				prgDialog.hide();
+				// When Http response code is '404'
+				if (statusCode == 404) {
+					Toast.makeText(getApplicationContext(), "资源未找到",
+							Toast.LENGTH_LONG).show();
+				}
+				// When Http response code is '500'
+				else if (statusCode == 500) {
+					Toast.makeText(getApplicationContext(), "服务器发生异常",
+							Toast.LENGTH_LONG).show();
+				}
+				// When Http response code other than 404, 500
+				else {
+					Toast.makeText(getApplicationContext(),
+							"设备网络异常或服务器为开启！" + statusCode + " " + url,
+							Toast.LENGTH_LONG).show();
+				}
+			}
+
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				// TODO Auto-generated method stub
 				// 隐藏 Progress Dialog
 				prgDialog.hide();
 				String uname = unameET.getText().toString();
@@ -112,12 +190,14 @@ public class LoginActivity extends FragmentActivity {
 				setInfotoSp(uname, pwd);
 				try {
 					// 将服务端返回的字符串转换成JSON Object
-					obj = new JSONObject(response);
+
+					String str = new String(arg2);
+					obj = new JSONObject(str);
 					if (obj.getBoolean("status")) {
 						Toast.makeText(getApplicationContext(), "登录成功!",
 								Toast.LENGTH_LONG).show();
 						// 进入HomeActivity
-
+						((ExTraceApplication) getApplication()).getUserInfo();
 						navigatetoMainActivity();
 					} else {
 						errorMsg.setText(obj.getString("error_msg"));
@@ -135,28 +215,6 @@ public class LoginActivity extends FragmentActivity {
 				}
 			}
 
-			@Override
-			public void onFailure(int statusCode, Throwable error,
-					String content) {
-				prgDialog.hide();
-				// When Http response code is '404'
-				if (statusCode == 404) {
-					Toast.makeText(getApplicationContext(), "资源未找到",
-							Toast.LENGTH_LONG).show();
-				}
-				// When Http response code is '500'
-				else if (statusCode == 500) {
-					Toast.makeText(getApplicationContext(), "服务器发生异常",
-							Toast.LENGTH_LONG).show();
-				}
-				// When Http response code other than 404, 500
-				else {
-					Toast.makeText(
-							getApplicationContext(),
-							"Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]",
-							Toast.LENGTH_LONG).show();
-				}
-			}
 		});
 
 	}

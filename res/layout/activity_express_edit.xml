@@ -3,5 +3,5 @@
     android:id="@+id/pager"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="extrace.ui.domain.ExpressEditActivity" />
+    tools:context="com.track.ui.domain.ExpressEditActivity" />
 

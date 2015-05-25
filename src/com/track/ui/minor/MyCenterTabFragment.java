@@ -19,8 +19,11 @@ import com.track.ui.domain.ExpressListFragment;
 
 public class MyCenterTabFragment extends Fragment {
 
+	private TestCallbacks mCallbacks;
 	private View view;
+	@SuppressWarnings("unused")
 	private FragmentManager mFragmentManager;
+	@SuppressWarnings("unused")
 	private ExpressListFragment mExpressListFragment;
 	private TextView mSendTV;
 	private TextView mReceiveTV;
@@ -31,7 +34,6 @@ public class MyCenterTabFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		view = inflater.inflate(R.layout.mycenter, container, false);
 		SharedPreferences sp = this.getActivity().getSharedPreferences(
 				"userInfo", Activity.MODE_PRIVATE);
@@ -64,7 +66,6 @@ public class MyCenterTabFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					showReceiveTasks();
 				}
 			});
@@ -73,7 +74,6 @@ public class MyCenterTabFragment extends Fragment {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					showTransferTasks();
 				}
 			});
@@ -81,20 +81,15 @@ public class MyCenterTabFragment extends Fragment {
 			mInfoTV.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
 					showMyinfo();
 				}
 			});
 
 		} else {
-			// 派送任务
 			mSendIV.setOnClickListener(mNoClickListener);
 			mSendTV.setOnClickListener(mNoClickListener);
-			// 揽收任务
 			mReceiveTV.setOnClickListener(mNoClickListener);
-			// 转运任务
 			mTransTV.setOnClickListener(mNoClickListener);
-			// 个人信息
 			mInfoTV.setOnClickListener(mNoClickListener);
 		}
 		return view;
@@ -107,6 +102,20 @@ public class MyCenterTabFragment extends Fragment {
 		}
 	};
 
+	protected void showSendTasks() {
+		mCallbacks.toFragment("ExDLV");
+	}
+
+	protected void showReceiveTasks() {
+		mCallbacks.toFragment("ExRCV");
+	}
+
+	protected void showTransferTasks() {
+
+		mCallbacks.toFragment("ExTAN");
+
+	}
+
 	protected void showMyinfo() {
 
 		Intent myinfoIntent = new Intent(getActivity(), MyInfoActivity.class);
@@ -114,23 +123,26 @@ public class MyCenterTabFragment extends Fragment {
 
 	}
 
-	protected void showTransferTasks() {
-		// TODO Auto-generated method stub
-
+	// 这是一个回调接口
+	public static interface TestCallbacks {
+		void toFragment(String type);
 	}
 
-	protected void showReceiveTasks() {
-		// TODO Auto-generated method stub
-
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (TestCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(
+					"Activity must implement TestCallbacks.");
+		}
 	}
 
-	protected void showSendTasks() {
-		// TODO Auto-generated method stub
-		Toast.makeText(getActivity().getApplicationContext(), "tst",
-				Toast.LENGTH_LONG).show();
-		mFragmentManager
-				.beginTransaction()
-				.replace(R.id.id_fragment_mycenter,
-						mExpressListFragment.newInstance("ExDLV")).commit();
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
 	}
+
 }

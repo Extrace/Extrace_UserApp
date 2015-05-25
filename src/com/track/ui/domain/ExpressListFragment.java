@@ -6,35 +6,29 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import com.track.loader.ExpressListLoader;
 import com.track.misc.model.ExpressSheet;
+import com.track.ui.adapter.ExpressListAdapter;
 import com.track.util.ExTraceApplication;
 
-/**
- * A fragment representing a list of Items.
- * <p />
- * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
- * interface.
- */
 public class ExpressListFragment extends ListFragment {
 
 	private static final String ARG_EX_TYPE = "ExType";
 
-	// TODO: Rename and change types of parameters
 	private String mExType;
-
 	private ExpressListAdapter mAdapter;
 	private ExpressListLoader mLoader;
+	@SuppressWarnings("unused")
+	private View rootView;
 
 	Intent mIntent;
 
 	private OnFragmentInteractionListener mListener;
 
-	// TODO: Rename and change types of parameters
 	public static ExpressListFragment newInstance(String ex_type) {
 
 		ExpressListFragment fragment = new ExpressListFragment();
@@ -51,18 +45,21 @@ public class ExpressListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		Log.e("onActivity", "created");
 		if (getArguments() != null) { // 另一种读出传入参数的方式
 			mExType = getArguments().getString(ARG_EX_TYPE);
 		}
 
-		setEmptyText("快递列表空的!");
+		setEmptyText("您还没有快递任务哦~");
 
+		// 初始化ExList适配器
 		mAdapter = new ExpressListAdapter(new ArrayList<ExpressSheet>(),
 				this.getActivity(), mExType);
+
 		setListAdapter(mAdapter);
 
 		getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
 		registerForContextMenu(getListView());
 
 		RefreshList();
@@ -90,24 +87,20 @@ public class ExpressListFragment extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 
 		if (null != mListener) {
-			// Notify the active callbacks interface (the activity, if the
-			// fragment is attached to one) that an item has been selected.
 			mListener.onFragmentInteraction(mAdapter.getItem(position).getId());
 		}
 		EditExpress(mAdapter.getItem(position));
 	}
 
 	public interface OnFragmentInteractionListener {
-		// TODO: Update argument type and name
 		public void onFragmentInteraction(String id);
 	}
 
 	private void RefreshList() {
+
 		String pkgId = null;
 		switch (mExType) {
 		case "ExDLV":
-			// NullPointer
-
 			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
 					.getLoginUser().getDeliverpid();
 			break;
@@ -122,9 +115,14 @@ public class ExpressListFragment extends ListFragment {
 		}
 		mLoader = new ExpressListLoader(mAdapter, this.getActivity());
 		mLoader.LoadExpressListInPackage(pkgId);
-		// mLoader.LoadExpressList();
+		mLoader.LoadExpressList();
 	}
 
+	/**
+	 * 编辑运单？why？
+	 * 
+	 * @param es
+	 */
 	void EditExpress(ExpressSheet es) {
 		Intent intent = new Intent();
 		intent.putExtra("Action", "Edit");

@@ -12,13 +12,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.track.app.user.R;
 import com.track.loader.ExpressLoader;
@@ -28,21 +31,23 @@ import com.track.net.IDataAdapter;
 import com.track.ui.misc.CustomerListActivity;
 import com.zxing.activity.CaptureActivity;
 
+/**
+ * 点击快件任务列表的一项时，跳转到此Activity
+ * 
+ * @author Eamonn
+ *
+ */
+@SuppressWarnings("deprecation")
 public class ExpressEditActivity extends ActionBarActivity implements
 		ActionBar.TabListener, IDataAdapter<ExpressSheet> {
-
-	// public static final int INTENT_NEW = 1;
-	// public static final int INTENT_EDIT = 2;
 
 	public static final int REQUEST_CAPTURE = 100;
 	public static final int REQUEST_RCV = 101;
 	public static final int REQUEST_SND = 102;
+	public static EditText mIDView;
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
 	ViewPager mViewPager;
 
 	private ExpressSheet mItem;
@@ -53,34 +58,20 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	private ExpressEditFragment2 externFragment;
 	private boolean new_es = false; // 新建
 
-	// private TextView mIDView;
-	// private TextView mRcvNameView;
-	// private TextView mRcvDptView;
-	// private TextView mRcvAddrView;
-	// private TextView mRcvRegionView;
-	// private ImageView mbtnRcv;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_express_edit);
 
-		// Set up the action bar.
 		final ActionBar actionBar = getSupportActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the activity.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
 				getSupportFragmentManager());
 
-		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 
-		// When swiping between different sections, select the corresponding
-		// tab. We can also use ActionBar.Tab#select() to do this if we have
-		// a reference to the Tab.
 		mViewPager
 				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 					@Override
@@ -89,27 +80,39 @@ public class ExpressEditActivity extends ActionBarActivity implements
 					}
 				});
 
-		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			// Create a tab with text corresponding to the page title defined by
-			// the adapter. Also specify this Activity object, which implements
-			// the TabListener interface, as the callback (listener) for when
-			// this tab is selected.
+
 			actionBar.addTab(actionBar.newTab()
 					.setText(mSectionsPagerAdapter.getPageTitle(i))
 					.setTabListener(this));
 		}
 
+		// 获取上个Activity或者fragment传来的Intent
 		mIntent = getIntent();
 		if (mIntent.hasExtra("Action")) {
 			if (mIntent.getStringExtra("Action").equals("New")) {
 				new_es = true;
-				StartCapture();
+				mItem = new ExpressSheet();
+				mItem.setId(mIntent.getStringExtra("ExpId"));
+				try {
+					mLoader = new ExpressLoader(this, this);
+					if (new_es) {
+						new_es = false;
+						mLoader.New(mItem.getId());
+					} else {
+						mLoader.Load(mItem.getId());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				// StartCapture();
 			} else if (mIntent.getStringExtra("Action").equals("Query")) {
 				StartCapture();
 			} else if (mIntent.getStringExtra("Action").equals("Edit")) {
 				ExpressSheet es;
 				if (mIntent.hasExtra("ExpressSheet")) {
+					// 创建一个运单？
 					es = (ExpressSheet) mIntent
 							.getSerializableExtra("ExpressSheet");
 					Refresh(es.getId());
@@ -128,14 +131,19 @@ public class ExpressEditActivity extends ActionBarActivity implements
 
 	}
 
+	/**
+	 * 创建菜单选项
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.express_edit, menu);
 		return true;
 	}
 
+	/**
+	 * 点击不同菜单项出触发不同的事件
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
@@ -148,6 +156,7 @@ public class ExpressEditActivity extends ActionBarActivity implements
 				Refresh(mItem.getId());
 			}
 			return true;
+			// 触发哪一个？
 		case (android.R.id.home):
 			mIntent.putExtra("ExpressSheet", mItem);
 			this.setResult(RESULT_OK, mIntent);
@@ -160,8 +169,6 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	@Override
 	public void onTabSelected(ActionBar.Tab tab,
 			FragmentTransaction fragmentTransaction) {
-		// When the given tab is selected, switch to the corresponding page in
-		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -247,8 +254,14 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	}
 
 	void Save() {
-		mLoader = new ExpressLoader(this, this);
-		mLoader.Save(mItem);
+		if (mItem != null) {
+			// mItem.setId(mIDView.getText().toString());
+			mLoader = new ExpressLoader(this, this);
+			mLoader.Save(mItem);
+		} else {
+			Toast.makeText(getApplicationContext(), "运单为null",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	private void StartCapture() {
@@ -263,15 +276,17 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		intent.setClass(this, CustomerListActivity.class);
 		if (intent_code == REQUEST_RCV) {
 			if (baseFragment.mRcvNameView.getTag() == null) {
-				intent.putExtra("Action", "New");
+				Log.e("RCVtag", "null");
+				intent.putExtra("Action", "Add");
 			} else {
+				Log.e("RCVtag", "yes");
 				intent.putExtra("Action", "New");
 				intent.putExtra("Customer",
 						(Customer) baseFragment.mRcvNameView.getTag());
 			}
 		} else if (intent_code == REQUEST_SND) {
 			if (baseFragment.mSndNameView.getTag() == null) {
-				intent.putExtra("Action", "New");
+				intent.putExtra("Action", "Add");
 			} else {
 				intent.putExtra("Action", "New");
 				intent.putExtra("Customer",
@@ -281,10 +296,6 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		startActivityForResult(intent, intent_code);
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
 		public SectionsPagerAdapter(FragmentManager fm) {
@@ -327,7 +338,7 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	 */
 	public static class ExpressEditFragment1 extends Fragment {
 
-		private TextView mIDView;
+		// private TextView mIDView;
 		private TextView mRcvNameView;
 		private TextView mRcvTelCodeView;
 		private TextView mRcvDptView;
@@ -339,10 +350,13 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		private TextView mSndDptView;
 		private TextView mSndAddrView;
 		private TextView mSndRegionView;
+		private TextView mExpStatus;
 
+		@SuppressWarnings("unused")
 		private TextView mRcverView;
 		private TextView mRcvTimeView;
 
+		@SuppressWarnings("unused")
 		private TextView mSnderView;
 		private TextView mSndTimeView;
 
@@ -363,7 +377,7 @@ public class ExpressEditActivity extends ActionBarActivity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_express_edit1,
 					container, false);
-			mIDView = (TextView) rootView.findViewById(R.id.expressId);
+			mIDView = (EditText) rootView.findViewById(R.id.expressId);
 			mRcvNameView = (TextView) rootView
 					.findViewById(R.id.expressRcvName);
 			mRcvTelCodeView = (TextView) rootView
@@ -383,11 +397,11 @@ public class ExpressEditActivity extends ActionBarActivity implements
 			mSndDptView = (TextView) rootView.findViewById(R.id.expressSndDpt);
 			mSndRegionView = (TextView) rootView
 					.findViewById(R.id.expressSndRegion);
-
 			mRcvTimeView = (TextView) rootView
 					.findViewById(R.id.expressAccTime);
 			mSndTimeView = (TextView) rootView
 					.findViewById(R.id.expressDlvTime);
+			mExpStatus = (TextView) rootView.findViewById(R.id.expressStatus);
 
 			mbtnCapture = (ImageView) rootView
 					.findViewById(R.id.action_ex_capture_icon);
@@ -418,6 +432,12 @@ public class ExpressEditActivity extends ActionBarActivity implements
 			return rootView;
 		}
 
+		void setExpId() {
+			Bundle idBundle = new Bundle();
+			idBundle.putString("ExpId", mIDView.getText().toString());
+			setArguments(idBundle);
+		}
+
 		void RefreshUI(ExpressSheet es) {
 			mIDView.setText(es.getId());
 			displayRcv(es);
@@ -433,6 +453,23 @@ public class ExpressEditActivity extends ActionBarActivity implements
 			else
 				mSndTimeView.setText(null);
 			displayBtn(es);
+			switch (es.getStatus()) {
+			case ExpressSheet.STATUS.STATUS_CREATED:
+				mExpStatus.setText("新建");
+				break;
+			case ExpressSheet.STATUS.STATUS_RECEIVED:
+				mExpStatus.setText("已揽收");
+				break;
+			case ExpressSheet.STATUS.STATUS_DELIVERIED:
+				mExpStatus.setText("已交付");
+				break;
+			case ExpressSheet.STATUS.STATUS_DISPATCHED:
+				mExpStatus.setText("派送中");
+				break;
+			case ExpressSheet.STATUS.STATUS_PARTATION:
+				mExpStatus.setText("正在分拣");
+				break;
+			}
 		}
 
 		void displayBtn(ExpressSheet es) { // 按钮状态控制

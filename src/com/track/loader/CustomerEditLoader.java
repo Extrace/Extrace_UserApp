@@ -28,13 +28,13 @@ public class CustomerEditLoader extends HttpAsyncTask {
 
 	@Override
 	public void onDataReceive(String class_data, String json_data) {
-		if (class_data.equals("CustomerInfo")) {
+		if (class_data.equals("Customer")) {
 			Customer ci = JsonUtils.fromJson(json_data,
 					new TypeToken<Customer>() {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
-		} else if (class_data.equals("R_CustomerInfo")) // 保存完成
+		} else if (class_data.equals("R_Customer")) // 保存完成
 		{
 			Customer ci = JsonUtils.fromJson(json_data,
 					new TypeToken<Customer>() {

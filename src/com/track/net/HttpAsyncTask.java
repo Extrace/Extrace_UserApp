@@ -1,4 +1,4 @@
-﻿//�Լ�д���첽���ճ���
+﻿//自己写的异步接收程序
 package com.track.net;
 
 //onpre->doinbackground->onpost
@@ -27,7 +27,7 @@ import android.util.Log;
 
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 
-//HTTPӦ�𷵻ز���
+//HTTP应答返回参数
 
 public abstract class HttpAsyncTask extends
 		AsyncTask<String, Integer, HttpResponseParam> {
@@ -94,8 +94,7 @@ public abstract class HttpAsyncTask extends
 				getMethod.setHeader("User-Agent", USER_AGENT);
 				getMethod.setHeader("Accept", "application/json");
 				// HttpParams params = new HttpParams();
-
-				// ����û�������֤��Ϣ
+				// 添加用户密码验证信息
 				// client.getCredentialsProvider().setCredentials(
 				// new AuthScope(null, -1),
 				// new UsernamePasswordCredentials(mUsername, mPassword));
@@ -143,7 +142,7 @@ public abstract class HttpAsyncTask extends
 				entity = response.getEntity();
 				Header[] head = response.getHeaders("EntityClass");
 				if (head.length > 0) {
-					responseObj.responseClassName = head[0].getValue(); // ���ж��ַ��صĶ������ʱ,���������������
+					responseObj.responseClassName = head[0].getValue(); // 当有多种返回的对象可能时,用这个名字来区分
 				} else {
 					responseObj.responseClassName = "";
 				}
@@ -159,12 +158,12 @@ public abstract class HttpAsyncTask extends
 				responseObj.statusCode = RETURN_STATUS.Saved;
 				break;
 			case 400:
-				responseObj.responseString = "������δ��ʶ������"
+				responseObj.responseString = "服务器未能识别请求："
 						+ response.getStatusLine().toString();
 				responseObj.statusCode = RETURN_STATUS.ResponseException;
 				break;
 			case 404:
-				responseObj.responseString = "�������ܾ���������: "
+				responseObj.responseString = "服务器拒绝满足请求： "
 						+ response.getStatusLine().toString();
 				responseObj.statusCode = RETURN_STATUS.ResponseException;
 				break;
@@ -175,18 +174,18 @@ public abstract class HttpAsyncTask extends
 				responseObj.statusCode = RETURN_STATUS.ServerException;
 				break;
 			default:
-				responseObj.responseString = "����������: "
+				responseObj.responseString = "服务器错误: "
 						+ response.getStatusLine().toString();
 				responseObj.statusCode = RETURN_STATUS.RequestException;
 				break;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			responseObj.responseString = "�������Ӵ���: " + e.getMessage();
+			responseObj.responseString = "网络连接错误:" + e.getMessage();
 			responseObj.statusCode = RETURN_STATUS.NetworkException;
 		} catch (Exception e) {
 			e.printStackTrace();
-			responseObj.responseString = "����ʱ����: " + e.getMessage();
+			responseObj.responseString = "运行时错误: " + e.getMessage();
 			responseObj.statusCode = RETURN_STATUS.Unknown;
 		}
 		publishProgress(100);
@@ -206,8 +205,8 @@ public abstract class HttpAsyncTask extends
 			dialog.dismiss();
 		} else {
 			// Toast.makeText(context.getApplicationContext(),
-			// "��������ʧ��!"+result.responseString, Toast.LENGTH_SHORT).show();
-			dialog.setMessage("��������ʧ��!" + result.responseString);
+			// "服务请求失败!" +result.responseString, Toast.LENGTH_SHORT).show();
+			dialog.setMessage("服务请求失败!" + result.responseString);
 			onStatusNotify(result.statusCode, result.responseString);
 		}
 		// dialog.dismiss();
@@ -215,13 +214,13 @@ public abstract class HttpAsyncTask extends
 
 	@Override
 	protected void onPreExecute() {
-		dialog.setMessage("���ڸ�������...");
+		dialog.setMessage("Please Wait...");
 		dialog.show();
 	}
 
 	@Override
 	protected void onProgressUpdate(Integer... values) {
-		// ���½���
+		// 更新进度
 	}
 
 	public abstract void onDataReceive(String class_name, String json_data);

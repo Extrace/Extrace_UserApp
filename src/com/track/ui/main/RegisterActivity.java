@@ -1,5 +1,6 @@
 package com.track.ui.main;
 
+import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -97,15 +98,102 @@ public class RegisterActivity extends Activity {
 		AsyncHttpClient client = new AsyncHttpClient();
 		client.get("http://192.168.43.17:9999/useraccount/register/doregister",
 				params, new AsyncHttpResponseHandler() {
-					// When the response returned by REST has Http response code
-					// '200'
+					// // When the response returned by REST has Http response
+					// code
+					// // '200'
+					// @Override
+					// public void onSuccess(String response) {
+					// // 隐藏进度对话框
+					// prgDialog.hide();
+					// try {
+					// // 将webservice返回的字符串转化为JSON Object
+					// JSONObject obj = new JSONObject(response);
+					// if (obj.getBoolean("status")) {
+					// // Set Default Values for Edit View controls
+					// setDefaultValues();
+					// // 显示注册成功的Toast
+					// Toast.makeText(getApplicationContext(),
+					// "You are successfully registered!",
+					// Toast.LENGTH_LONG).show();
+					// } else {
+					// errorMsg.setText(obj.getString("error_msg"));
+					// Toast.makeText(getApplicationContext(),
+					// obj.getString("error_msg"),
+					// Toast.LENGTH_LONG).show();
+					// }
+					// } catch (JSONException e) {
+					// Toast.makeText(
+					// getApplicationContext(),
+					// "Error Occured [Server's JSON response might be invalid]!",
+					// Toast.LENGTH_LONG).show();
+					// e.printStackTrace();
+					//
+					// }
+					// }
+					//
+					// // When the response returned by REST has Http response
+					// code
+					// // other than '200'
+					// @Override
+					// public void onFailure(int statusCode, Throwable error,
+					// String content) {
+					// prgDialog.hide();
+					// // When Http response code is '404'
+					// if (statusCode == 404) {
+					// Toast.makeText(getApplicationContext(),
+					// "Requested resource not found",
+					// Toast.LENGTH_LONG).show();
+					// }
+					// // When Http response code is '500'
+					// else if (statusCode == 500) {
+					// Toast.makeText(getApplicationContext(),
+					// "Something went wrong at server end",
+					// Toast.LENGTH_LONG).show();
+					// }
+					// // When Http response code other than 404, 500
+					// else {
+					// Toast.makeText(
+					// getApplicationContext(),
+					// "Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]",
+					// Toast.LENGTH_LONG).show();
+					// }
+					// }
+
 					@Override
-					public void onSuccess(String response) {
+					public void onFailure(int statusCode, Header[] arg1,
+							byte[] arg2, Throwable arg3) {
+						// TODO Auto-generated method stub
+						prgDialog.hide();
+						// When Http response code is '404'
+						if (statusCode == 404) {
+							Toast.makeText(getApplicationContext(),
+									"Requested resource not found",
+									Toast.LENGTH_LONG).show();
+						}
+						// When Http response code is '500'
+						else if (statusCode == 500) {
+							Toast.makeText(getApplicationContext(),
+									"Something went wrong at server end",
+									Toast.LENGTH_LONG).show();
+						}
+						// When Http response code other than 404, 500
+						else {
+							Toast.makeText(
+									getApplicationContext(),
+									"Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]",
+									Toast.LENGTH_LONG).show();
+						}
+					}
+
+					@Override
+					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+						// TODO Auto-generated method stub
 						// 隐藏进度对话框
 						prgDialog.hide();
 						try {
 							// 将webservice返回的字符串转化为JSON Object
-							JSONObject obj = new JSONObject(response);
+							String str = new String(arg2);
+							JSONObject obj = new JSONObject(str);
 							if (obj.getBoolean("status")) {
 								// Set Default Values for Edit View controls
 								setDefaultValues();
@@ -126,33 +214,6 @@ public class RegisterActivity extends Activity {
 									Toast.LENGTH_LONG).show();
 							e.printStackTrace();
 
-						}
-					}
-
-					// When the response returned by REST has Http response code
-					// other than '200'
-					@Override
-					public void onFailure(int statusCode, Throwable error,
-							String content) {
-						prgDialog.hide();
-						// When Http response code is '404'
-						if (statusCode == 404) {
-							Toast.makeText(getApplicationContext(),
-									"Requested resource not found",
-									Toast.LENGTH_LONG).show();
-						}
-						// When Http response code is '500'
-						else if (statusCode == 500) {
-							Toast.makeText(getApplicationContext(),
-									"Something went wrong at server end",
-									Toast.LENGTH_LONG).show();
-						}
-						// When Http response code other than 404, 500
-						else {
-							Toast.makeText(
-									getApplicationContext(),
-									"Unexpected Error occcured! [Most common Error: Device might not be connected to Internet or remote server is not up and running]",
-									Toast.LENGTH_LONG).show();
 						}
 					}
 				});

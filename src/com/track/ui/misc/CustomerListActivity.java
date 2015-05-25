@@ -23,10 +23,12 @@ import android.view.View;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.track.app.user.R;
 import com.track.loader.CustomerListLoader;
 import com.track.misc.model.Customer;
+import com.track.ui.adapter.CustomerListAdapter;
 
 public class CustomerListActivity extends ActionBarActivity {
 
@@ -39,7 +41,6 @@ public class CustomerListActivity extends ActionBarActivity {
 
 		FragmentManager fm = getSupportFragmentManager();
 
-		// Create the list fragment and add it as our sole content.
 		if (fm.findFragmentById(android.R.id.content) == null) {
 			list_fg = new PlaceholderFragment();
 			fm.beginTransaction().add(android.R.id.content, list_fg).commit();
@@ -52,7 +53,7 @@ public class CustomerListActivity extends ActionBarActivity {
 	}
 
 	/**
-	 * A placeholder fragment containing a simple view.
+	 * 点击运单编辑界面的客户姓名，跳转到此fragment
 	 */
 	public static class PlaceholderFragment extends ListFragment {
 		private CustomerListAdapter mAdapter;
@@ -70,30 +71,28 @@ public class CustomerListActivity extends ActionBarActivity {
 		public void onActivityCreated(Bundle savedInstanceState) {
 			super.onActivityCreated(savedInstanceState);
 
-			// Give some text to display if there is no data. In a real
-			// application this would come from a resource.
-			setEmptyText("锟斤拷锟揭客伙拷!");
+			setEmptyText("查找客户!");
 
-			// We have a menu item to show in action bar.
 			setHasOptionsMenu(true);
-
-			// Create an empty adapter we will use to display the loaded data.
 			mAdapter = new CustomerListAdapter(new ArrayList<Customer>(),
 					this.getActivity());
 			setListAdapter(mAdapter);
-
 			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
-			registerForContextMenu(getListView()); // getListView().setLongClickable(true);
+			registerForContextMenu(getListView());
+			// getListView().setLongClickable(true);
 
-			// Start out with a progress indicator.
 			// setListShown(false);
 
 			if (mIntent.hasExtra("Action")) {
 				if (mIntent.getStringExtra("Action").equals("New")) {
+					selectItem = (Customer) mIntent
+							.getSerializableExtra("Customer");
+					RefreshList(selectItem.getCname());
+				} else if (mIntent.getStringExtra("Action").equals("Query")
+						|| mIntent.getStringExtra("Action").equals("Add")) {
 					// mItem = new Customer();
-				} else if (mIntent.getStringExtra("Action").equals("None")) {
-					// mItem = new Customer();
+					RefeshAllList();
 				} else if (mIntent.getStringExtra("Action").equals("Edit")) {
 					if (mIntent.hasExtra("Customer")) {
 						selectItem = (Customer) mIntent
@@ -121,10 +120,11 @@ public class CustomerListActivity extends ActionBarActivity {
 
 		@Override
 		public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-			// Inflate the menu; this adds items to the action bar if it is
-			// present.
+
+			// 客户列表菜单
 			inflater.inflate(R.menu.customer_list, menu);
 
+			// 获取“搜索按钮”菜单控件
 			MenuItem item = menu.findItem(R.id.action_search);
 			final SearchView searchView = (SearchView) item.getActionView();
 			if (searchView != null) {
@@ -133,13 +133,11 @@ public class CustomerListActivity extends ActionBarActivity {
 						new OnQueryTextListenerCompat() {
 							@Override
 							public boolean onQueryTextChange(String newText) {
-								// Called when the action bar search text has
-								// changed. Since this
-								// is a simple array adapter, we can just have
-								// it do the filtering.
+
 								return true;
 							}
 
+							// 当搜索结果提交时执行
 							@Override
 							public boolean onQueryTextSubmit(String query) {
 								if (!TextUtils.isEmpty(query)) {
@@ -167,18 +165,24 @@ public class CustomerListActivity extends ActionBarActivity {
 			}
 		}
 
+		// 点击客户列表的界面的菜单选项，分别触发不同的事件
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
 			int id = item.getItemId();
 			switch (id) {
 			case android.R.id.home:
+				this.getActivity().finish();
+				return true;
 			case R.id.action_ok:
-				SelectOk(); // 锟斤拷锟截革拷锟较诧拷
+				// 将选中客户数据放进mIntent，结束自己的Activity
+				SelectOk();
 				return true;
 			case R.id.action_edit:
+				// 跳转到CustomerEditActvity
 				EditItem();
 				return true;
 			case R.id.action_new:
+				// 跳转到CustomerEditActivity
 				NewItem();
 				return true;
 			case R.id.action_search:
@@ -187,6 +191,7 @@ public class CustomerListActivity extends ActionBarActivity {
 			return super.onOptionsItemSelected(item);
 		}
 
+		// 长按客户列表触发上下文菜单
 		@Override
 		public void onCreateContextMenu(ContextMenu menu, View v,
 				ContextMenuInfo menuInfo) {
@@ -198,22 +203,22 @@ public class CustomerListActivity extends ActionBarActivity {
 			selectItem = mAdapter.getItem(info.position);
 			selectPosition = info.position;
 			this.getActivity().setTitle(selectItem.getCname());
-			menu.setHeaderTitle("锟酵伙拷: " + selectItem.getCname());
-			menu.add(info.position, 1, 0, "选锟斤拷");
-			menu.add(info.position, 2, 1, "锟睫革拷");
-			menu.add(info.position, 3, 2, "删锟斤拷");
+			menu.setHeaderTitle("客户: " + selectItem.getCname());
+			menu.add(info.position, 1, 0, "选择");
+			menu.add(info.position, 2, 1, "修改");
+			menu.add(info.position, 3, 2, "删除");
 		}
 
 		@Override
 		public boolean onContextItemSelected(MenuItem item) {
 			// AdapterContextMenuInfo info = (AdapterContextMenuInfo)
 			// item.getMenuInfo();
-			if (item.getTitle().equals("选锟斤拷")) {
-				SelectOk(); // 锟斤拷锟截革拷锟较诧拷
-			} else if (item.getTitle().equals("锟睫革拷")) {
-				EditItem(); // 锟洁辑锟酵伙拷
-			} else if (item.getTitle().equals("删锟斤拷")) {
-				DeleteItem(); // 删锟斤拷锟酵伙拷
+			if (item.getTitle().equals("选择")) {
+				SelectOk(); // 返回给上层
+			} else if (item.getTitle().equals("修改")) {
+				EditItem(); // 编辑客户
+			} else if (item.getTitle().equals("删除")) {
+				DeleteItem(); // 删除客户
 			}
 			return super.onContextItemSelected(item);
 		}
@@ -227,7 +232,7 @@ public class CustomerListActivity extends ActionBarActivity {
 
 		@Override
 		public void onActivityResult(int requestCode, int resultCode,
-				Intent data) { // 锟洁辑锟斤拷锟斤拷幕氐锟?
+				Intent data) { // 编辑界面的回调
 			switch (resultCode) {
 			case RESULT_OK:
 				Customer customer;
@@ -252,18 +257,28 @@ public class CustomerListActivity extends ActionBarActivity {
 		}
 
 		private void SelectOk() {
-			mIntent.putExtra("Customer", selectItem);
-			this.getActivity().setResult(RESULT_OK, mIntent);
-			this.getActivity().finish();
+			if (selectItem != null) {
+				mIntent.putExtra("Customer", selectItem);
+				this.getActivity().setResult(RESULT_OK, mIntent);
+				this.getActivity().finish();
+			} else {
+				Toast.makeText(getActivity(), "请至少选择一项！", Toast.LENGTH_SHORT)
+						.show();
+			}
 		}
 
 		private void EditItem() {
-			Intent intent = new Intent();
-			intent.setClass(this.getActivity(), CustomerEditActivity.class);
-			intent.putExtra("Action", "Edit");
-			intent.putExtra("Customer", selectItem);
-			this.getActivity().startActivityForResult(intent,
-					CustomerEditActivity.INTENT_EDIT); // 锟斤拷锟斤拷锟铰诧拷嗉?
+			if (selectItem != null) {
+				Intent intent = new Intent();
+				intent.setClass(this.getActivity(), CustomerEditActivity.class);
+				intent.putExtra("Action", "Edit");
+				intent.putExtra("Customer", selectItem);
+				this.getActivity().startActivityForResult(intent,
+						CustomerEditActivity.INTENT_EDIT);
+			} else {
+				Toast.makeText(getActivity(), "请至少选择一项！", Toast.LENGTH_SHORT)
+						.show();
+			}
 		}
 
 		private void NewItem() {
@@ -271,7 +286,7 @@ public class CustomerListActivity extends ActionBarActivity {
 			intent.setClass(this.getActivity(), CustomerEditActivity.class);
 			intent.putExtra("Action", "New");
 			this.getActivity().startActivityForResult(intent,
-					CustomerEditActivity.INTENT_NEW); // 锟斤拷锟斤拷锟铰诧拷嗉?锟斤拷锟斤拷锟铰碉拷
+					CustomerEditActivity.INTENT_NEW); // 激发下层编辑-建立新的
 		}
 
 		private void DeleteItem() {
@@ -285,7 +300,7 @@ public class CustomerListActivity extends ActionBarActivity {
 
 		private void RefreshList(String name) {
 			this.getActivity().setTitle("");
-			if (checkMobile(name)) { // 锟斤拷锟较电话锟斤拷锟斤拷墓锟斤拷锟?锟斤拷锟界话锟斤拷锟斤拷锟窖?
+			if (checkMobile(name)) { // 符合电话号码的规律,按电话号码查询
 				try {
 					mLoader = new CustomerListLoader(mAdapter,
 							this.getActivity());
@@ -304,13 +319,24 @@ public class CustomerListActivity extends ActionBarActivity {
 			}
 		}
 
+		private void RefeshAllList() {
+			// TODO Auto-generated method stub
+			try {
+				mLoader = new CustomerListLoader(mAdapter, this.getActivity());
+				mLoader.LoadCustomerList();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		public boolean checkMobile(String str) {
-			String regex_mb = "(\\+\\d+)?1[34578]\\d{9}$"; // 锟狡讹拷锟界话锟斤拷锟斤拷锟斤拷锟斤拷式
-			String regex_ph = "(\\+\\d+)?(\\d{3,4}\\-?)?\\d{7,8}$"; // 锟教讹拷锟界话锟斤拷锟斤拷锟斤拷锟斤拷式
+			String regex_mb = "(\\+\\d+)?1[34578]\\d{9}$"; // 移动电话的正则表达式
+			String regex_ph = "(\\+\\d+)?(\\d{3,4}\\-?)?\\d{7,8}$"; // 固定电话的正则表达式
 			Pattern pattern_mb = Pattern.compile(regex_mb);
 			Pattern pattern_ph = Pattern.compile(regex_ph);
 			return pattern_mb.matcher(str).matches()
 					|| pattern_ph.matcher(str).matches();
 		}
 	}
+
 }

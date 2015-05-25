@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="extrace.ui.domain.ExpressEditActivity$ExpressEditFragment1" >
+    android:background="@color/white"
+    tools:context="com.track.ui.domain.ExpressEditActivity$ExpressEditFragment1" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -29,7 +30,7 @@
                 android:textColor="@color/black"
                 android:textSize="16dip" />
 
-            <TextView
+            <EditText
                 android:id="@+id/expressId"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
@@ -44,7 +45,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/btn_camera" />
+                android:src="@drawable/search_express" />
         </LinearLayout>
 
         <TextView
@@ -94,7 +95,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu_user" />
+                android:src="@drawable/contact_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -183,7 +184,7 @@
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/menu_user" />
+                android:src="@drawable/contact_normal" />
         </LinearLayout>
 
         <LinearLayout
