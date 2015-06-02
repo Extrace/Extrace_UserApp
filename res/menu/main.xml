@@ -14,5 +14,32 @@
         android:icon="@drawable/men_scan_icon"
         app:showAsAction="always"
         android:title="扫描"/>
+    
+     <item
+        android:id="@+id/action_my_package"
+        android:orderInCategory="100"
+        android:title="@string/action_my_package"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_my_message"
+        android:orderInCategory="100"
+        android:title="@string/action_my_message"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_my_location"
+        android:orderInCategory="100"
+        android:title="@string/action_my_location"
+        app:showAsAction="never"/>
+    
+    <item
+        android:id="@+id/action_exit"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
 
 </menu>

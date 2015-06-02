@@ -30,10 +30,10 @@
                 android:textColor="@color/black"
                 android:textSize="16dip" />
 
-            <EditText
+            <TextView
                 android:id="@+id/expressId"
                 android:layout_width="match_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_weight="1"
                 android:gravity="center"

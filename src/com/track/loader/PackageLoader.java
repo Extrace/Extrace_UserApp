@@ -11,13 +11,13 @@ import com.track.net.IDataAdapter;
 import com.track.net.JsonUtils;
 import com.track.util.ExTraceApplication;
 
-public class TransPackageLoader extends HttpAsyncTask {
+public class PackageLoader extends HttpAsyncTask {
 
 	String url;
 	IDataAdapter<Package> adapter;
 	private Activity context;
 
-	public TransPackageLoader(IDataAdapter<Package> adpt, Activity context) {
+	public PackageLoader(IDataAdapter<Package> adpt, Activity context) {
 		super(context);
 		this.context = context;
 		adapter = adpt;
@@ -33,7 +33,7 @@ public class TransPackageLoader extends HttpAsyncTask {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
-		} else if (class_name.equals("R_TransPackage")) // 保存完成
+		} else if (class_name.equals("R_Package")) // 保存完成
 		{
 			Package ci = JsonUtils.fromJson(json_data,
 					new TypeToken<Package>() {
@@ -50,6 +50,15 @@ public class TransPackageLoader extends HttpAsyncTask {
 	public void onStatusNotify(RETURN_STATUS status, String str_response) {
 		// TODO Auto-generated method stub
 
+	}
+
+	public void New(String id) {
+		url += "newTransPackage/id/" + id + "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void Load(String id) {

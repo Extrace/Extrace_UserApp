@@ -17,6 +17,12 @@
 
 <!-- Colors specific to Material themes. -->
 <resources>
+    <color name="grey"> #ebebeb</color>
+    <color name="black"> #000000</color>
+    <color name="darkgrey"> #C0C0C0</color>
+    <color name="white"> #FFFFFF</color>
+     <color name="red"> #FF0000</color>
+     <color name="darkyellow"> #FFCC33</color>
     <color name="background_material_dark">#ff303030</color>
     <color name="background_material_light">#ffeeeeee</color>
     <color name="background_floating_material_dark">#ff424242</color>

@@ -13,6 +13,17 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+ 
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -22,6 +33,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme" >
+          <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="ee2c789e1e427e1f0f089cec3d0fa2a9" />
         <activity
             android:name="com.track.ui.main.MainActivity"
             android:label="@string/app_name" >
@@ -37,6 +51,38 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name="com.amap.location.demo.CurrentWeatherReportActivity"
+              android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="com.amap.location.demo.FutureWeatherReportActivity"
+              android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
+         <activity
+            android:name="com.amap.location.demo.NetLocationActivity" 
+              android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
+        
+          <activity
+            android:name="com.amap.location.demo.MultyLocationActivity"
+              android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
+        
+            <activity
+            android:name="com.amap.location.demo.GeoFenceActivity"
+              android:screenOrientation="portrait"
+            android:label="@string/app_name" >
+        </activity>
+            <activity
+            android:name="com.amap.location.demo.GPSLocationActivity"
+              android:screenOrientation="portrait"
+            android:label="@string/app_name" >
         </activity>
          <activity
             android:name="com.track.ui.main.LoginActivity"
@@ -77,6 +123,10 @@
         <activity
             android:name="com.track.ui.domain.ExpressEditActivity"
             android:label="@string/title_activity_express_edit" >
+        </activity>
+        <activity
+            android:name="com.track.ui.domain.PackageEditActivity"
+            android:label="包裹信息" >
         </activity>
     </application>
 

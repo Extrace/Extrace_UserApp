@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -44,7 +43,7 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	public static final int REQUEST_CAPTURE = 100;
 	public static final int REQUEST_RCV = 101;
 	public static final int REQUEST_SND = 102;
-	public static EditText mIDView;
+	public static TextView mIDView;
 
 	SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -106,9 +105,21 @@ public class ExpressEditActivity extends ActionBarActivity implements
 					e.printStackTrace();
 				}
 
-				// StartCapture();
+			} else if (mIntent.getStringExtra("Action").equals("NewD")) {
+				try {
+					mLoader = new ExpressLoader(this, this);
+					mLoader.Dispatch(mIntent.getStringExtra("ExpId"));
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else if (mIntent.getStringExtra("Action").equals("Query")) {
-				StartCapture();
+				try {
+					mLoader = new ExpressLoader(this, this);
+					mLoader.Load(mIntent.getStringExtra("ExpId"));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else if (mIntent.getStringExtra("Action").equals("Edit")) {
 				ExpressSheet es;
 				if (mIntent.hasExtra("ExpressSheet")) {
@@ -156,9 +167,10 @@ public class ExpressEditActivity extends ActionBarActivity implements
 				Refresh(mItem.getId());
 			}
 			return true;
-			// 触发哪一个？
+			// 触发哪一个？返回键。。
 		case (android.R.id.home):
 			mIntent.putExtra("ExpressSheet", mItem);
+			mIntent.putExtra("result", mIDView.getEditableText().toString());
 			this.setResult(RESULT_OK, mIntent);
 			this.finish();
 			return true;
@@ -254,12 +266,13 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	}
 
 	void Save() {
-		if (mItem != null) {
+		if (mItem != null && mItem.getReceiver() != null
+				&& mItem.getSender() != null) {
 			// mItem.setId(mIDView.getText().toString());
 			mLoader = new ExpressLoader(this, this);
 			mLoader.Save(mItem);
 		} else {
-			Toast.makeText(getApplicationContext(), "运单为null",
+			Toast.makeText(getApplicationContext(), "运单信息填写不完整，无法揽收！",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -377,7 +390,7 @@ public class ExpressEditActivity extends ActionBarActivity implements
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_express_edit1,
 					container, false);
-			mIDView = (EditText) rootView.findViewById(R.id.expressId);
+			mIDView = (TextView) rootView.findViewById(R.id.expressId);
 			mRcvNameView = (TextView) rootView
 					.findViewById(R.id.expressRcvName);
 			mRcvTelCodeView = (TextView) rootView

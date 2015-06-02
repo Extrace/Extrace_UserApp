@@ -116,4 +116,13 @@ public class Package implements Serializable {
 		return _saved;
 	}
 
+	public static final class STATUS {
+		public static final int STATUS_CREATED = 0;
+		public static final int STATUS_PACKED = 1;
+		public static final int STATUS_TRANSPORT = 2;
+		public static final int STATUS_PARTATION = 3;
+		public static final int STATUS_DELIVED = 4;
+		public static final int STATUS_DISPACHED = 5;
+	}
+
 }

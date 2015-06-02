@@ -31,14 +31,15 @@ public class MenuAdapter extends BaseAdapter {
 
 	private Integer[] images = { R.drawable.menu_index,
 			R.drawable.menu_deliver, R.drawable.menu_deliver,
-			R.drawable.menu_pack, R.drawable.menu_pack,
+			R.drawable.menu_pack, R.drawable.menu_pack, R.drawable.menu_pack,
 			R.drawable.menu_customer2, R.drawable.menu_about
 
 	};
 
 	private Integer[] texts = { R.string.menu_index, R.string.menu_receive,
 			R.string.menu_deliver, R.string.menu_unpack, R.string.menu_pack,
-			R.string.menu_customermanage, R.string.menu_about };
+			R.string.menu_receivepkg, R.string.menu_customermanage,
+			R.string.menu_about };
 
 	@Override
 	public int getCount() {

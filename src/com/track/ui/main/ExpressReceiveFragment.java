@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 import com.track.app.user.R;
 import com.track.ui.domain.ExpressEditActivity;
+import com.track.ui.domain.ExpressListFragment;
 import com.zxing.activity.CaptureActivity;
 
 public class ExpressReceiveFragment extends Fragment {
@@ -24,6 +27,7 @@ public class ExpressReceiveFragment extends Fragment {
 	private ImageView mImageCamera;
 	private static EditText mEditText;
 	private Button mButton;
+	private Button mBtR;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,6 +37,7 @@ public class ExpressReceiveFragment extends Fragment {
 		mEditText = (EditText) view.findViewById(R.id.id_et_pkgNum);
 		mImageCamera = (ImageView) view.findViewById(R.id.id_iv_camera);
 		mButton = (Button) view.findViewById(R.id.button1);
+		mBtR = (Button) view.findViewById(R.id.btnToRcvTasks);
 		mImageCamera.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -89,6 +94,19 @@ public class ExpressReceiveFragment extends Fragment {
 				}
 			}
 		});
+
+		mBtR.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				FragmentManager mfragmentManager = getFragmentManager();
+				FragmentTransaction ft = mfragmentManager.beginTransaction();
+				ft.replace(R.id.container,
+						ExpressListFragment.newInstance("ExRCV"));
+				ft.addToBackStack(null);
+				ft.commit();
+			}
+		});
 		return view;
 	}
 
@@ -96,7 +114,12 @@ public class ExpressReceiveFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		String result = data.getExtras().getString("result");
+		String result;
+		if (data != null) {
+			result = data.getExtras().getString("result");
+		} else {
+			result = "";
+		}
 		mEditText.setText(result);
 
 	}

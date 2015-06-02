@@ -3,4 +3,5 @@
     <issue id="RtlHardcoded">
         <ignore path="src/com/track/app/user/MainActivity.java" />
     </issue>
+    <issue id="SimpleDateFormat" severity="ignore" />
 </lint>

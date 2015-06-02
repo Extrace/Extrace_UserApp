@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingBottom="100dp"
+    android:background="#fff"
+    android:orientation="vertical" >
+    <EditText
+        android:id="@+id/id_et_pkgNum"
+        android:layout_width="176dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageView
+        android:id="@+id/id_iv_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/id_et_pkgNum"
+        android:layout_toRightOf="@+id/id_et_pkgNum"
+        android:src="@drawable/btn_camera" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/id_et_pkgNum"
+        android:src="@drawable/img_barcode" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_iv_camera"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/round_button"
+        android:textColor="#000"
+        android:text="点击派送"
+        android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/id_et_pkgNum"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="35dp"
+        android:text="请输入或扫描您要派送的运单号：" />
+    
+     <Button
+         android:id="@+id/btnToDispTasks"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentLeft="true"
+         android:layout_below="@+id/button1"
+         android:layout_marginTop="18dp"
+         android:textSize="15sp"
+         android:background="@null"
+         android:text="查看我的派送任务"
+         android:textColor="@color/toolbar"
+         android:textStyle="bold" />
+
+</RelativeLayout>

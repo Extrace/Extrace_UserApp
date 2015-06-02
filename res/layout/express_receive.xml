@@ -2,9 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="#fff"
-    android:orientation="vertical" >
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="100dp" >
 
     <EditText
         android:id="@+id/id_et_pkgNum"
@@ -43,7 +44,30 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="19dp"
         android:background="@drawable/round_button"
+        android:textColor="#000"
         android:text="新建运单"
         android:textSize="17sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/id_et_pkgNum"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="35dp"
+        android:text="请输入或扫描您要新建的运单号："
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnToRcvTasks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="18dp"
+        android:background="@null"
+        android:text="查看我的揽收任务"
+        android:textColor="@color/toolbar"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

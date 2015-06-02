@@ -33,16 +33,29 @@ public class ExpressLoader extends HttpAsyncTask {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
-		} else if (class_name.equals("E_ExpressSheet")) // 已经存在
-		{
+		} else if (class_name.equals("NP_ExpressSheet")) {
+			Toast.makeText(context, "你还没有揽收包裹！请新建包裹！", Toast.LENGTH_SHORT)
+					.show();
+		} else if (class_name.equals("DP_ExpressSheet")) {
+			Toast.makeText(context, "你还没有派送包裹！请新建包裹！", Toast.LENGTH_SHORT)
+					.show();
+		} else if (class_name.equals("D_ExpressSheet")) {
+			ExpressSheet ci = JsonUtils.fromJson(json_data,
+					new TypeToken<ExpressSheet>() {
+					});
+			adapter.setData(ci);
+			adapter.notifyDataSetChanged();
+			Toast.makeText(context, "快件正在派送，请到“首页—>个人中心”处理！",
+					Toast.LENGTH_SHORT).show();
+		} else if (class_name.equals("E_ExpressSheet")) {// 已经存在
 			ExpressSheet ci = JsonUtils.fromJson(json_data,
 					new TypeToken<ExpressSheet>() {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
 			Toast.makeText(context, "快件运单信息已经存在!", Toast.LENGTH_SHORT).show();
-		} else if (class_name.equals("R_ExpressSheet")) // 保存完成
-		{
+		} else if (class_name.equals("R_ExpressSheet")) {
+			// 保存完成
 			ExpressSheet ci = JsonUtils.fromJson(json_data,
 					new TypeToken<ExpressSheet>() {
 					});
@@ -50,16 +63,18 @@ public class ExpressLoader extends HttpAsyncTask {
 			adapter.getData().onSave();
 			adapter.notifyDataSetChanged();
 			Toast.makeText(context, "快件运单信息保存完成!", Toast.LENGTH_SHORT).show();
-		} else {
+		} else if (class_name.equals("N_ExpressSheet")) {
+			Toast.makeText(context, "查无此单，请返回检查运单号是否正确!", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 
 	@Override
 	public void onStatusNotify(RETURN_STATUS status, String str_response) {
-		// TODO Auto-generated method stub
 
 	}
 
+	// 获取单个快件Byid
 	public void Load(String id) {
 		url += "getExpressSheet/" + id + "?_type=json";
 		try {
@@ -69,6 +84,7 @@ public class ExpressLoader extends HttpAsyncTask {
 		}
 	}
 
+	// 新建一个快件，并将快件放入user的揽收（receive）包裹
 	public void New(String id) {
 		int uid = ((ExTraceApplication) context.getApplication())
 				.getLoginUser().getId();
@@ -80,6 +96,21 @@ public class ExpressLoader extends HttpAsyncTask {
 		}
 	}
 
+	// 派送快件
+	public void Dispatch(String id) {
+
+		int uid = ((ExTraceApplication) context.getApplication())
+				.getLoginUser().getId();
+		url += "dispatchExpressSheetId/id/" + id + "/uid/" + uid
+				+ "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 保存快件信息
 	public void Save(ExpressSheet es) {
 		String jsonObj = JsonUtils.toJson(es, true);
 		url += "saveExpressSheet";

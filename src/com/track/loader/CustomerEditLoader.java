@@ -52,6 +52,7 @@ public class CustomerEditLoader extends HttpAsyncTask {
 		Log.i("onStatusNotify", "onStatusNotify: " + str_response);
 	}
 
+	// 获取客户信息byId
 	public void LoadCustomer(int id) {
 		url += "getCustomerInfo/" + id + "?_type=json";
 		try {
@@ -76,6 +77,7 @@ public class CustomerEditLoader extends HttpAsyncTask {
 		SaveCustomer(cstm);
 	}
 
+	// 保存客户信息
 	public void SaveCustomer(Customer cstm) {
 		String jsonObj = JsonUtils.toJson(cstm, true);
 		url += "saveCustomerInfo";

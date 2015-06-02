@@ -123,7 +123,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 			stText = "新建";
 			break;
 		case ExpressSheet.STATUS.STATUS_RECEIVED:
-			stText = "揽收中";
+			stText = "已揽收";
 			break;
 		case ExpressSheet.STATUS.STATUS_DELIVERIED:
 			stText = "已交付";
@@ -132,7 +132,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 			stText = "派送中";
 			break;
 		case ExpressSheet.STATUS.STATUS_PARTATION:
-			stText = "分拣中";
+			stText = "正在分拣";
 			break;
 		}
 		hd.status.setText(stText);

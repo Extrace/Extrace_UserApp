@@ -16,8 +16,7 @@ import com.track.util.ExTraceApplication;
 
 public class CustomerListLoader extends HttpAsyncTask {
 
-	// private static final String PREFS_NAME = "ExTrace.cfg";
-	String url;// = "http://192.168.7.100:8080/TestCxfHibernate/REST/Misc/";
+	String url;
 	IDataAdapter<List<Customer>> adapter;
 	private Activity context;
 
@@ -28,23 +27,11 @@ public class CustomerListLoader extends HttpAsyncTask {
 		adapter = adpt;
 		url = ((ExTraceApplication) context.getApplication())
 				.getMiscServiceUrl();
-		// SharedPreferences settings = context.getSharedPreferences(PREFS_NAME,
-		// 0);
-		// url = settings.getString("ServerUrl", "");
-		// if(url == null || url.length() == 0)
-		// {
-		// url = "http://192.168.7.100:8080/TestCxfHibernate/REST/Misc/";
-		// //把这个改成泥的TOMCAT主机的URL
-		// SharedPreferences.Editor editor = settings.edit();
-		// editor.putString("ServerUrl", url);
-		// editor.commit();
-		// }
 	}
 
 	@Override
 	public void onDataReceive(String class_data, String json_data) {
 		if (json_data.equals("Deleted")) {
-			// adapter.getData().remove(0);//这个地方不好处理
 			Toast.makeText(context, "客户信息已删除!", Toast.LENGTH_SHORT).show();
 		} else {
 			if (json_data == null || json_data.length() == 0) {
@@ -68,6 +55,7 @@ public class CustomerListLoader extends HttpAsyncTask {
 		Log.i("onStatusNotify", "onStatusNotify: " + str_response);
 	}
 
+	// 获取客户列表byTelcode
 	public void LoadCustomerListByTelCode(String telCode) {
 		url += "getCustomerListByTelCode/" + telCode + "?_type=json";
 		try {
@@ -77,6 +65,7 @@ public class CustomerListLoader extends HttpAsyncTask {
 		}
 	}
 
+	// 获取客户列表byName（支持模糊查询）
 	public void LoadCustomerListByName(String name) {
 		url += "getCustomerListByName/" + name + "?_type=json";
 		try {
@@ -86,6 +75,7 @@ public class CustomerListLoader extends HttpAsyncTask {
 		}
 	}
 
+	// 获取所有客户列表
 	public void LoadCustomerList() {
 		url += "getCustomerList?_type=json";
 		try {
@@ -96,6 +86,7 @@ public class CustomerListLoader extends HttpAsyncTask {
 
 	}
 
+	// 删除客户ById
 	public void DeleteCustomer(int id) {
 		url += "deleteCustomerInfo/" + id + "?_type=json";
 		try {

@@ -15,7 +15,7 @@ import com.track.misc.model.User;
 import com.track.net.JsonUtils;
 
 public class ExTraceApplication extends Application {
-	private static final String PREFS_NAME = "ExTrace.cfg";
+	private static final String PREFS_NAME = "ExTrace_lb.cfg";
 	private static final String USER_INFO = "userInfo";
 	String mServerUrl;
 	String mMiscService, mDomainService;
@@ -89,9 +89,8 @@ public class ExTraceApplication extends Application {
 					});
 					setLoginUser(user);
 					updateUserInfo();
-					Toast.makeText(getApplicationContext(),
-							"获取用户数据成功 ！" + user.toString(), Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(getApplicationContext(), "获取用户数据成功 ！",
+							Toast.LENGTH_SHORT).show();
 				}
 
 			});
@@ -121,7 +120,7 @@ public class ExTraceApplication extends Application {
 		mMiscService = settings.getString("MiscService", "/rest/Misc/");
 		mDomainService = settings.getString("DomainService", "/rest/Domain/");
 		if (mServerUrl == null || mServerUrl.length() == 0) {
-			mServerUrl = "http://192.168.191.1:8080/TestCxfHibernate";
+			mServerUrl = "http://192.168.10.146:8080/TestCxfHibernate";
 			mMiscService = "/rest/Misc/";
 			mDomainService = "/rest/Domain/";
 			SharedPreferences.Editor editor = settings.edit();

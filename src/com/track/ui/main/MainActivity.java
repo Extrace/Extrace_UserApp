@@ -18,11 +18,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.amap.location.demo.MultyLocationActivity;
 import com.track.app.user.R;
 import com.track.ui.domain.ExpressListFragment;
 import com.track.ui.domain.ExpressListFragment.OnFragmentInteractionListener;
 import com.track.ui.domain.ExpressSendFragment;
 import com.track.ui.minor.MyCenterTabFragment;
+import com.track.ui.minor.PackageListTabFragment;
 import com.track.ui.minor.TransPackageTabFragment;
 import com.track.ui.misc.CustomerListActivity;
 import com.zxing.activity.CaptureActivity;
@@ -32,7 +34,7 @@ import com.zxing.activity.CaptureActivity;
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks,
 		MyCenterTabFragment.TestCallbacks, ActionBar.TabListener,
-		OnFragmentInteractionListener {
+		OnFragmentInteractionListener, PackageListTabFragment.PkgListCallbacks {
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
@@ -44,6 +46,10 @@ public class MainActivity extends ActionBarActivity implements
 	private ExpressSendFragment mExpressSendFragment;
 	private FragmentManager mfragmentManager;
 	private ExpressReceiveFragment mExpressReceiveFragment;
+	private ExpressDispatcherFragment mExpressDispatcherFragment;
+	private PackageUnpackFragment mPackageUnpackFragment;
+	private PackagePackFragment mPackagePackFragment;
+	private AboutFragment mAboutFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +112,10 @@ public class MainActivity extends ActionBarActivity implements
 		mTransPackageTabFragment = new TransPackageTabFragment();
 		mExpressSendFragment = new ExpressSendFragment();
 		mExpressReceiveFragment = new ExpressReceiveFragment();
+		mExpressDispatcherFragment = new ExpressDispatcherFragment();
+		mPackagePackFragment = new PackagePackFragment();
+		mPackageUnpackFragment = new PackageUnpackFragment();
+		mAboutFragment = new AboutFragment();
 
 		FragmentTransaction mFragmentTransaction = mfragmentManager
 				.beginTransaction();
@@ -137,8 +147,9 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 		// 快件派送
 		case 2:
-			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
-					.commit();
+			mFragmentTransaction.replace(R.id.container,
+					mExpressDispatcherFragment);
+			mFragmentTransaction.commit();
 			onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -149,8 +160,9 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 包裹拆包
 		case 3:
-			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
-					.commit();
+			mFragmentTransaction
+					.replace(R.id.container, mPackageUnpackFragment);
+			mFragmentTransaction.commit();
 			onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -161,8 +173,8 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 包裹打包
 		case 4:
-			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
-					.commit();
+			mFragmentTransaction.replace(R.id.container, mPackagePackFragment);
+			mFragmentTransaction.commit();
 			onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -187,8 +199,8 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 关于
 		case 6:
-			mFragmentTransaction.replace(R.id.container, mExpressSendFragment)
-					.commit();
+			mFragmentTransaction.replace(R.id.container, mAboutFragment);
+			mFragmentTransaction.commit();
 			onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
@@ -270,7 +282,36 @@ public class MainActivity extends ActionBarActivity implements
 			startActivityForResult(openCameraIntent, 0);
 			return true;
 		}
+
+		if (id == R.id.action_exit) {
+			this.finish();
+			return true;
+		}
+
+		if (id == R.id.action_my_package) {
+
+			showPackages();
+
+			return true;
+		}
+
+		if (id == R.id.action_my_location) {
+			toLocationActivity();
+			return true;
+		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void toLocationActivity() {
+		// TODO Auto-generated method stub
+		Intent multyIntent = new Intent(MainActivity.this,
+				MultyLocationActivity.class);
+		startActivity(multyIntent);
+
+	}
+
+	private void showPackages() {
+
 	}
 
 	/**

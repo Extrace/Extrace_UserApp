@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <item
+        android:id="@+id/location_details"
+        android:orderInCategory="100"
+        android:title="详细信息"/>
+    <item
+        android:id="@+id/location_my"
+        android:orderInCategory="100"
+        android:title="我的位置"/>
+
+</menu>

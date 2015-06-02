@@ -10,13 +10,13 @@ import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
 import com.track.util.ExTraceApplication;
 
-public class TransPackageListLoader extends HttpAsyncTask {
+public class PackageListLoader extends HttpAsyncTask {
 
 	String url;
 	IDataAdapter<List<Package>> adapter;
 	private Activity context;
 
-	public TransPackageListLoader(IDataAdapter<List<Package>> adpt,
+	public PackageListLoader(IDataAdapter<List<Package>> adpt,
 			Activity context) {
 		super(context);
 		this.context = context;

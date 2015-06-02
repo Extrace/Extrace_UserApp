@@ -48,8 +48,10 @@ public class ExpressListLoader extends HttpAsyncTask {
 		Log.i("onStatusNotify", "onStatusNotify: " + str_response);
 	}
 
+	// 获取快件列表,可以指定（将 like ---> eq ）
+	// 也可以模糊查询 （ 6 代表运单id的模糊查询？）
 	public void LoadExpressList() {
-		url += "getExpressList/ID/like/6?_type=json";
+		url += "getExpressList/id/like/6?_type=json";
 		try {
 			execute(url, "GET");
 		} catch (Exception e) {
@@ -57,6 +59,7 @@ public class ExpressListLoader extends HttpAsyncTask {
 		}
 	}
 
+	// 获取指定包裹的快件列表
 	public void LoadExpressListInPackage(String pkgId) {
 		url += "getExpressListInPackage/PackageId/" + pkgId + "?_type=json";
 		try {
