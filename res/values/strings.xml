@@ -7,6 +7,7 @@
     <string name="menu_deliver">快件派送</string>
     <string name="menu_unpack">包裹拆包</string>
     <string name="menu_pack">包裹打包</string>
+    <string name="menu_receive_pacakge">包裹揽收</string>
     <string name="menu_customermanage">客户管理</string>
     <string name="menu_about">关于</string>
     <string name="menu_receivepkg">接收包裹</string>

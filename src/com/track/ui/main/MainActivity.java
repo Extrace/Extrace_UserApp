@@ -1,5 +1,8 @@
 package com.track.ui.main;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,10 +16,12 @@ import android.support.v7.app.ActionBar.Tab;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.amap.location.demo.MultyLocationActivity;
 import com.track.app.user.R;
@@ -34,7 +39,8 @@ import com.zxing.activity.CaptureActivity;
 public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks,
 		MyCenterTabFragment.TestCallbacks, ActionBar.TabListener,
-		OnFragmentInteractionListener, PackageListTabFragment.PkgListCallbacks {
+		OnFragmentInteractionListener, PackageListTabFragment.PkgListCallbacks,
+		PackageUnpackFragment.PkgListCallbacks {
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
@@ -47,6 +53,7 @@ public class MainActivity extends ActionBarActivity implements
 	private FragmentManager mfragmentManager;
 	private ExpressReceiveFragment mExpressReceiveFragment;
 	private ExpressDispatcherFragment mExpressDispatcherFragment;
+	private ExpressListFragment mExpressListFragment;
 	private PackageUnpackFragment mPackageUnpackFragment;
 	private PackagePackFragment mPackagePackFragment;
 	private AboutFragment mAboutFragment;
@@ -183,8 +190,22 @@ public class MainActivity extends ActionBarActivity implements
 			}
 			break;
 
-		// 客户管理
+		// 接收包裹
 		case 5:
+			// mFragmentTransaction.replace(R.id.container,
+			// mPackagePackFragment);
+			// mFragmentTransaction.commit();
+			// onSectionAttached(position + 1);
+			// try {
+			// mDrawerLayout.closeDrawer(Gravity.LEFT);
+			// } catch (NullPointerException e) {
+			//
+			// }
+			test();
+			break;
+
+		// 客户管理
+		case 6:
 			// mFragmentTransaction.replace(R.id.container,
 			// mExpressSendFragment)
 			// .commit();
@@ -198,7 +219,7 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 
 		// 关于
-		case 6:
+		case 7:
 			mFragmentTransaction.replace(R.id.container, mAboutFragment);
 			mFragmentTransaction.commit();
 			onSectionAttached(position + 1);
@@ -242,9 +263,12 @@ public class MainActivity extends ActionBarActivity implements
 			mTitle = getString(R.string.menu_pack);
 			break;
 		case 6:
-			mTitle = getString(R.string.menu_customermanage);
+			mTitle = getString(R.string.menu_receive_pacakge);
 			break;
 		case 7:
+			mTitle = getString(R.string.menu_customermanage);
+			break;
+		case 8:
 			mTitle = getString(R.string.menu_about);
 			break;
 		}
@@ -264,6 +288,32 @@ public class MainActivity extends ActionBarActivity implements
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	private static Boolean isQuit = false;
+	Timer timer = new Timer();
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (isQuit == false) {
+				isQuit = true;
+				Toast.makeText(getBaseContext(), "再按一次返回键退出程序",
+						Toast.LENGTH_SHORT).show();
+				TimerTask task = null;
+				task = new TimerTask() {
+					@Override
+					public void run() {
+						isQuit = false;
+					}
+				};
+				timer.schedule(task, 2000);
+			} else {
+				finish();
+				System.exit(0);
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -286,6 +336,17 @@ public class MainActivity extends ActionBarActivity implements
 		if (id == R.id.action_exit) {
 			this.finish();
 			return true;
+		}
+
+		if (id == android.R.id.home) {
+			Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG)
+					.show();
+
+			if (!mTitle.equals(R.string.menu_index)) {
+				Toast.makeText(getApplicationContext(), "test",
+						Toast.LENGTH_LONG).show();
+			}
+
 		}
 
 		if (id == R.id.action_my_package) {
@@ -442,5 +503,20 @@ public class MainActivity extends ActionBarActivity implements
 		ft.replace(R.id.container, ExpressListFragment.newInstance(type));
 		ft.addToBackStack(null);
 		ft.commit();
+	}
+
+	@Override
+	public void toTestFragment(String PkgId, String type) {
+		// TODO Auto-generated method stu
+		mfragmentManager = getSupportFragmentManager();
+		FragmentTransaction ft = mfragmentManager.beginTransaction();
+		ft.replace(R.id.container, ExpressListFragment.newInstance(PkgId, type));
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+
+	public void test() {
+		Toast.makeText(getApplicationContext(), "此功能尚未实现！", Toast.LENGTH_SHORT)
+				.show();
 	}
 }

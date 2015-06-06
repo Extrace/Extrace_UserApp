@@ -2,13 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:background="#fff"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" >
+    </com.amap.api.maps.MapView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="查询网点" />
+        android:background="#fff"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="10dp" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_location_tap" />
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="搜周边..."
+            android:singleLine="true" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageView
+            android:id="@+id/action_searchAround"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/amap_location_pressed" />
+    </LinearLayout>
 
 </LinearLayout>

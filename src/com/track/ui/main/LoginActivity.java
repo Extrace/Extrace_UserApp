@@ -104,59 +104,6 @@ public class LoginActivity extends FragmentActivity {
 		url += "doLogin";
 		client.get(url, params, new AsyncHttpResponseHandler() {
 
-			// @Override
-			// public void onSuccess(String response) {
-			// // 隐藏 Progress Dialog
-			// prgDialog.hide();
-			// String uname = unameET.getText().toString();
-			// String pwd = pwdET.getText().toString();
-			// setInfotoSp(uname, pwd);
-			// try {
-			// // 将服务端返回的字符串转换成JSON Object
-			// obj = new JSONObject(response);
-			// if (obj.getBoolean("status")) {
-			// Toast.makeText(getApplicationContext(), "登录成功!" + url,
-			// Toast.LENGTH_LONG).show();
-			// // 进入HomeActivity
-			// ((ExTraceApplication) getApplication()).getUserInfo();
-			// navigatetoMainActivity();
-			// } else {
-			// errorMsg.setText(obj.getString("error_msg"));
-			// Toast.makeText(getApplicationContext(),
-			// obj.getString("error_msg"), Toast.LENGTH_LONG)
-			// .show();
-			// }
-			// } catch (JSONException e) {
-			// Toast.makeText(
-			// getApplicationContext(),
-			// "Error Occured [Server's JSON response might be invalid]!",
-			// Toast.LENGTH_LONG).show();
-			// e.printStackTrace();
-			//
-			// }
-			// }
-			//
-			// @Override
-			// public void onFailure(int statusCode, Throwable error,
-			// String content) {
-			// prgDialog.hide();
-			// // When Http response code is '404'
-			// if (statusCode == 404) {
-			// Toast.makeText(getApplicationContext(), "资源未找到",
-			// Toast.LENGTH_LONG).show();
-			// }
-			// // When Http response code is '500'
-			// else if (statusCode == 500) {
-			// Toast.makeText(getApplicationContext(), "服务器发生异常",
-			// Toast.LENGTH_LONG).show();
-			// }
-			// // When Http response code other than 404, 500
-			// else {
-			// Toast.makeText(getApplicationContext(),
-			// "设备网络异常或服务器为开启！" + url, Toast.LENGTH_LONG).show();
-			// }
-			// }
-
 			@Override
 			public void onFailure(int statusCode, Header[] arg1, byte[] arg2,
 					Throwable arg3) {
@@ -190,7 +137,6 @@ public class LoginActivity extends FragmentActivity {
 				setInfotoSp(uname, pwd);
 				try {
 					// 将服务端返回的字符串转换成JSON Object
-
 					String str = new String(arg2);
 					obj = new JSONObject(str);
 					if (obj.getBoolean("status")) {

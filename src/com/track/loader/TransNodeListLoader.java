@@ -7,20 +7,20 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.track.misc.model.Customer;
+import com.track.misc.model.TransNode;
 import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
 import com.track.util.ExTraceApplication;
 import com.track.util.JsonUtils;
 
-public class CustomerListLoader extends HttpAsyncTask {
+public class TransNodeListLoader extends HttpAsyncTask {
 
 	String url;
-	IDataAdapter<List<Customer>> adapter;
+	IDataAdapter<List<TransNode>> adapter;
 	private Activity context;
 
-	public CustomerListLoader(IDataAdapter<List<Customer>> adpt,
+	public TransNodeListLoader(IDataAdapter<List<TransNode>> adpt,
 			Activity context) {
 		super(context);
 		this.context = context;
@@ -32,18 +32,19 @@ public class CustomerListLoader extends HttpAsyncTask {
 	@Override
 	public void onDataReceive(String class_data, String json_data) {
 		if (json_data.equals("Deleted")) {
-			Toast.makeText(context, "客户信息已删除!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "网点信息已删除!", Toast.LENGTH_SHORT).show();
 		} else {
 			if (json_data == null || json_data.length() == 0) {
-				Toast.makeText(context, "没有符合条件的客户信息!", Toast.LENGTH_SHORT)
+				Toast.makeText(context, "没有符合条件的网点信息!", Toast.LENGTH_SHORT)
 						.show();
 				adapter.setData(null);
 				adapter.notifyDataSetChanged();
 			} else {
 				// 将json字符串转换成list，new typetoken里面的格式必须和服务器返回的格式一样
-				List<Customer> cstm = JsonUtils.fromJson(json_data,
-						new TypeToken<List<Customer>>() {
+				List<TransNode> cstm = JsonUtils.fromJson(json_data,
+						new TypeToken<List<TransNode>>() {
 						});
+				Log.e("TransNode", cstm.toString());
 				adapter.setData(cstm);
 				adapter.notifyDataSetChanged();
 			}
@@ -55,9 +56,9 @@ public class CustomerListLoader extends HttpAsyncTask {
 		Log.i("onStatusNotify", "onStatusNotify: " + str_response);
 	}
 
-	// 获取客户列表byTelcode
-	public void LoadCustomerListByTelCode(String telCode) {
-		url += "getCustomerListByTelCode/" + telCode + "?_type=json";
+	// 获取网点列表byTelcode
+	public void LoadTransNodeListByTelCode(String telCode) {
+		url += "getTransNodeListByTelCode/" + telCode + "?_type=json";
 		try {
 			execute(url, "GET");
 		} catch (Exception e) {
@@ -65,9 +66,9 @@ public class CustomerListLoader extends HttpAsyncTask {
 		}
 	}
 
-	// 获取客户列表byName（支持模糊查询）
-	public void LoadCustomerListByName(String name) {
-		url += "getCustomerListByName/" + name + "?_type=json";
+	// 获取网点列表byName（支持模糊查询）
+	public void LoadTransNodeListByName(String name) {
+		url += "getTransNodeListByName/" + name + "?_type=json";
 		try {
 			execute(url, "GET");
 		} catch (Exception e) {
@@ -75,9 +76,29 @@ public class CustomerListLoader extends HttpAsyncTask {
 		}
 	}
 
-	// 获取所有客户列表
-	public void LoadCustomerList() {
-		url += "getCustomerList?_type=json";
+	// 获取网点列表byCode
+	public void LoadTransNodeListByCode(String code) {
+		url += "getNode/" + code + "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 获取网点列表byId
+	public void LoadTransNodeListById(String id) {
+		url += "getNodebyId/" + id + "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 获取所有网点列表
+	public void LoadTransNodeList() {
+		url += "getTransNodeList?_type=json";
 		try {
 			execute(url, "GET");
 		} catch (Exception e) {
@@ -86,13 +107,4 @@ public class CustomerListLoader extends HttpAsyncTask {
 
 	}
 
-	// 删除客户ById
-	public void DeleteCustomer(int id) {
-		url += "deleteCustomerInfo/" + id + "?_type=json";
-		try {
-			execute(url, "GET");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }

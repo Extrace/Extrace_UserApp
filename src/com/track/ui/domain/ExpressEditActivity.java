@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -289,10 +288,8 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		intent.setClass(this, CustomerListActivity.class);
 		if (intent_code == REQUEST_RCV) {
 			if (baseFragment.mRcvNameView.getTag() == null) {
-				Log.e("RCVtag", "null");
 				intent.putExtra("Action", "Add");
 			} else {
-				Log.e("RCVtag", "yes");
 				intent.putExtra("Action", "New");
 				intent.putExtra("Customer",
 						(Customer) baseFragment.mRcvNameView.getTag());

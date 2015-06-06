@@ -7,8 +7,8 @@ import com.google.gson.reflect.TypeToken;
 import com.track.misc.model.User;
 import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
-import com.track.net.JsonUtils;
 import com.track.util.ExTraceApplication;
+import com.track.util.JsonUtils;
 
 public class UserInfoLoader extends HttpAsyncTask {
 

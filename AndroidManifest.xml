@@ -8,7 +8,7 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="21" />
 
-     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -22,8 +22,9 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
- 
+ 
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -33,17 +34,20 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppBaseTheme" >
-          <meta-data
+        <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="ee2c789e1e427e1f0f089cec3d0fa2a9" />
+
         <activity
             android:name="com.track.ui.main.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name="com.zxing.activity.CaptureActivity"
@@ -54,37 +58,40 @@
         </activity>
         <activity
             android:name="com.amap.location.demo.CurrentWeatherReportActivity"
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="com.amap.location.demo.FutureWeatherReportActivity"
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-         <activity
-            android:name="com.amap.location.demo.NetLocationActivity" 
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+        <activity
+            android:name="com.amap.location.demo.NetLocationActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-        
-          <activity
+        <activity
+            android:name="com.amap.location.demo.TraceActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name="com.amap.location.demo.MultyLocationActivity"
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-        
-            <activity
+        <activity
             android:name="com.amap.location.demo.GeoFenceActivity"
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-            <activity
+        <activity
             android:name="com.amap.location.demo.GPSLocationActivity"
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-         <activity
+        <activity
             android:name="com.track.ui.main.LoginActivity"
             android:label="登录" >
         </activity>
@@ -96,9 +103,16 @@
             android:name="com.track.ui.minor.MyInfoActivity"
             android:label="个人信息" >
         </activity>
-         <activity
+        <activity
             android:name="com.track.ui.misc.CustomerListActivity"
             android:label="@string/title_activity_customer_list" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.track.ui.misc.TransNodeListActivity"
+            android:label="网点列表" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -109,6 +123,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.track.ui.misc.CustomerListActivity" />

@@ -12,7 +12,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.track.misc.model.User;
-import com.track.net.JsonUtils;
 
 public class ExTraceApplication extends Application {
 	private static final String PREFS_NAME = "ExTrace_lb.cfg";
@@ -120,7 +119,7 @@ public class ExTraceApplication extends Application {
 		mMiscService = settings.getString("MiscService", "/rest/Misc/");
 		mDomainService = settings.getString("DomainService", "/rest/Domain/");
 		if (mServerUrl == null || mServerUrl.length() == 0) {
-			mServerUrl = "http://192.168.10.146:8080/TestCxfHibernate";
+			mServerUrl = "http://192.168.1.126:8080/TestCxfHibernate";
 			mMiscService = "/rest/Misc/";
 			mDomainService = "/rest/Domain/";
 			SharedPreferences.Editor editor = settings.edit();

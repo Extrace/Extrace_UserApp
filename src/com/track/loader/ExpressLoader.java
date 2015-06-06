@@ -8,8 +8,8 @@ import com.track.misc.model.ExpressSheet;
 import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
-import com.track.net.JsonUtils;
 import com.track.util.ExTraceApplication;
+import com.track.util.JsonUtils;
 
 public class ExpressLoader extends HttpAsyncTask {
 
@@ -28,7 +28,7 @@ public class ExpressLoader extends HttpAsyncTask {
 	@Override
 	public void onDataReceive(String class_name, String json_data) {
 		if (class_name.equals("ExpressSheet")) {
-			ExpressSheet ci = JsonUtils.fromJson(json_data,
+			ExpressSheet ci = com.track.util.JsonUtils.fromJson(json_data,
 					new TypeToken<ExpressSheet>() {
 					});
 			adapter.setData(ci);
@@ -120,4 +120,5 @@ public class ExpressLoader extends HttpAsyncTask {
 			e.printStackTrace();
 		}
 	}
+
 }

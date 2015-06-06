@@ -1,6 +1,7 @@
 package com.track.loader;
 
 import android.app.Activity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
@@ -8,8 +9,8 @@ import com.track.misc.model.Package;
 import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
-import com.track.net.JsonUtils;
 import com.track.util.ExTraceApplication;
+import com.track.util.JsonUtils;
 
 public class PackageLoader extends HttpAsyncTask {
 
@@ -31,6 +32,7 @@ public class PackageLoader extends HttpAsyncTask {
 			Package ci = JsonUtils.fromJson(json_data,
 					new TypeToken<Package>() {
 					});
+			Log.e("pkgData", ci.toString());
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
 		} else if (class_name.equals("R_Package")) // 保存完成
@@ -42,7 +44,13 @@ public class PackageLoader extends HttpAsyncTask {
 			adapter.getData().onSave();
 			adapter.notifyDataSetChanged();
 			Toast.makeText(context, "包裹信息保存完成!", Toast.LENGTH_SHORT).show();
-		} else {
+		} else if (class_name.equals("E_Package")) {
+			Package ci = JsonUtils.fromJson(json_data,
+					new TypeToken<Package>() {
+					});
+			adapter.setData(ci);
+			adapter.notifyDataSetChanged();
+			Toast.makeText(context, "包裹已经存在!", Toast.LENGTH_SHORT).show();
 		}
 	}
 

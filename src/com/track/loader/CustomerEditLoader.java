@@ -9,8 +9,8 @@ import com.track.misc.model.Customer;
 import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
-import com.track.net.JsonUtils;
 import com.track.util.ExTraceApplication;
+import com.track.util.JsonUtils;
 
 public class CustomerEditLoader extends HttpAsyncTask {
 

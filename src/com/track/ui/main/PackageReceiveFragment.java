@@ -1,8 +1,6 @@
 package com.track.ui.main;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -22,7 +20,7 @@ import com.track.ui.domain.ExpressEditActivity;
 import com.track.ui.minor.PackageListTabFragment;
 import com.zxing.activity.CaptureActivity;
 
-public class PackageUnpackFragment extends Fragment {
+public class PackageReceiveFragment extends Fragment {
 
 	private View view;
 	private ImageView mImageCamera;
@@ -57,43 +55,12 @@ public class PackageUnpackFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if (mEditText.getText().toString().trim().equals("")) {
-					Toast.makeText(getActivity(), "包裹号不能为空！",
-							Toast.LENGTH_SHORT).show();
-				} else {
-					// 通过AlertDialog.Builder这个类来实例化我们的一个AlertDialog的对象
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							getActivity());
-					// 设置Title的图标
-					builder.setIcon(R.drawable.ic_launcher);
-					// 设置Title的内容
-					builder.setTitle("此操作将会拆包：");
-					// 设置Content来显示一个信息
-					builder.setMessage("确定拆包:\n" + mEditText.getText() + "\n吗？");
-					// 设置一个PositiveButton
-					builder.setPositiveButton("确定",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									mCallbacks.toTestFragment(mEditText
-											.getText().toString().trim(),
-											"UnPkg");
-								}
-							});
-					// 设置一个NegativeButton
-					builder.setNegativeButton("取消",
-							new DialogInterface.OnClickListener() {
-								@Override
-								public void onClick(DialogInterface dialog,
-										int which) {
-									return;
-								}
-							});
-					builder.show();
-
-				}
+				Toast.makeText(getActivity(), mEditText.getText(),
+						Toast.LENGTH_SHORT).show();
+				mCallbacks.toTestFragment(
+						mEditText.getText().toString().trim(), "UnPkg");
 			}
+
 		});
 
 		mBtR.setOnClickListener(new OnClickListener() {

@@ -8,6 +8,7 @@
         app:actionViewClass="android.widget.SearchView"
         android:icon="@drawable/actionbar_search_icon"
         app:showAsAction="ifRoom|collapseActionView"
+        android:queryHint="Hint text"
         android:title="搜索"/>
     <item
         android:id="@+id/action_scan"

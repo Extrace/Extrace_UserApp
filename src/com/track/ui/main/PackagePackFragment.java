@@ -26,7 +26,7 @@ public class PackagePackFragment extends Fragment {
 	private View view;
 	private ImageView mImageCamera;
 	private static EditText mEditText;
-	private PackageListTabFragment mCenterTabFragment;
+	private PackageListTabFragment mPackageListFragment;
 	private Button mButton;
 	private Button mBtR;
 
@@ -39,7 +39,7 @@ public class PackagePackFragment extends Fragment {
 		mImageCamera = (ImageView) view.findViewById(R.id.id_iv_camera);
 		mButton = (Button) view.findViewById(R.id.button1);
 		mBtR = (Button) view.findViewById(R.id.btnToPackages);
-		mCenterTabFragment = new PackageListTabFragment();
+		mPackageListFragment = new PackageListTabFragment();
 		mImageCamera.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -102,7 +102,7 @@ public class PackagePackFragment extends Fragment {
 			public void onClick(View v) {
 				FragmentManager mfragmentManager = getFragmentManager();
 				FragmentTransaction ft = mfragmentManager.beginTransaction();
-				ft.replace(R.id.container, mCenterTabFragment);
+				ft.replace(R.id.container, mPackageListFragment);
 				ft.addToBackStack(null);
 				ft.commit();
 			}

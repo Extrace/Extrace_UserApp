@@ -115,6 +115,28 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 				hd.time.setText(myFmt.format(es.getAcceptetime()));
 			}
 			break;
+		case "UnPkg": // 这个需要改
+			if (es.getReceiver() != null) {
+				hd.name.setText(es.getReceiver().getCname()); // 接收者姓名
+				hd.telCode.setText(es.getReceiver().getTelcode()); // 接收者电话
+				hd.address.setText(es.getReceiver().getAddress()); // 接收者
+			}
+			if (es.getAcceptetime() != null) {
+				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 hh:mm");
+				hd.time.setText(myFmt.format(es.getAcceptetime()));
+			}
+			break;
+		case "NPkg": // 这个需要改
+			if (es.getReceiver() != null) {
+				hd.name.setText(es.getReceiver().getCname()); // 接收者姓名
+				hd.telCode.setText(es.getReceiver().getTelcode()); // 接收者电话
+				hd.address.setText(es.getReceiver().getAddress()); // 接收者
+			}
+			if (es.getAcceptetime() != null) {
+				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 hh:mm");
+				hd.time.setText(myFmt.format(es.getAcceptetime()));
+			}
+			break;
 		}
 
 		String stText = "";

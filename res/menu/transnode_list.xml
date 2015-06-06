@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.track.ui.misc.CustomerEditActivity" >
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/search"
+        app:showAsAction="collapseActionView|always"
+        app:actionViewClass="android.widget.SearchView"
+        android:hint="search regioncode.."
+        android:title="@string/action_search"/>
+    <item
+        android:id="@+id/action_new"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_new"/>
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/mybill_edit_normal"
+        app:showAsAction="always"
+        android:title="@string/action_edit"/>
+    
+    <item
+        android:id="@+id/action_ok"
+        android:icon="@drawable/image_exp_status_ok"
+        app:showAsAction="always"
+        android:title="@string/action_ok"/>
+
+</menu>

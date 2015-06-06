@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lint>
+    <issue id="InflateParams">
+        <ignore path="src/com/track/ui/adapter/TransNodeListAdapter.java" />
+    </issue>
     <issue id="RtlHardcoded">
         <ignore path="src/com/track/app/user/MainActivity.java" />
     </issue>

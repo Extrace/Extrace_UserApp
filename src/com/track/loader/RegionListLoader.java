@@ -10,8 +10,8 @@ import com.track.misc.model.CodeNamePair;
 import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
-import com.track.net.JsonUtils;
 import com.track.util.ExTraceApplication;
+import com.track.util.JsonUtils;
 
 public class RegionListLoader extends HttpAsyncTask {
 

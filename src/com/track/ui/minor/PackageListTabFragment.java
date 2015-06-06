@@ -45,7 +45,7 @@ public class PackageListTabFragment extends Fragment {
 		mReceiveTV = (TextView) view.findViewById(R.id.id_tv_taskreceive);
 
 		if (sp.contains("uname")) {
-			// 派送任务
+			// 派送包裹
 			mSendIV.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -60,7 +60,7 @@ public class PackageListTabFragment extends Fragment {
 					showSendTasks();
 				}
 			});
-			// 揽收任务
+			// 揽收包裹
 			mReceiveTV.setOnClickListener(new OnClickListener() {
 
 				@Override
@@ -68,7 +68,7 @@ public class PackageListTabFragment extends Fragment {
 					showReceiveTasks();
 				}
 			});
-			// 转运任务
+			// 转运包裹
 			mTransTV.setOnClickListener(new OnClickListener() {
 
 				@Override

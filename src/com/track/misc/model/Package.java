@@ -102,6 +102,26 @@ public class Package implements Serializable {
 		}
 	}
 
+	private TransNode sourceTransNode;
+
+	private TransNode targetTransNode;
+
+	public TransNode getSourceTransNode() {
+		return sourceTransNode;
+	}
+
+	public void setSourceTransNode(TransNode sourceTransNode) {
+		this.sourceTransNode = sourceTransNode;
+	}
+
+	public TransNode getTargetTransNode() {
+		return targetTransNode;
+	}
+
+	public void setTargetTransNode(TransNode targetTransNode) {
+		this.targetTransNode = targetTransNode;
+	}
+
 	private boolean _saved = false;
 
 	public void onSave() {
