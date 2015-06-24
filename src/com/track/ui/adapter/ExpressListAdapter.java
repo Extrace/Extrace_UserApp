@@ -79,15 +79,12 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 		ExpressSheet es = getItem(position);
 		switch (ex_type) {
 		case "ExDLV": // 派送
-			System.out.println("****Exadapter not if****");
 			if (es.getReceiver() != null) {
-				System.out.println("****Exadapter in if****");
 				hd.name.setText(es.getReceiver().getCname()); // 接收者姓名
 				hd.telCode.setText(es.getReceiver().getTelcode()); // 接收者电话
 				hd.address.setText(es.getReceiver().getAddress()); // 接收者
 			}
 			if (es.getAcceptetime() != null) {
-				// SimpleDateFormat myFmt=new SimpleDateFormat("MM月dd日 HH:mm");
 				hd.time.setText(DateFormat.format("MM月dd日 HH:mm",
 						es.getAcceptetime()));
 			}
@@ -99,8 +96,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 				hd.address.setText(es.getSender().getAddress());
 			}
 			if (es.getAcceptetime() != null) {
-				// SimpleDateFormat myFmt=new SimpleDateFormat("MM月dd日 hh:mm");
-				hd.time.setText(DateFormat.format("MM月dd日 hh:mm",
+				hd.time.setText(DateFormat.format("MM月dd日 HH:mm",
 						es.getAcceptetime()));
 			}
 			break;
@@ -111,7 +107,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 				hd.address.setText(es.getReceiver().getAddress()); // 接收者
 			}
 			if (es.getAcceptetime() != null) {
-				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 hh:mm");
+				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 HH:mm");
 				hd.time.setText(myFmt.format(es.getAcceptetime()));
 			}
 			break;
@@ -122,7 +118,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 				hd.address.setText(es.getReceiver().getAddress()); // 接收者
 			}
 			if (es.getAcceptetime() != null) {
-				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 hh:mm");
+				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 HH:mm");
 				hd.time.setText(myFmt.format(es.getAcceptetime()));
 			}
 			break;
@@ -133,7 +129,7 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 				hd.address.setText(es.getReceiver().getAddress()); // 接收者
 			}
 			if (es.getAcceptetime() != null) {
-				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 hh:mm");
+				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 HH:mm");
 				hd.time.setText(myFmt.format(es.getAcceptetime()));
 			}
 			break;
@@ -155,6 +151,9 @@ public class ExpressListAdapter extends ArrayAdapter<ExpressSheet> implements
 			break;
 		case ExpressSheet.STATUS.STATUS_PARTATION:
 			stText = "正在分拣";
+			break;
+		case ExpressSheet.STATUS.STATUS_TRANSPORT:
+			stText = "转运";
 			break;
 		}
 		hd.status.setText(stText);

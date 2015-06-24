@@ -112,20 +112,27 @@ public class TransNodeTabFragment extends Fragment implements LocationSource,
 
 	protected void search(String key) {
 		if (!key.equals("")) {
-			PoiSearch.Query query = new PoiSearch.Query(key,
-					mLocation.getCityCode());
-			query.setPageSize(10);
-			query.setPageNum(0);
-			PoiSearch poisearch = new PoiSearch(getActivity(), query);
-			poisearch.setOnPoiSearchListener(this);
-			LatLonPoint point = new LatLonPoint(mLocation.getLatitude(),
-					mLocation.getLongitude());
-			Toast.makeText(getActivity(),
-					mLocation.getLatitude() + "||" + mLocation.getAltitude(),
-					Toast.LENGTH_SHORT).show();
-			// 第一个参数为自己的定位点，第二个为搜索半径
-			poisearch.setBound(new SearchBound(point, 3000, true));
-			poisearch.searchPOIAsyn();
+			if (mLocation != null) {
+				PoiSearch.Query query = new PoiSearch.Query(key,
+						mLocation.getCityCode());
+				query.setPageSize(10);
+				query.setPageNum(0);
+				PoiSearch poisearch = new PoiSearch(getActivity(), query);
+				poisearch.setOnPoiSearchListener(this);
+				LatLonPoint point = new LatLonPoint(mLocation.getLatitude(),
+						mLocation.getLongitude());
+				Toast.makeText(
+						getActivity(),
+						mLocation.getLatitude() + "||"
+								+ mLocation.getAltitude(), Toast.LENGTH_SHORT)
+						.show();
+				// 第一个参数为自己的定位点，第二个为搜索半径
+				poisearch.setBound(new SearchBound(point, 3000, true));
+				poisearch.searchPOIAsyn();
+			} else {
+				Toast.makeText(getActivity(), "定位失败，请检查您的GPS或者网络是否正常开启！",
+						Toast.LENGTH_SHORT).show();
+			}
 		} else {
 			Toast.makeText(getActivity(), "请输入您要查找的关键字哦~", Toast.LENGTH_SHORT)
 					.show();

@@ -69,7 +69,8 @@ public class NavigationDrawerFragment extends Fragment {
 		SharedPreferences sp = this.getActivity().getSharedPreferences(
 				"userInfo", Activity.MODE_PRIVATE);
 		mTextView.setText(sp.getString("uname", "点击登录哦~"));
-
+		// Toast.makeText(getActivity(), String.valueOf(sp.getInt("role", -1)),
+		// Toast.LENGTH_LONG).show();
 		if (!sp.contains("uname")) {
 			setLoginClickLisener();
 			mDrawerListView
@@ -97,9 +98,24 @@ public class NavigationDrawerFragment extends Fragment {
 					});
 		}
 		// 给抽屉的listview添加适配器
+		// if (sp.getInt("role", -1) == 0) {
+		// C_MenuAdapter menuAdapter = new C_MenuAdapter(getActivity());
+		// mDrawerListView.setAdapter(menuAdapter);
+		// mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		// } else if (sp.getInt("role", -1) == 1) {
+		// M_MenuAdapter menuAdapter = new M_MenuAdapter(getActivity());
+		// mDrawerListView.setAdapter(menuAdapter);
+		// mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		// } else if (sp.getInt("role", -1) == 2) {
+		// D_MenuAdapter menuAdapter = new D_MenuAdapter(getActivity());
+		// mDrawerListView.setAdapter(menuAdapter);
+		// mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		// } else {
 		MenuAdapter menuAdapter = new MenuAdapter(getActivity());
 		mDrawerListView.setAdapter(menuAdapter);
 		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+		// }
+
 		return rootview;
 	}
 

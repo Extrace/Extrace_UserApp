@@ -121,9 +121,11 @@ public class ExpressListFragment extends ListFragment {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
 
 		selectItem = mAdapter.getItem(info.position);
-		selectPosition = info.position;
-		menu.setHeaderTitle("运单: " + selectItem.getId());
-		menu.add(info.position, 1, 0, "放入包裹");
+		if (selectItem.getStatus() == ExpressSheet.STATUS.STATUS_PARTATION) {
+			selectPosition = info.position;
+			menu.setHeaderTitle("运单: " + selectItem.getId());
+			menu.add(info.position, 1, 0, "放入包裹");
+		}
 	}
 
 	@Override
@@ -137,8 +139,6 @@ public class ExpressListFragment extends ListFragment {
 
 	private void SelectOk() {
 		mLoader = new ExpressListLoader(mAdapter, this.getActivity());
-		Log.e("esId", selectItem.getId());
-		Log.e("pkgId", mPkgId);
 		mLoader.AddtoPkg(selectItem.getId(), mPkgId);
 		mLoader.LoadExpressList();
 	}
@@ -155,33 +155,25 @@ public class ExpressListFragment extends ListFragment {
 		case "ExDLV":
 			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
 					.getLoginUser().getDeliverpid();
-			mLoader.LoadExpressListInPackage(pkgId);
-			mLoader.LoadExpressList();
 			break;
 		case "ExRCV":
 			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
 					.getLoginUser().getReceivepid();
-			mLoader.LoadExpressListInPackage(pkgId);
-			mLoader.LoadExpressList();
 			break;
 		case "ExTAN":
 			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
 					.getLoginUser().getTranspid();
-			mLoader.LoadExpressListInPackage(pkgId);
-			mLoader.LoadExpressList();
 			break;
 		case "UnPkg":
 			pkgId = mPkgId;
 			mLoader.UnpackExpressList(pkgId);
-			mLoader.LoadExpressListInPackage(pkgId);
-			// mLoader.LoadExpressList();
 			break;
 		case "NPkg":
 			pkgId = mPkgId;
-			mLoader.LoadExpressListInPackage(pkgId);
-			// mLoader.LoadExpressList();
 			break;
 		}
+		mLoader.LoadExpressListInPackage(pkgId);
+		mLoader.LoadExpressList();
 
 	}
 

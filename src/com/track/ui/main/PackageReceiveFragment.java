@@ -13,33 +13,37 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.track.app.user.R;
+import com.track.loader.PackageLoader;
+import com.track.misc.model.Package;
+import com.track.net.IDataAdapter;
 import com.track.ui.domain.ExpressEditActivity;
-import com.track.ui.minor.PackageListTabFragment;
+import com.track.ui.domain.PackageListFragment;
 import com.zxing.activity.CaptureActivity;
 
-public class PackageReceiveFragment extends Fragment {
+public class PackageReceiveFragment extends Fragment implements
+		IDataAdapter<Package> {
 
 	private View view;
 	private ImageView mImageCamera;
 	private static EditText mEditText;
 	private Button mButton;
-	private PackageListTabFragment mPackageListFragment;
+	private PackageListFragment mPackageListFragment;
 	private Button mBtR;
+	private PackageLoader mLoader;
 	private PkgListCallbacks mCallbacks;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		view = inflater.inflate(R.layout.package_unpack, container, false);
+		view = inflater.inflate(R.layout.package_receive, container, false);
 		mEditText = (EditText) view.findViewById(R.id.id_et_pkgNum);
 		mImageCamera = (ImageView) view.findViewById(R.id.id_iv_camera);
-		mButton = (Button) view.findViewById(R.id.button1);
-		mPackageListFragment = new PackageListTabFragment();
-		mBtR = (Button) view.findViewById(R.id.btnToPackages);
+		mButton = (Button) view.findViewById(R.id.bt_receive);
+		mPackageListFragment = new PackageListFragment();
+		mBtR = (Button) view.findViewById(R.id.btnMyPackages);
 		mImageCamera.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -54,11 +58,9 @@ public class PackageReceiveFragment extends Fragment {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(getActivity(), mEditText.getText(),
-						Toast.LENGTH_SHORT).show();
-				mCallbacks.toTestFragment(
-						mEditText.getText().toString().trim(), "UnPkg");
+				// mCallbacks.toReceiveFragment(mEditText.getText().toString()
+				// .trim(), "RcvPkg");
+				receivePackage();
 			}
 
 		});
@@ -77,6 +79,11 @@ public class PackageReceiveFragment extends Fragment {
 		return view;
 	}
 
+	protected void receivePackage() {
+		mLoader = new PackageLoader(this, this.getActivity());
+		mLoader.receivePackage(mEditText.getText().toString());
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
@@ -93,7 +100,7 @@ public class PackageReceiveFragment extends Fragment {
 
 	public static interface PkgListCallbacks {
 
-		void toTestFragment(String PkgId, String type);
+		void toReceiveFragment(String PkgId, String type);
 	}
 
 	@Override
@@ -119,5 +126,23 @@ public class PackageReceiveFragment extends Fragment {
 		intent.putExtra("ExpId", mEditText.getText().toString().trim());
 		intent.setClass(this.getActivity(), ExpressEditActivity.class);
 		startActivityForResult(intent, 0);
+	}
+
+	@Override
+	public Package getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setData(Package data) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void notifyDataSetChanged() {
+		// TODO Auto-generated method stub
+
 	}
 }

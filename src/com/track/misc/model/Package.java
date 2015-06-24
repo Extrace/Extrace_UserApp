@@ -14,6 +14,9 @@
 package com.track.misc.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
@@ -33,7 +36,7 @@ public class Package implements Serializable {
 	@Expose
 	private String targetnode;
 	@Expose
-	private java.sql.Timestamp createtime;
+	private Date createtime;
 	@Expose
 	private int status;
 
@@ -65,11 +68,11 @@ public class Package implements Serializable {
 		this.targetnode = targetnode;
 	}
 
-	public java.sql.Timestamp getCreatetime() {
+	public Date getCreatetime() {
 		return createtime;
 	}
 
-	public void setCreatetime(java.sql.Timestamp createtime) {
+	public void setCreatetime(Date createtime) {
 		this.createtime = createtime;
 	}
 
@@ -106,6 +109,16 @@ public class Package implements Serializable {
 
 	private TransNode targetTransNode;
 
+	private List<TransHistory> transHistory = new ArrayList<TransHistory>();
+
+	public List<TransHistory> getTransHistory() {
+		return transHistory;
+	}
+
+	public void setTransHistory(List<TransHistory> transHistory) {
+		this.transHistory = transHistory;
+	}
+
 	public TransNode getSourceTransNode() {
 		return sourceTransNode;
 	}
@@ -120,6 +133,16 @@ public class Package implements Serializable {
 
 	public void setTargetTransNode(TransNode targetTransNode) {
 		this.targetTransNode = targetTransNode;
+	}
+
+	private int uid;
+
+	public int getUid() {
+		return uid;
+	}
+
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
 
 	private boolean _saved = false;

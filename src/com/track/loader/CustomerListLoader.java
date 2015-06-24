@@ -53,6 +53,7 @@ public class CustomerListLoader extends HttpAsyncTask {
 	@Override
 	public void onStatusNotify(RETURN_STATUS status, String str_response) {
 		Log.i("onStatusNotify", "onStatusNotify: " + str_response);
+
 	}
 
 	// 获取客户列表byTelcode

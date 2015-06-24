@@ -28,16 +28,18 @@ public class ExpressLoader extends HttpAsyncTask {
 	@Override
 	public void onDataReceive(String class_name, String json_data) {
 		if (class_name.equals("ExpressSheet")) {
-			ExpressSheet ci = com.track.util.JsonUtils.fromJson(json_data,
+			ExpressSheet ci = JsonUtils.fromJson(json_data,
 					new TypeToken<ExpressSheet>() {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
+		} else if (class_name.equals("DLV_ExpressSheet")) {
+			Toast.makeText(context, "快件已成功交付！", Toast.LENGTH_SHORT).show();
 		} else if (class_name.equals("NP_ExpressSheet")) {
-			Toast.makeText(context, "你还没有揽收包裹！请新建包裹！", Toast.LENGTH_SHORT)
+			Toast.makeText(context, "您还没有揽收包裹，请与管理员联系！", Toast.LENGTH_SHORT)
 					.show();
 		} else if (class_name.equals("DP_ExpressSheet")) {
-			Toast.makeText(context, "你还没有派送包裹！请新建包裹！", Toast.LENGTH_SHORT)
+			Toast.makeText(context, "您还没有派送包裹，请与管理员联系！", Toast.LENGTH_SHORT)
 					.show();
 		} else if (class_name.equals("D_ExpressSheet")) {
 			ExpressSheet ci = JsonUtils.fromJson(json_data,
@@ -45,7 +47,7 @@ public class ExpressLoader extends HttpAsyncTask {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
-			Toast.makeText(context, "快件正在派送，请到“首页—>个人中心”处理！",
+			Toast.makeText(context, "运单正在派送，请到“首页—>个人中心”处理！",
 					Toast.LENGTH_SHORT).show();
 		} else if (class_name.equals("E_ExpressSheet")) {// 已经存在
 			ExpressSheet ci = JsonUtils.fromJson(json_data,
@@ -53,7 +55,7 @@ public class ExpressLoader extends HttpAsyncTask {
 					});
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
-			Toast.makeText(context, "快件运单信息已经存在!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "运单信息已经存在!", Toast.LENGTH_SHORT).show();
 		} else if (class_name.equals("R_ExpressSheet")) {
 			// 保存完成
 			ExpressSheet ci = JsonUtils.fromJson(json_data,
@@ -62,7 +64,8 @@ public class ExpressLoader extends HttpAsyncTask {
 			adapter.getData().setId(ci.getId());
 			adapter.getData().onSave();
 			adapter.notifyDataSetChanged();
-			Toast.makeText(context, "快件运单信息保存完成!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "运单信息保存完成，已经揽收！", Toast.LENGTH_SHORT)
+					.show();
 		} else if (class_name.equals("N_ExpressSheet")) {
 			Toast.makeText(context, "查无此单，请返回检查运单号是否正确!", Toast.LENGTH_SHORT)
 					.show();
@@ -121,4 +124,18 @@ public class ExpressLoader extends HttpAsyncTask {
 		}
 	}
 
+	// 交付快件
+	public void Delieve(String id) {
+
+		int uid = ((ExTraceApplication) context.getApplication())
+				.getLoginUser().getId();
+		url += "deliveryExpressSheetId/id/" + id + "/uid/" + uid
+				+ "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
 }

@@ -64,7 +64,7 @@
          android:layout_marginTop="18dp"
          android:textSize="15sp"
          android:background="@null"
-         android:text="查看我的派送任务"
+         android:text="查看我的派送包裹"
          android:textColor="@color/toolbar"
          android:textStyle="bold" />
 

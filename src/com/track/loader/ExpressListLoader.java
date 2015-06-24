@@ -12,6 +12,7 @@ import com.track.net.HttpAsyncTask;
 import com.track.net.HttpResponseParam.RETURN_STATUS;
 import com.track.net.IDataAdapter;
 import com.track.util.ExTraceApplication;
+import com.track.util.JsonUtils;
 
 public class ExpressListLoader extends HttpAsyncTask {
 
@@ -35,15 +36,23 @@ public class ExpressListLoader extends HttpAsyncTask {
 			Toast.makeText(context, "快件信息已删除!", Toast.LENGTH_SHORT).show();
 		} else if (class_data.equals("AD_ExpressSheet")) {
 			Toast.makeText(context, "加入包裹成功！", Toast.LENGTH_SHORT).show();
+
+		} else if (class_data.equals("UNP_Package")) {
+			Toast.makeText(context, "拆包成功！可在您的转运包裹中查看快件信息！", Toast.LENGTH_SHORT)
+					.show();
+		} else if (class_data.equals("NULL_Package")) {
+			Toast.makeText(context, "不存在此包裹，请检查包裹ID！", Toast.LENGTH_SHORT)
+					.show();
 		} else {
-			List<ExpressSheet> cstm = com.track.util.JsonUtils.fromJson(
-					json_data, new TypeToken<List<ExpressSheet>>() {
+			List<ExpressSheet> cstm = JsonUtils.fromJson(json_data,
+					new TypeToken<List<ExpressSheet>>() {
 					});
 			if (cstm.size() > 0) {
 				adapter.setData(cstm);
 				adapter.notifyDataSetChanged();
 			} else {
-				Toast.makeText(context, "此包裹内没有快件！", Toast.LENGTH_SHORT).show();
+				Toast.makeText(context, "此包裹内没有快件哦！", Toast.LENGTH_SHORT)
+						.show();
 			}
 		}
 	}
@@ -51,6 +60,7 @@ public class ExpressListLoader extends HttpAsyncTask {
 	@Override
 	public void onStatusNotify(RETURN_STATUS status, String str_response) {
 		Log.i("onStatusNotify", "onStatusNotify: " + str_response);
+		Toast.makeText(context, "没有内容", Toast.LENGTH_SHORT).show();
 	}
 
 	// 获取快件列表,可以指定（将 like ---> eq ）

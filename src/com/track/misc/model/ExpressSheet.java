@@ -1,7 +1,9 @@
 package com.track.misc.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.google.gson.annotations.Expose;
 
@@ -208,6 +210,16 @@ public class ExpressSheet implements Serializable {
 			sb.append("]");
 			return sb.toString();
 		}
+	}
+
+	private List<Package> Package = new ArrayList<Package>();
+
+	public List<Package> getPackage() {
+		return Package;
+	}
+
+	public void setPackage(List<Package> package1) {
+		Package = package1;
 	}
 
 	private boolean _saved = false;

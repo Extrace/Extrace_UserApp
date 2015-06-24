@@ -10,18 +10,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import com.track.loader.ExpressListLoader;
-import com.track.misc.model.ExpressSheet;
-import com.track.ui.adapter.ExpressListAdapter;
-import com.track.util.ExTraceApplication;
+import com.track.loader.PackageListLoader;
+import com.track.misc.model.Package;
+import com.track.ui.adapter.PackageListAdapter;
 
 public class PackageListFragment extends ListFragment {
 
 	private static final String ARG_EX_TYPE = "ExType";
 
-	private String mExType;
-	private ExpressListAdapter mAdapter;
-	private ExpressListLoader mLoader;
+	private PackageListAdapter mAdapter;
+	private PackageListLoader mLoader;
 
 	Intent mIntent;
 
@@ -45,14 +43,13 @@ public class PackageListFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		Log.e("onActivity", "created");
 		if (getArguments() != null) { // 另一种读出传入参数的方式
-			mExType = getArguments().getString(ARG_EX_TYPE);
 		}
 
-		setEmptyText("您还没有快递任务哦~");
+		setEmptyText("您还没有接收任何包裹哦~");
 
-		// 初始化ExList适配器
-		mAdapter = new ExpressListAdapter(new ArrayList<ExpressSheet>(),
-				this.getActivity(), mExType);
+		// 初始化PkgList适配器
+		mAdapter = new PackageListAdapter(new ArrayList<Package>(),
+				this.getActivity());
 
 		setListAdapter(mAdapter);
 
@@ -87,7 +84,7 @@ public class PackageListFragment extends ListFragment {
 		if (null != mListener) {
 			mListener.onFragmentInteraction(mAdapter.getItem(position).getId());
 		}
-		EditExpress(mAdapter.getItem(position));
+		EditPackage((mAdapter.getItem(position)));
 	}
 
 	public interface OnFragmentInteractionListener {
@@ -96,24 +93,8 @@ public class PackageListFragment extends ListFragment {
 
 	private void RefreshList() {
 
-		String pkgId = null;
-		switch (mExType) {
-		case "ExDLV":
-			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
-					.getLoginUser().getDeliverpid();
-			break;
-		case "ExRCV":
-			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
-					.getLoginUser().getReceivepid();
-			break;
-		case "ExTAN":
-			pkgId = ((ExTraceApplication) this.getActivity().getApplication())
-					.getLoginUser().getTranspid();
-			break;
-		}
-		mLoader = new ExpressListLoader(mAdapter, this.getActivity());
-		mLoader.LoadExpressListInPackage(pkgId);
-		mLoader.LoadExpressList();
+		mLoader = new PackageListLoader(mAdapter, this.getActivity());
+		mLoader.getPackageListByUid();
 	}
 
 	/**
@@ -121,11 +102,11 @@ public class PackageListFragment extends ListFragment {
 	 * 
 	 * @param es
 	 */
-	void EditExpress(ExpressSheet es) {
+	void EditPackage(Package pkg) {
 		Intent intent = new Intent();
 		intent.putExtra("Action", "Edit");
-		intent.putExtra("ExpressSheet", es);
-		intent.setClass(this.getActivity(), ExpressEditActivity.class);
+		intent.putExtra("Package", pkg);
+		intent.setClass(this.getActivity(), PackageEditActivity.class);
 		startActivityForResult(intent, 0);
 	}
 

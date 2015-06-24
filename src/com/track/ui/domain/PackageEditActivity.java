@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +40,7 @@ public class PackageEditActivity extends ActionBarActivity implements
 	public static final int REQUEST_SND = 102;
 	public static TextView mIDView;
 
-	private Package mItem;
+	private static Package mItem;
 	private static TransNode sourcetransNode;
 	private static TransNode targettransNode;
 	private PackageLoader mLoader;
@@ -132,7 +131,14 @@ public class PackageEditActivity extends ActionBarActivity implements
 		int id = item.getItemId();
 		switch (id) {
 		case R.id.action_ok:
-			Save();
+			if (mItem.getStatus() == Package.STATUS.STATUS_CREATED) {
+				Save();
+				if (mItem != null) {
+					Refresh(mItem.getId());
+				}
+			} else {
+				Toast.makeText(this, "无需再次保存！", Toast.LENGTH_SHORT).show();
+			}
 			return true;
 		case R.id.action_refresh:
 			if (mItem != null) {
@@ -226,12 +232,13 @@ public class PackageEditActivity extends ActionBarActivity implements
 	}
 
 	void Save() {
-		if (mItem != null) {
+		if (mItem != null && mItem.getSourceTransNode() != null
+				&& mItem.getTargetTransNode() != null) {
 			// mItem.setId(mIDView.getText().toString());
 			mLoader = new PackageLoader(this, this);
 			mLoader.Save(mItem);
 		} else {
-			Toast.makeText(getApplicationContext(), "包裹为null",
+			Toast.makeText(getApplicationContext(), "包裹信息不完整，无法保存！",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -287,7 +294,15 @@ public class PackageEditActivity extends ActionBarActivity implements
 	}
 
 	private void PackOk(String pid) {
-
+		if (mItem != null && mItem.getSourceTransNode() != null
+				&& mItem.getTargetTransNode() != null) {
+			mLoader = new PackageLoader(this, this);
+			mLoader.PackOk(pid);
+			Refresh(pid);
+		} else {
+			Toast.makeText(getApplicationContext(), "包裹信息不完整，无法打包！",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	public static class PackageEditFragment1 extends Fragment {
@@ -304,9 +319,12 @@ public class PackageEditActivity extends ActionBarActivity implements
 		private ImageView mBtnTarget;
 		private TextView mCreateTime;
 		private TextView mStatus;
-		private Button mAddExpresssBt;
-		private Button mQueryExpressBt;
-		private Button mPackOk;
+		private ImageView mAddExpresssBt;
+		private ImageView mQueryExpressBt;
+		private ImageView mPackOk;
+		private TextView mtvPackOk;
+		private TextView mtvQueryEs;
+		private TextView mtvAddEs;
 
 		public static PackageEditFragment1 newInstance() {
 			PackageEditFragment1 fragment = new PackageEditFragment1();
@@ -314,7 +332,6 @@ public class PackageEditActivity extends ActionBarActivity implements
 		}
 
 		public PackageEditFragment1() {
-
 		}
 
 		@Override
@@ -362,7 +379,18 @@ public class PackageEditActivity extends ActionBarActivity implements
 							.getTransNodes(REQUEST_TND);
 				}
 			});
-			mAddExpresssBt = (Button) rootView.findViewById(R.id.button_add_es);
+			mAddExpresssBt = (ImageView) rootView
+					.findViewById(R.id.button_add_es);
+			mtvAddEs = (TextView) rootView.findViewById(R.id.tv_add_es);
+			mtvAddEs.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					((PackageEditActivity) getActivity())
+							.getExpressList("ExTAN");
+				}
+			});
 			mAddExpresssBt.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -372,8 +400,19 @@ public class PackageEditActivity extends ActionBarActivity implements
 							.getExpressList("ExTAN");
 				}
 			});
-			mQueryExpressBt = (Button) rootView
+			mQueryExpressBt = (ImageView) rootView
 					.findViewById(R.id.button_queryEsInPkg);
+			mtvQueryEs = (TextView) rootView.findViewById(R.id.tv_query_es);
+			mtvQueryEs.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					((PackageEditActivity) getActivity())
+							.QueryExpressInPkg(mIDView.getText().toString()
+									.trim());
+				}
+			});
 			mQueryExpressBt.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -384,7 +423,17 @@ public class PackageEditActivity extends ActionBarActivity implements
 									.trim());
 				}
 			});
-			mPackOk = (Button) rootView.findViewById(R.id.button_packOk);
+			mPackOk = (ImageView) rootView.findViewById(R.id.button_packOk);
+			mtvPackOk = (TextView) rootView.findViewById(R.id.tv_packOk);
+			mtvPackOk.setOnClickListener(new View.OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					((PackageEditActivity) getActivity()).PackOk(mIDView
+							.getText().toString().trim());
+				}
+			});
 			mPackOk.setOnClickListener(new View.OnClickListener() {
 
 				@Override
@@ -394,6 +443,9 @@ public class PackageEditActivity extends ActionBarActivity implements
 							.getText().toString().trim());
 				}
 			});
+			if (mItem != null) {
+				RefreshUI(mItem);
+			}
 			return rootView;
 
 		}
@@ -403,10 +455,11 @@ public class PackageEditActivity extends ActionBarActivity implements
 			displayTnd(mItem);
 			displaySnd(mItem);
 			if (mItem.getCreatetime() != null)
-				mCreateTime.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss",
+				mCreateTime.setText(DateFormat.format("yyyy-MM-dd HH:mm:ss",
 						mItem.getCreatetime()));
 			else
 				mCreateTime.setText(null);
+			displayBtn(mItem);
 			switch (mItem.getStatus()) {
 			case Package.STATUS.STATUS_CREATED:
 				mStatus.setText("新建");
@@ -423,16 +476,25 @@ public class PackageEditActivity extends ActionBarActivity implements
 			case Package.STATUS.STATUS_PARTATION:
 				mStatus.setText("分拣");
 				break;
+			case Package.STATUS.STATUS_TRANSPORT:
+				mStatus.setText("转运中");
+				break;
 			}
 		}
 
 		void displayBtn(Package mItem) { // 按钮状态控制
-			if (mItem.getStatus() == 0) {
-				mBtnSource.setVisibility(1);
-				mBtnTarget.setVisibility(1);
+			if (mItem.getStatus() == Package.STATUS.STATUS_CREATED) {
+				mBtnSource.setVisibility(View.VISIBLE);
+				mBtnTarget.setVisibility(View.VISIBLE);
+				mBtnScan.setVisibility(View.VISIBLE);
 			} else {
-				mBtnSource.setVisibility(0);
-				mBtnTarget.setVisibility(0);
+				mBtnSource.setVisibility(View.GONE);
+				mBtnTarget.setVisibility(View.GONE);
+				mBtnScan.setVisibility(View.GONE);
+				mPackOk.setVisibility(View.GONE);
+				mtvAddEs.setVisibility(View.GONE);
+				mtvPackOk.setVisibility(View.GONE);
+				mAddExpresssBt.setVisibility(View.GONE);
 			}
 		}
 

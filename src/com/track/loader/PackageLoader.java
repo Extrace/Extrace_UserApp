@@ -44,6 +44,12 @@ public class PackageLoader extends HttpAsyncTask {
 			adapter.getData().onSave();
 			adapter.notifyDataSetChanged();
 			Toast.makeText(context, "包裹信息保存完成!", Toast.LENGTH_SHORT).show();
+		} else if (class_name.equals("UNP_Package")) {
+			Toast.makeText(context, "拆包成功！可在您的转运包裹中查看快件信息！", Toast.LENGTH_SHORT)
+					.show();
+		} else if (class_name.equals("NULL_Package")) {
+			Toast.makeText(context, "不存在此包裹，请检查包裹ID！", Toast.LENGTH_SHORT)
+					.show();
 		} else if (class_name.equals("E_Package")) {
 			Package ci = JsonUtils.fromJson(json_data,
 					new TypeToken<Package>() {
@@ -51,6 +57,16 @@ public class PackageLoader extends HttpAsyncTask {
 			adapter.setData(ci);
 			adapter.notifyDataSetChanged();
 			Toast.makeText(context, "包裹已经存在!", Toast.LENGTH_SHORT).show();
+		} else if (class_name.equals("P_Package")) {
+			Package ci = JsonUtils.fromJson(json_data,
+					new TypeToken<Package>() {
+					});
+			adapter.setData(ci);
+			adapter.notifyDataSetChanged();
+			Toast.makeText(context, "包裹打包完成!", Toast.LENGTH_SHORT).show();
+		} else if (class_name.equals("RCV_Package")) {
+			Toast.makeText(context, "接收成功!", Toast.LENGTH_SHORT).show();
+
 		}
 	}
 
@@ -61,7 +77,9 @@ public class PackageLoader extends HttpAsyncTask {
 	}
 
 	public void New(String id) {
-		url += "newTransPackage/id/" + id + "?_type=json";
+		int uid = ((ExTraceApplication) context.getApplication())
+				.getLoginUser().getId();
+		url += "newTransPackage/id/" + id + "/uid/" + uid + "?_type=json";
 		try {
 			execute(url, "GET");
 		} catch (Exception e) {
@@ -87,4 +105,41 @@ public class PackageLoader extends HttpAsyncTask {
 			e.printStackTrace();
 		}
 	}
+
+	public void PackOk(String pid) {
+		int uid = ((ExTraceApplication) context.getApplication())
+				.getLoginUser().getId();
+		url += "packTransPackage/pid/" + pid + "/uid/" + uid + "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void receivePackage(String pid) {
+		int uid = ((ExTraceApplication) context.getApplication())
+				.getLoginUser().getId();
+		url += "receivePackagByUid/pid/" + pid + "/uid/" + uid + "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 拆包，将包内快件状态改为“分拣”,并放入转运包裹？
+
+	public void UnpackExpressList(String pKgId) {
+		int uid = ((ExTraceApplication) context.getApplication())
+				.getLoginUser().getId();
+		url += "UnpackExpressList/PackageId/" + pKgId + "/uid/" + uid
+				+ "?_type=json";
+		try {
+			execute(url, "GET");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }

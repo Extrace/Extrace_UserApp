@@ -74,9 +74,6 @@ public class ExpressReceiveFragment extends Fragment {
 								public void onClick(DialogInterface dialog,
 										int which) {
 									StartReceiveExpress();
-									// Toast.makeText(getActivity(),
-									// mEditText.getText(),
-									// Toast.LENGTH_SHORT).show();
 
 								}
 							});

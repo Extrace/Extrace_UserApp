@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/unpackfrg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
@@ -79,7 +80,7 @@
         android:layout_below="@+id/button1"
         android:layout_marginTop="18dp"
         android:background="@null"
-        android:text="查看我的包裹"
+        android:text="查看我的转运快件"
         android:textColor="@color/toolbar"
         android:textSize="15sp"
         android:textStyle="bold" />

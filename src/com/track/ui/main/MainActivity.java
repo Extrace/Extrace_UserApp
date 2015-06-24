@@ -4,7 +4,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +30,8 @@ import com.track.app.user.R;
 import com.track.ui.domain.ExpressListFragment;
 import com.track.ui.domain.ExpressListFragment.OnFragmentInteractionListener;
 import com.track.ui.domain.ExpressSendFragment;
+import com.track.ui.domain.PackageListFragment;
+import com.track.ui.domain.TransHistoryListFragment;
 import com.track.ui.minor.MyCenterTabFragment;
 import com.track.ui.minor.PackageListTabFragment;
 import com.track.ui.minor.TransPackageTabFragment;
@@ -40,7 +44,10 @@ public class MainActivity extends ActionBarActivity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks,
 		MyCenterTabFragment.TestCallbacks, ActionBar.TabListener,
 		OnFragmentInteractionListener, PackageListTabFragment.PkgListCallbacks,
-		PackageUnpackFragment.PkgListCallbacks {
+		PackageUnpackFragment.PkgListCallbacks,
+		TransPackageTabFragment.mTrackCallbacks,
+		PackageReceiveFragment.PkgListCallbacks,
+		PackageListFragment.OnFragmentInteractionListener {
 
 	private ActionBarDrawerToggle mDrawerToggle;
 	private DrawerLayout mDrawerLayout;
@@ -56,6 +63,7 @@ public class MainActivity extends ActionBarActivity implements
 	private ExpressListFragment mExpressListFragment;
 	private PackageUnpackFragment mPackageUnpackFragment;
 	private PackagePackFragment mPackagePackFragment;
+	private PackageReceiveFragment mPackageReceiveFragment;
 	private AboutFragment mAboutFragment;
 
 	@Override
@@ -115,6 +123,8 @@ public class MainActivity extends ActionBarActivity implements
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// 获得fragmentManager
+		SharedPreferences sp = getSharedPreferences("userInfo",
+				Activity.MODE_PRIVATE);
 		mfragmentManager = getSupportFragmentManager();
 		mTransPackageTabFragment = new TransPackageTabFragment();
 		mExpressSendFragment = new ExpressSendFragment();
@@ -122,6 +132,7 @@ public class MainActivity extends ActionBarActivity implements
 		mExpressDispatcherFragment = new ExpressDispatcherFragment();
 		mPackagePackFragment = new PackagePackFragment();
 		mPackageUnpackFragment = new PackageUnpackFragment();
+		mPackageReceiveFragment = new PackageReceiveFragment();
 		mAboutFragment = new AboutFragment();
 
 		FragmentTransaction mFragmentTransaction = mfragmentManager
@@ -142,10 +153,14 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 		// 快件揽收
 		case 1:
-			mFragmentTransaction.replace(R.id.container,
-					mExpressReceiveFragment);
-			mFragmentTransaction.commit();
-			onSectionAttached(position + 1);
+			if (sp.getInt("role", -1) == 0) {
+				mFragmentTransaction.replace(R.id.container,
+						mExpressReceiveFragment);
+				mFragmentTransaction.commit();
+				onSectionAttached(position + 1);
+			} else {
+				test();
+			}
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -154,10 +169,14 @@ public class MainActivity extends ActionBarActivity implements
 			break;
 		// 快件派送
 		case 2:
-			mFragmentTransaction.replace(R.id.container,
-					mExpressDispatcherFragment);
-			mFragmentTransaction.commit();
-			onSectionAttached(position + 1);
+			if (sp.getInt("role", -1) == 0) {
+				mFragmentTransaction.replace(R.id.container,
+						mExpressDispatcherFragment);
+				mFragmentTransaction.commit();
+				onSectionAttached(position + 1);
+			} else {
+				test();
+			}
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -167,10 +186,14 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 包裹拆包
 		case 3:
-			mFragmentTransaction
-					.replace(R.id.container, mPackageUnpackFragment);
-			mFragmentTransaction.commit();
-			onSectionAttached(position + 1);
+			if (sp.getInt("role", -1) == 1) {
+				mFragmentTransaction.replace(R.id.container,
+						mPackageUnpackFragment);
+				mFragmentTransaction.commit();
+				onSectionAttached(position + 1);
+			} else {
+				test();
+			}
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -180,9 +203,14 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 包裹打包
 		case 4:
-			mFragmentTransaction.replace(R.id.container, mPackagePackFragment);
-			mFragmentTransaction.commit();
-			onSectionAttached(position + 1);
+			if (sp.getInt("role", -1) == 1) {
+				mFragmentTransaction.replace(R.id.container,
+						mPackagePackFragment);
+				mFragmentTransaction.commit();
+				onSectionAttached(position + 1);
+			} else {
+				test();
+			}
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -192,25 +220,24 @@ public class MainActivity extends ActionBarActivity implements
 
 		// 接收包裹
 		case 5:
-			// mFragmentTransaction.replace(R.id.container,
-			// mPackagePackFragment);
-			// mFragmentTransaction.commit();
-			// onSectionAttached(position + 1);
-			// try {
-			// mDrawerLayout.closeDrawer(Gravity.LEFT);
-			// } catch (NullPointerException e) {
-			//
-			// }
-			test();
+			if (sp.getInt("role", -1) == 1 || sp.getInt("role", -1) == 2) {
+				mFragmentTransaction.replace(R.id.container,
+						mPackageReceiveFragment);
+				mFragmentTransaction.commit();
+				onSectionAttached(position + 1);
+			} else {
+				test();
+			}
+			try {
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
+			} catch (NullPointerException e) {
+
+			}
 			break;
 
 		// 客户管理
 		case 6:
-			// mFragmentTransaction.replace(R.id.container,
-			// mExpressSendFragment)
-			// .commit();
 			getCustomers();
-			// onSectionAttached(position + 1);
 			try {
 				mDrawerLayout.closeDrawer(Gravity.LEFT);
 			} catch (NullPointerException e) {
@@ -338,17 +365,6 @@ public class MainActivity extends ActionBarActivity implements
 			return true;
 		}
 
-		if (id == android.R.id.home) {
-			Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_LONG)
-					.show();
-
-			if (!mTitle.equals(R.string.menu_index)) {
-				Toast.makeText(getApplicationContext(), "test",
-						Toast.LENGTH_LONG).show();
-			}
-
-		}
-
 		if (id == R.id.action_my_package) {
 
 			showPackages();
@@ -364,7 +380,6 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	private void toLocationActivity() {
-		// TODO Auto-generated method stub
 		Intent multyIntent = new Intent(MainActivity.this,
 				MultyLocationActivity.class);
 		startActivity(multyIntent);
@@ -506,8 +521,7 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	@Override
-	public void toTestFragment(String PkgId, String type) {
-		// TODO Auto-generated method stu
+	public void toUnpackExpListFragment(String PkgId, String type) {
 		mfragmentManager = getSupportFragmentManager();
 		FragmentTransaction ft = mfragmentManager.beginTransaction();
 		ft.replace(R.id.container, ExpressListFragment.newInstance(PkgId, type));
@@ -516,7 +530,22 @@ public class MainActivity extends ActionBarActivity implements
 	}
 
 	public void test() {
-		Toast.makeText(getApplicationContext(), "此功能尚未实现！", Toast.LENGTH_SHORT)
+		Toast.makeText(getApplicationContext(), "身份不允许！", Toast.LENGTH_SHORT)
 				.show();
+	}
+
+	@Override
+	public void toTrackFragmets(String id) {
+		// TODO Auto-generated method stub
+		mfragmentManager = getSupportFragmentManager();
+		FragmentTransaction ft = mfragmentManager.beginTransaction();
+		ft.replace(R.id.container, TransHistoryListFragment.newInstance(id));
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+
+	@Override
+	public void toReceiveFragment(String PkgId, String type) {
+
 	}
 }

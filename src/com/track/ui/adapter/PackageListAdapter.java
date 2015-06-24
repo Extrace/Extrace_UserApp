@@ -1,6 +1,5 @@
 package com.track.ui.adapter;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -13,24 +12,20 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.track.app.user.R;
-import com.track.misc.model.ExpressSheet;
+import com.track.misc.model.Package;
 import com.track.net.IDataAdapter;
 
 @SuppressLint({ "InflateParams", "SimpleDateFormat" })
-public class PackageListAdapter extends ArrayAdapter<ExpressSheet> implements
-		IDataAdapter<List<ExpressSheet>> {
+public class PackageListAdapter extends ArrayAdapter<Package> implements
+		IDataAdapter<List<Package>> {
 
-	private List<ExpressSheet> itemList;
+	private List<Package> itemList;
 	private Context context;
-	private String ex_type;
 
-	public PackageListAdapter(List<ExpressSheet> itemList, Context ctx,
-			String ex_type) {
-		super(ctx, R.layout.express_list_item, itemList);
-
+	public PackageListAdapter(List<Package> itemList, Context ctx) {
+		super(ctx, R.layout.package_list_item, itemList);
 		this.itemList = itemList;
 		this.context = ctx;
-		this.ex_type = ex_type;
 	}
 
 	@Override
@@ -41,7 +36,7 @@ public class PackageListAdapter extends ArrayAdapter<ExpressSheet> implements
 	}
 
 	@Override
-	public ExpressSheet getItem(int position) {
+	public Package getItem(int position) {
 		if (itemList != null)
 			return itemList.get(position);
 		return null;
@@ -63,11 +58,10 @@ public class PackageListAdapter extends ArrayAdapter<ExpressSheet> implements
 			hd = new hold();
 			LayoutInflater inflater = (LayoutInflater) context
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = inflater.inflate(R.layout.express_list_item, null);
+			v = inflater.inflate(R.layout.package_list_item, null);
 
-			hd.name = (TextView) v.findViewById(R.id.name);
-			hd.telCode = (TextView) v.findViewById(R.id.tel);
-			hd.address = (TextView) v.findViewById(R.id.addr);
+			hd.id = (TextView) v.findViewById(R.id.id);
+			hd.targetNode = (TextView) v.findViewById(R.id.target);
 			hd.time = (TextView) v.findViewById(R.id.time);
 			hd.status = (TextView) v.findViewById(R.id.st);
 
@@ -76,63 +70,35 @@ public class PackageListAdapter extends ArrayAdapter<ExpressSheet> implements
 			hd = (hold) v.getTag();
 		}
 
-		ExpressSheet es = getItem(position);
-		switch (ex_type) {
-		case "ExDLV": // 派送
-			System.out.println("****Exadapter not if****");
-			if (es.getReceiver() != null) {
-				System.out.println("****Exadapter in if****");
-				hd.name.setText(es.getReceiver().getCname()); // 接收者姓名
-				hd.telCode.setText(es.getReceiver().getTelcode()); // 接收者电话
-				hd.address.setText(es.getReceiver().getAddress()); // 接收者
-			}
-			if (es.getAcceptetime() != null) {
-				// SimpleDateFormat myFmt=new SimpleDateFormat("MM月dd日 HH:mm");
-				hd.time.setText(DateFormat.format("MM月dd日 HH:mm",
-						es.getAcceptetime()));
-			}
-			break;
-		case "ExRCV": // 揽收
-			if (es.getSender() != null) {
-				hd.name.setText(es.getSender().getCname()); // 发送者姓名
-				hd.telCode.setText(es.getSender().getTelcode());
-				hd.address.setText(es.getSender().getAddress());
-			}
-			if (es.getAcceptetime() != null) {
-				// SimpleDateFormat myFmt=new SimpleDateFormat("MM月dd日 hh:mm");
-				hd.time.setText(DateFormat.format("MM月dd日 hh:mm",
-						es.getAcceptetime()));
-			}
-			break;
-		case "ExTAN": // 这个需要改
-			if (es.getReceiver() != null) {
-				hd.name.setText(es.getReceiver().getCname()); // 接收者姓名
-				hd.telCode.setText(es.getReceiver().getTelcode()); // 接收者电话
-				hd.address.setText(es.getReceiver().getAddress()); // 接收者
-			}
-			if (es.getAcceptetime() != null) {
-				SimpleDateFormat myFmt = new SimpleDateFormat("MM月dd日 hh:mm");
-				hd.time.setText(myFmt.format(es.getAcceptetime()));
-			}
-			break;
+		Package pkg = getItem(position);
+		if (pkg != null) {
+			hd.id.setText(pkg.getId()); // 包裹id
+			hd.targetNode.setText(pkg.getTargetTransNode().getNodename()); // 接收者
+		}
+		if (pkg.getCreatetime() != null) {
+			hd.time.setText(DateFormat.format("MM月dd日 HH:mm",
+					pkg.getCreatetime()));
 		}
 
 		String stText = "";
-		switch (es.getStatus()) {
-		case ExpressSheet.STATUS.STATUS_CREATED:
+		switch (pkg.getStatus()) {
+		case Package.STATUS.STATUS_CREATED:
 			stText = "新建";
 			break;
-		case ExpressSheet.STATUS.STATUS_RECEIVED:
-			stText = "揽收中";
+		case Package.STATUS.STATUS_DELIVED:
+			stText = "揽收货篮";
 			break;
-		case ExpressSheet.STATUS.STATUS_DELIVERIED:
-			stText = "已交付";
+		case Package.STATUS.STATUS_DISPACHED:
+			stText = "派送货篮";
 			break;
-		case ExpressSheet.STATUS.STATUS_DISPATCHED:
-			stText = "派送中";
+		case Package.STATUS.STATUS_PACKED:
+			stText = "打包";
 			break;
-		case ExpressSheet.STATUS.STATUS_PARTATION:
-			stText = "分拣中";
+		case Package.STATUS.STATUS_PARTATION:
+			stText = "分拣货篮";
+			break;
+		case Package.STATUS.STATUS_TRANSPORT:
+			stText = "转运";
 			break;
 		}
 		hd.status.setText(stText);
@@ -140,19 +106,18 @@ public class PackageListAdapter extends ArrayAdapter<ExpressSheet> implements
 	}
 
 	@Override
-	public List<ExpressSheet> getData() {
+	public List<Package> getData() {
 		return itemList;
 	}
 
 	@Override
-	public void setData(List<ExpressSheet> data) {
+	public void setData(List<Package> data) {
 		this.itemList = data;
 	}
 
 	private class hold {
-		TextView name;
-		TextView telCode;
-		TextView address;
+		TextView id;
+		TextView targetNode;
 		TextView time;
 		TextView status;
 	}

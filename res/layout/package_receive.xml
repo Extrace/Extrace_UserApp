@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="100dp" >
+
+    <EditText
+        android:id="@+id/id_et_pkgNum"
+        android:layout_width="176dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageView
+        android:id="@+id/id_iv_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/id_et_pkgNum"
+        android:layout_toRightOf="@+id/id_et_pkgNum"
+        android:src="@drawable/btn_camera" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/id_et_pkgNum"
+        android:src="@drawable/img_barcode" />
+
+    <Button
+        android:id="@+id/bt_receive"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/id_iv_camera"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/round_button"
+        android:text="接收包裹"
+        android:textSize="17sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/id_et_pkgNum"
+        android:layout_alignLeft="@+id/imageView1"
+        android:layout_marginBottom="35dp"
+        android:textStyle="bold"
+        android:text="请输入或扫描您要接收的包裹号：" />
+
+    <Button
+        android:id="@+id/btnMyPackages"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/bt_receive"
+        android:background="@null"
+        android:text="查看我接收的包裹"
+        android:textColor="@color/toolbar"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

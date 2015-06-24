@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -49,14 +50,13 @@ public class MultyLocationActivity extends ActionBarActivity implements
 	private OnLocationChangedListener mListener;
 	private LocationManagerProxy mAMapLocationManager;
 	private RadioGroup mGPSModeGroup;
-	private int markerCounts = 0;
 	private List<LatLng> traceList;
-	private double trace[] = { 34.820026, 113.534138, 34.820581, 113.534198,
-			34.821139, 113.534225, 34.821572, 113.534059, 34.821594,
-			113.533644, 34.821422, 113.53333, 34.821125, 113.533148, 34.820821,
-			113.53303, 34.820406, 113.532937, 34.819876, 113.533191, 34.819403,
-			113.533375, 34.819425, 113.53398, 34.819632, 113.534355, 34.820019,
-			113.534547, 34.820516, 113.534608, 34.821053, 113.534651 };
+	private double trace[] = { 39.917339, 116.418568, 39.915798, 116.412391,
+			39.915325, 116.407993, 39.915739, 116.402972, 39.923323,
+			116.394707, 39.919176, 116.391075, 39.922671, 116.385668,
+			39.922907, 116.378485, 39.918405, 116.381336, 39.915561,
+			116.381336, 39.914969, 116.380561, 39.915087, 116.373614,
+			39.915561, 116.364495 };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +71,11 @@ public class MultyLocationActivity extends ActionBarActivity implements
 			traceList.add(mLatlng);
 		}
 		init();
+		PolylineOptions po = new PolylineOptions();
+		po.color(Color.BLUE);
+		mapView.getMap().addPolyline(new PolylineOptions().addAll(traceList));
+		addMarker(traceList.get(0), "起点");
+		addMarker(traceList.get(traceList.size() - 1), "终点");
 	}
 
 	private void init() {
@@ -112,7 +117,7 @@ public class MultyLocationActivity extends ActionBarActivity implements
 	}
 
 	/**
-	 * 激活定位 /
+	 * 激活定位
 	 * 
 	 * 
 	 */
@@ -169,11 +174,6 @@ public class MultyLocationActivity extends ActionBarActivity implements
 
 	}
 
-	// 添加网点标记到地图
-	public void addNodesToMap() {
-
-	}
-
 	// 搜索周边标志物
 	public void search(String keyCode, String POI) {
 		PoiSearch.Query query = new PoiSearch.Query(keyCode, POI, "郑州市");
@@ -195,23 +195,9 @@ public class MultyLocationActivity extends ActionBarActivity implements
 	@Override
 	public void onMapClick(LatLng arg0) {
 		// TODO Auto-generated method stub
-		MarkerOptions markerOptions = new MarkerOptions();
 		Toast.makeText(getApplicationContext(),
 				arg0.latitude + "||" + arg0.longitude, Toast.LENGTH_SHORT)
 				.show();
-		Log.e("LatLng", arg0.latitude + "," + arg0.longitude);
-		markerOptions.title("第" + (markerCounts + 1) + "个Marker");
-		// 设置Marker的坐标，为我们点击地图的经纬度坐标
-		markerOptions.position(arg0);
-		// 设置Marker的可见性
-		markerOptions.visible(true);
-		// 设置Marker是否可以被拖拽，这里先设置为false，之后会演示Marker的拖拽功能
-		markerOptions.draggable(false);
-		// 将Marker添加到地图上去
-		aMap.addMarker(markerOptions);
-		// Marker的计数器自增
-		markerCounts++;
-
 	}
 
 	@Override
@@ -230,34 +216,30 @@ public class MultyLocationActivity extends ActionBarActivity implements
 			return true;
 		}
 		if (id == R.id.location_trace) {
+			PolylineOptions po = new PolylineOptions();
+			po.color(Color.BLUE);
 			mapView.getMap().addPolyline(
 					new PolylineOptions().addAll(traceList));
-
-			return true;
-		}
-		if (id == R.id.transnodes) {
-			showTransnodes();
+			addMarker(traceList.get(0), "起点");
+			addMarker(traceList.get(traceList.size() - 1), "终点");
 			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void showTransnodes() {
+	private void addMarker(LatLng lt, String des) {
 		// TODO Auto-generated method stub
 		MarkerOptions markerOptions = new MarkerOptions();
-
-		markerOptions.title("第" + (markerCounts + 1) + "个Marker");
+		markerOptions.title(des);
 		// 设置Marker的坐标，为我们点击地图的经纬度坐标
-		// markerOptions.position(arg0);
+		markerOptions.position(lt);
 		// 设置Marker的可见性
 		markerOptions.visible(true);
 		// 设置Marker是否可以被拖拽，这里先设置为false，之后会演示Marker的拖拽功能
 		markerOptions.draggable(false);
 		// 将Marker添加到地图上去
 		aMap.addMarker(markerOptions);
-		// Marker的计数器自增
-		markerCounts++;
 	}
 
 	@Override

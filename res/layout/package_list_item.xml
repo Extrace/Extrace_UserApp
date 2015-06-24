@@ -26,21 +26,7 @@
                 android:gravity="center"
                 android:padding="2dip"
                 android:singleLine="true"
-                android:textColor="@color/gray"
-                android:textSize="15dip" />
-
-            <TextView
-                android:id="@+id/st"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="6dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="2dip"
-                android:singleLine="true"
-                android:text="状态"
-                android:textColor="@color/gray"
-                android:textSize="15dip" />
+                android:textSize="16dip" />
         </LinearLayout>
 
         <LinearLayout
@@ -51,40 +37,8 @@
             android:orientation="vertical"
             android:paddingLeft="8dip" >
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:padding="2dip" >
-
-                <TextView
-                    android:id="@+id/name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="2dip"
-                    android:singleLine="true"
-                    android:text="姓名"
-                    android:textColor="@color/black"
-                    android:textSize="18dip" />
-
-                <TextView
-                    android:id="@+id/tel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:padding="2dip"
-                    android:singleLine="true"
-                    android:text="电话"
-                    android:textColor="@color/black"
-                    android:textSize="18dip" />
-            </RelativeLayout>
-
             <TextView
-                android:id="@+id/addr"
+                android:id="@+id/target"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_alignParentRight="true"
@@ -92,10 +46,37 @@
                 android:gravity="center"
                 android:padding="2dip"
                 android:singleLine="true"
-                android:text="地址"
-                android:textColor="@color/gray"
-                android:textSize="16dip" />
+                android:text="目的地"
+                android:textColor="@color/black"
+                android:textSize="17dip" />
+
+            <TextView
+                android:id="@+id/id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="2dip"
+                android:singleLine="true"
+                android:text="包裹id"
+                android:textSize="18dip" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/st"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignBottom="@+id/l1"
+            android:layout_alignRight="@+id/l2"
+            android:layout_below="@+id/l2"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="2dip"
+            android:singleLine="true"
+            android:text="状态"
+            android:textColor="@color/toolbar"
+            android:textSize="15dip" />
     </RelativeLayout>
 
 </LinearLayout>

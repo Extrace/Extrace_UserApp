@@ -65,7 +65,7 @@
         android:layout_below="@+id/button1"
         android:layout_marginTop="18dp"
         android:background="@null"
-        android:text="查看我的揽收任务"
+        android:text="查看我的揽收包裹"
         android:textColor="@color/toolbar"
         android:textSize="15sp"
         android:textStyle="bold" />

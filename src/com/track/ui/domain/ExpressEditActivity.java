@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -89,6 +90,7 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		mIntent = getIntent();
 		if (mIntent.hasExtra("Action")) {
 			if (mIntent.getStringExtra("Action").equals("New")) {
+				// 新建包裹触发
 				new_es = true;
 				mItem = new ExpressSheet();
 				mItem.setId(mIntent.getStringExtra("ExpId"));
@@ -159,7 +161,14 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		int id = item.getItemId();
 		switch (id) {
 		case R.id.action_ok:
-			Save();
+			if (mItem.getStatus() == 0) {
+				Save();
+				if (mItem != null) {
+					Refresh(mItem.getId());
+				}
+			} else {
+				Toast.makeText(this, "无需再次保存！", Toast.LENGTH_SHORT).show();
+			}
 			return true;
 		case R.id.action_refresh:
 			if (mItem != null) {
@@ -267,12 +276,21 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	void Save() {
 		if (mItem != null && mItem.getReceiver() != null
 				&& mItem.getSender() != null) {
-			// mItem.setId(mIDView.getText().toString());
 			mLoader = new ExpressLoader(this, this);
 			mLoader.Save(mItem);
 		} else {
-			Toast.makeText(getApplicationContext(), "运单信息填写不完整，无法揽收！",
+			Toast.makeText(getApplicationContext(), "运单信息填写不完整，无法完成揽收！",
 					Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	void Delieve(String id) {
+		try {
+			mLoader = new ExpressLoader(this, this);
+			mLoader.Delieve(id);
+			Refresh(id);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -348,7 +366,6 @@ public class ExpressEditActivity extends ActionBarActivity implements
 	 */
 	public static class ExpressEditFragment1 extends Fragment {
 
-		// private TextView mIDView;
 		private TextView mRcvNameView;
 		private TextView mRcvTelCodeView;
 		private TextView mRcvDptView;
@@ -373,6 +390,9 @@ public class ExpressEditActivity extends ActionBarActivity implements
 		private ImageView mbtnCapture;
 		private ImageView mbtnRcv;
 		private ImageView mbtnSnd;
+		// 交付运单按钮
+		private ImageView mImageDlv;
+		private TextView mTextDlv;
 
 		public static ExpressEditFragment1 newInstance() {
 			ExpressEditFragment1 fragment = new ExpressEditFragment1();
@@ -421,6 +441,8 @@ public class ExpressEditActivity extends ActionBarActivity implements
 					((ExpressEditActivity) getActivity()).StartCapture();
 				}
 			});
+
+			// 选择收件人
 			mbtnRcv = (ImageView) rootView
 					.findViewById(R.id.action_ex_rcv_icon);
 			mbtnRcv.setOnClickListener(new View.OnClickListener() {
@@ -430,6 +452,8 @@ public class ExpressEditActivity extends ActionBarActivity implements
 							.GetCustomer(REQUEST_RCV);
 				}
 			});
+
+			// 选择发件人
 			mbtnSnd = (ImageView) rootView
 					.findViewById(R.id.action_ex_snd_icon);
 			mbtnSnd.setOnClickListener(new View.OnClickListener() {
@@ -437,6 +461,28 @@ public class ExpressEditActivity extends ActionBarActivity implements
 				public void onClick(View view) {
 					((ExpressEditActivity) getActivity())
 							.GetCustomer(REQUEST_SND);
+				}
+			});
+
+			// 快件交付点击事件
+			mImageDlv = (ImageView) rootView.findViewById(R.id.iv_delieve_exp);
+			mImageDlv.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					((ExpressEditActivity) getActivity()).Delieve(mIDView
+							.getText().toString());
+				}
+			});
+			mTextDlv = (TextView) rootView.findViewById(R.id.tv_deleive_exp);
+			mTextDlv.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					((ExpressEditActivity) getActivity()).Delieve(mIDView
+							.getText().toString());
 				}
 			});
 			return rootView;
@@ -452,13 +498,13 @@ public class ExpressEditActivity extends ActionBarActivity implements
 			mIDView.setText(es.getId());
 			displayRcv(es);
 			displaySnd(es);
-			if (es.getAcceptetime() != null)
-				mRcvTimeView.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss",
+			if (es.getAcceptetime() != null) {
+				mRcvTimeView.setText(DateFormat.format("yyyy-MM-dd HH:mm:ss",
 						es.getAcceptetime()));
-			else
+			} else
 				mRcvTimeView.setText(null);
 			if (es.getDelivetime() != null)
-				mSndTimeView.setText(DateFormat.format("yyyy-MM-dd hh:mm:ss",
+				mSndTimeView.setText(DateFormat.format("yyyy-MM-dd HH:mm:ss",
 						es.getDelivetime()));
 			else
 				mSndTimeView.setText(null);
@@ -479,16 +525,30 @@ public class ExpressEditActivity extends ActionBarActivity implements
 			case ExpressSheet.STATUS.STATUS_PARTATION:
 				mExpStatus.setText("正在分拣");
 				break;
+			case ExpressSheet.STATUS.STATUS_TRANSPORT:
+				mExpStatus.setText("转运中");
+				break;
 			}
 		}
 
-		void displayBtn(ExpressSheet es) { // 按钮状态控制
+		void displayBtn(ExpressSheet es) {
+			// 如果运单状态为0，即新建状态
 			if (es.getStatus() == 0) {
-				mbtnRcv.setVisibility(1);
-				mbtnSnd.setVisibility(1);
+				mbtnRcv.setVisibility(View.VISIBLE);
+				mbtnCapture.setVisibility(View.VISIBLE);
+				mbtnSnd.setVisibility(View.VISIBLE);
+				mImageDlv.setVisibility(View.GONE);
+				mTextDlv.setVisibility(View.GONE);
+
+			} else if (es.getStatus() == ExpressSheet.STATUS.STATUS_DISPATCHED) {
+				mImageDlv.setVisibility(View.VISIBLE);
+				mTextDlv.setVisibility(View.VISIBLE);
 			} else {
-				mbtnRcv.setVisibility(0);
-				mbtnSnd.setVisibility(0);
+				mbtnRcv.setVisibility(View.GONE);
+				mbtnSnd.setVisibility(View.GONE);
+				mbtnCapture.setVisibility(View.GONE);
+				mImageDlv.setVisibility(View.GONE);
+				mTextDlv.setVisibility(View.GONE);
 			}
 		}
 

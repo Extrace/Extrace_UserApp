@@ -1,5 +1,6 @@
 package com.track.ui.minor;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.track.app.user.R;
 import com.track.ui.domain.ExpressEditActivity;
+import com.track.ui.domain.TransHistoryActivity;
 import com.zxing.activity.CaptureActivity;
 
 public class TransPackageTabFragment extends Fragment {
@@ -23,6 +25,7 @@ public class TransPackageTabFragment extends Fragment {
 	private View view;
 	private Button mExpInfoBt;
 	private Button mExpTrackBt;
+	private mTrackCallbacks mCallbacks;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,16 +58,47 @@ public class TransPackageTabFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				StartTackExpress();
+
+				StartTrackExpress();
 
 			}
 		});
 		return view;
 	}
 
-	protected void StartTackExpress() {
-		// TODO Auto-generated method stub
-		Toast.makeText(getActivity(), "目前还未实现此功能哦~", Toast.LENGTH_SHORT).show();
+	protected void StartTrackExpress() {
+		if (mEditText.getText().toString().trim().equals("")) {
+			Toast.makeText(getActivity(), "运单号不能为空!", Toast.LENGTH_SHORT)
+					.show();
+		} else {
+			Intent intent = new Intent();
+			intent.putExtra("ExpId", mEditText.getText().toString().trim());
+			// intent.putExtra("Action", "Query");
+			intent.setClass(this.getActivity(), TransHistoryActivity.class);
+			startActivityForResult(intent, 0);
+		}
+
+	}
+
+	public static interface mTrackCallbacks {
+		void toTrackFragmets(String id);
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mCallbacks = (mTrackCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(
+					"Activity must implement TestCallbacks.");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mCallbacks = null;
 	}
 
 	@Override

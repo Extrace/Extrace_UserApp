@@ -143,6 +143,10 @@
             android:name="com.track.ui.domain.PackageEditActivity"
             android:label="包裹信息" >
         </activity>
+         <activity
+            android:name="com.track.ui.domain.TransHistoryActivity"
+            android:label="物流信息" >
+        </activity>
     </application>
 
 </manifest>

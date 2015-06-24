@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context="com.track.ui.domain.ExpressEditActivity$ExpressEditFragment1" >
 
     <LinearLayout
@@ -80,7 +80,7 @@
                 android:textColor="@color/black"
                 android:textSize="20dip" />
 
-             <TextView
+            <TextView
                 android:id="@+id/expressRcvTel"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
@@ -238,7 +238,7 @@
             android:paddingBottom="8dip"
             android:paddingLeft="5dip"
             android:paddingTop="8dip" >
-        
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -258,12 +258,12 @@
                 android:textColor="@color/black"
                 android:textSize="16dip" />
         </LinearLayout>
-            
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -271,7 +271,7 @@
             android:paddingBottom="8dip"
             android:paddingLeft="5dip"
             android:paddingTop="8dip" >
-        
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -296,7 +296,7 @@
             android:layout_width="fill_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -304,7 +304,7 @@
             android:paddingBottom="8dip"
             android:paddingLeft="5dip"
             android:paddingTop="8dip" >
-        
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
@@ -324,20 +324,41 @@
                 android:textColor="@color/black"
                 android:textSize="16dip" />
         </LinearLayout>
-            
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="0.5dp"
             android:background="@color/lightgray" />
-    </LinearLayout>
-        
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="8dip"
-        android:paddingLeft="5dip"
-        android:paddingTop="8dip" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:paddingRight="30dp" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_delieve_exp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/delieve_exp" />
+
+                <TextView
+                    android:id="@+id/tv_deleive_exp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:text="交付运单"
+                    android:textColor="@color/toolbar" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

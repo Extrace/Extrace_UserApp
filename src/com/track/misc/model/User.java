@@ -1,16 +1,39 @@
 package com.track.misc.model;
 
-public class User {
+import java.io.Serializable;
+
+import com.google.gson.annotations.Expose;
+
+public class User implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Expose
 	private int id;
+	@Expose
 	private String password;
+	@Expose
 	private String uname;
+	@Expose
 	private int role;
-	private String telCode;
+	@Expose
+	private String telcode;
+	@Expose
 	private int status;
+	@Expose
 	private String dptid;
+	@Expose
 	private String receivepid;
+	@Expose
 	private String deliverpid;
+	@Expose
 	private String transpid;
+
+	public User() {
+
+	}
 
 	public int getId() {
 		return id;
@@ -44,12 +67,12 @@ public class User {
 		this.role = role;
 	}
 
-	public String getTelCode() {
-		return telCode;
+	public String getTelcode() {
+		return telcode;
 	}
 
-	public void setTelCode(String telCode) {
-		this.telCode = telCode;
+	public void setTelcode(String telCode) {
+		this.telcode = telCode;
 	}
 
 	public int getStatus() {
@@ -107,7 +130,7 @@ public class User {
 			sb.append("PWD=").append(getPassword()).append(" ");
 			sb.append("Name=").append(getUname()).append(" ");
 			sb.append("URull=").append(getRole()).append(" ");
-			sb.append("TelCode=").append(getTelCode()).append(" ");
+			sb.append("TelCode=").append(getTelcode()).append(" ");
 			sb.append("Status=").append(getStatus()).append(" ");
 			sb.append("DptID=").append(getDptid()).append(" ");
 			sb.append("]");

@@ -18,11 +18,15 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.track.app.user.R;
-import com.track.ui.domain.ExpressEditActivity;
+import com.track.loader.PackageLoader;
+import com.track.misc.model.Package;
+import com.track.net.IDataAdapter;
+import com.track.ui.domain.ExpressListFragment;
 import com.track.ui.minor.PackageListTabFragment;
 import com.zxing.activity.CaptureActivity;
 
-public class PackageUnpackFragment extends Fragment {
+public class PackageUnpackFragment extends Fragment implements
+		IDataAdapter<Package> {
 
 	private View view;
 	private ImageView mImageCamera;
@@ -30,6 +34,7 @@ public class PackageUnpackFragment extends Fragment {
 	private Button mButton;
 	private PackageListTabFragment mPackageListFragment;
 	private Button mBtR;
+	private PackageLoader mLoader;
 	private PkgListCallbacks mCallbacks;
 
 	@Override
@@ -76,9 +81,10 @@ public class PackageUnpackFragment extends Fragment {
 								@Override
 								public void onClick(DialogInterface dialog,
 										int which) {
-									mCallbacks.toTestFragment(mEditText
-											.getText().toString().trim(),
-											"UnPkg");
+									// mCallbacks.toUnpackExpListFragment(
+									// mEditText.getText().toString()
+									// .trim(), "UnPkg");
+									unPack();
 								}
 							});
 					// 设置一个NegativeButton
@@ -102,12 +108,18 @@ public class PackageUnpackFragment extends Fragment {
 			public void onClick(View v) {
 				FragmentManager mfragmentManager = getFragmentManager();
 				FragmentTransaction ft = mfragmentManager.beginTransaction();
-				ft.replace(R.id.container, mPackageListFragment);
+				ft.replace(R.id.container,
+						ExpressListFragment.newInstance("ExTAN"));
 				ft.addToBackStack(null);
 				ft.commit();
 			}
 		});
 		return view;
+	}
+
+	public void unPack() {
+		mLoader = new PackageLoader(this, this.getActivity());
+		mLoader.UnpackExpressList(mEditText.getText().toString().trim());
 	}
 
 	@Override
@@ -126,7 +138,7 @@ public class PackageUnpackFragment extends Fragment {
 
 	public static interface PkgListCallbacks {
 
-		void toTestFragment(String PkgId, String type);
+		void toUnpackExpListFragment(String PkgId, String type);
 	}
 
 	@Override
@@ -146,11 +158,21 @@ public class PackageUnpackFragment extends Fragment {
 		mCallbacks = null;
 	}
 
-	void StartUnpackPackage() {
-		Intent intent = new Intent();
-		intent.putExtra("Action", "New");
-		intent.putExtra("ExpId", mEditText.getText().toString().trim());
-		intent.setClass(this.getActivity(), ExpressEditActivity.class);
-		startActivityForResult(intent, 0);
+	@Override
+	public Package getData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setData(Package data) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void notifyDataSetChanged() {
+		// TODO Auto-generated method stub
+
 	}
 }
